@@ -8,8 +8,12 @@ namespace SMK.Model
 {
     class Product
     {
-        public string thumbnail;
-        public string Product_Name;
-        public string Product_Text;
+
+        public int product_ID { get; set; }
+        public String product_Name { get; set; }
+        public String product_Thumbnail { get; set; }
+        public String product_Text { get; set; }
+        public List<int> product_PContents { get; set; }
+
     }
 }

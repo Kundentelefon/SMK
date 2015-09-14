@@ -8,5 +8,9 @@ namespace SMK.Model
 {
     class PContent
     {
+        public int content_ID { get; set; }
+        public int content_Kind { get; set; }
+        public String content_Title { get; set; }
+        public String content_Location { get; set; }
     }
 }
