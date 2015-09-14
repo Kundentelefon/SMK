@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using SMK.View;
 
 using Xamarin.Forms;
 
@@ -11,10 +12,9 @@ namespace SMK
     {
         public App()
         {
-            // The root page of your application
-            MainPage = new ContentPage
-            { 
-            };
+            NavigationPage Navigation_Page = new NavigationPage(new LoginPage_Xaml());
+            MainPage = Navigation_Page;
+            
         }
 
         protected override void OnStart()
