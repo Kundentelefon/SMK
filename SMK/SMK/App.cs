@@ -1,35 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using LoginPattern;
 using SMK.View;
-
+using System;
 using Xamarin.Forms;
+
 
 namespace SMK
 {
-    public class App : Application
+    public class App : Application, ILoginManager
     {
+        static ILoginManager loginManager;
+        public static App Current;
+
+
         public App()
         {
+
             NavigationPage Navigation_Page = new NavigationPage(new MainMenuPage());
             MainPage = Navigation_Page;
-            
+            Current = this;
+
+            var isLoggedIn = Properties.ContainsKey("IsLoggedIn") ? (bool)Properties["IsLoggedIn"] : false;
+
+            // after login the next site to go
+            if (isLoggedIn)
+                //  MainPage = Navigation_Page;
+                MainPage = new LoginPattern.Navigation_Page();
+            else
+                MainPage = new LoginModalPage(this);
         }
 
-        protected override void OnStart()
+        public void ShowMainPage()
         {
-            // Handle when your app starts
+            MainPage = new Navigation_Page();
         }
 
-        protected override void OnSleep()
+        public void Logout()
         {
-            // Handle when your app sleeps
+            // It will set true on the Main Page
+            Properties["IsLoggedIn"] = false;
+            MainPage = new LoginModalPage(this);
         }
 
-        protected override void OnResume()
-        {
-            // Handle when your app resumes
-        }
     }
 }
