@@ -36,6 +36,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
+    <Compile Include="CreateAccountPage.cs" />
+    <Compile Include="ILoginManager.cs" />
+    <Compile Include="LoginModalPage.cs" />
+    <Compile Include="LoginPage.cs" />
+    <Compile Include="MainPage.cs" />
     <Compile Include="MainPage_Xaml.xaml.cs">
       <DependentUpon>MainPage_Xaml.xaml</DependentUpon>
     </Compile>
