@@ -41,6 +41,7 @@ namespace SMK.View
             foreach (Product product in ProductCollection)
             {
                 TapGestureRecognizer gesture = new TapGestureRecognizer();
+                localFileSystem files = new localFileSystem();
 
                 Frame frame = new Frame
                 {
