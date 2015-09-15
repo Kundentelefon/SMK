@@ -6,6 +6,7 @@ using System.Text;
 using SMK.Model;
 using SMK.Support;
 
+
 using Xamarin.Forms;
 using System.Collections.ObjectModel;
 
@@ -38,6 +39,7 @@ namespace SMK.View
 
             ScrollView scrollView = new ScrollView();
             StackLayout stackLayout = new StackLayout();
+
             
 
             foreach (Product product in ProductCollection)
@@ -46,7 +48,7 @@ namespace SMK.View
                 bool owned = files.hasContent(product);
                 Color color = Color.Red;
                 if (owned == true)
-                   color = Color.Blue;
+                    color = Color.Blue;
 
                 Frame frame = new Frame
                 {

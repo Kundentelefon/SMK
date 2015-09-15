@@ -24,13 +24,13 @@ namespace SMK.View
             TapGestureRecognizer gesture = new TapGestureRecognizer();
             string source = null;
 
-            if (pContent != null)
+            if (pContent[0] != null)
             {
                 foreach (PContent content in pContent)
                 {
                     if (content.content_Kind == 0)
                     {
-                        source = content.content_FileNames.ElementAt(0);
+                        source = content.content_FileNames[0];
                         break;
                     }
 

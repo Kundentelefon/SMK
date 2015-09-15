@@ -20,6 +20,9 @@ C:\Users\Maddin\Source\Repos\SMK\SMK\SMK.Droid\obj\Debug\res\drawable-xhdpi\icon
 C:\Users\Maddin\Source\Repos\SMK\SMK\SMK.Droid\obj\Debug\res\drawable-xxhdpi\icon.png
 C:\Users\Maddin\Source\Repos\SMK\SMK\SMK.Droid\obj\Debug\R.cs.flag
 C:\Users\Maddin\Source\Repos\SMK\SMK\SMK.Droid\obj\Debug\uploadflags.txt
+C:\Users\Maddin\Source\Repos\SMK\SMK\SMK.Droid\obj\Debug\res\drawable\ic_launcher.png
+C:\Users\Maddin\Source\Repos\SMK\SMK\SMK.Droid\obj\Debug\res\drawable\splash.png
+C:\Users\Maddin\Source\Repos\SMK\SMK\SMK.Droid\obj\Debug\res\values\styles.xml
 C:\Users\sebas\Source\Repos\SMK\SMK\SMK.Droid\bin\Debug\SMK.Droid.dll
 C:\Users\sebas\Source\Repos\SMK\SMK\SMK.Droid\bin\Debug\SMK.Droid.pdb
 C:\Users\sebas\Source\Repos\SMK\SMK\SMK.Droid\bin\Debug\SMK.Droid.apk
@@ -37,14 +40,11 @@ C:\Users\sebas\Source\Repos\SMK\SMK\SMK.Droid\obj\Debug\SMK.Droid.csprojResolveA
 C:\Users\sebas\Source\Repos\SMK\SMK\SMK.Droid\obj\Debug\SMK.Droid.dll
 C:\Users\sebas\Source\Repos\SMK\SMK\SMK.Droid\obj\Debug\SMK.Droid.pdb
 C:\Users\sebas\Source\Repos\SMK\SMK\SMK.Droid\obj\Debug\android\bin\SMK.Droid.apk
+C:\Users\sebas\Source\Repos\SMK\SMK\SMK.Droid\obj\Debug\res\drawable\ic_launcher.png
+C:\Users\sebas\Source\Repos\SMK\SMK\SMK.Droid\obj\Debug\res\drawable\splash.png
 C:\Users\sebas\Source\Repos\SMK\SMK\SMK.Droid\obj\Debug\res\drawable-hdpi\icon.png
 C:\Users\sebas\Source\Repos\SMK\SMK\SMK.Droid\obj\Debug\res\drawable-xhdpi\icon.png
 C:\Users\sebas\Source\Repos\SMK\SMK\SMK.Droid\obj\Debug\res\drawable-xxhdpi\icon.png
+C:\Users\sebas\Source\Repos\SMK\SMK\SMK.Droid\obj\Debug\res\values\styles.xml
 C:\Users\sebas\Source\Repos\SMK\SMK\SMK.Droid\obj\Debug\R.cs.flag
 C:\Users\sebas\Source\Repos\SMK\SMK\SMK.Droid\obj\Debug\uploadflags.txt
-C:\Users\sebas\Source\Repos\SMK\SMK\SMK.Droid\obj\Debug\res\drawable\ic_launcher.png
-C:\Users\sebas\Source\Repos\SMK\SMK\SMK.Droid\obj\Debug\res\drawable\splash.png
-C:\Users\sebas\Source\Repos\SMK\SMK\SMK.Droid\obj\Debug\res\values\styles.xml
-C:\Users\Maddin\Source\Repos\SMK\SMK\SMK.Droid\obj\Debug\res\drawable\ic_launcher.png
-C:\Users\Maddin\Source\Repos\SMK\SMK\SMK.Droid\obj\Debug\res\drawable\splash.png
-C:\Users\Maddin\Source\Repos\SMK\SMK\SMK.Droid\obj\Debug\res\values\styles.xml

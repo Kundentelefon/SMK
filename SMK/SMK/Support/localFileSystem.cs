@@ -47,6 +47,7 @@ namespace SMK.Support
                                                             };
             return (returnList);
         }
+
         /// <summary>
         /// Übergebe ein Product und bekomme eine Liste mit Allen Content für dieses Produkt
         /// Content kann Null sein falls User Product nicht besitzt
@@ -57,12 +58,13 @@ namespace SMK.Support
         {
             List<PContent> completeList = loadContentList();
             List<PContent> returnList = new List<PContent>();
-            foreach (int item in product.product_PContents)
+            foreach (var item in product.product_PContents)
             {
                 returnList.Add(completeList[item]);
             }
             return returnList;
         }
+
         /// <summary>
         /// falls Content nicht null gibt true zurück
         /// </summary>

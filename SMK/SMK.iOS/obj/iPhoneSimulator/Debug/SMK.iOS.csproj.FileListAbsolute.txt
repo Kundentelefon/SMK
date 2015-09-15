@@ -7,6 +7,9 @@ C:\Users\sebas\Source\Repos\SMK\SMK\SMK.iOS\bin\iPhoneSimulator\Debug\Xamarin.Fo
 C:\Users\sebas\Source\Repos\SMK\SMK\SMK.iOS\bin\iPhoneSimulator\Debug\SMK.pdb
 C:\Users\sebas\Source\Repos\SMK\SMK\SMK.iOS\bin\iPhoneSimulator\Debug\Xamarin.Forms.Core.xml
 C:\Users\sebas\Source\Repos\SMK\SMK\SMK.iOS\bin\iPhoneSimulator\Debug\Xamarin.Forms.Xaml.xml
+C:\Users\sebas\Source\Repos\SMK\SMK\SMK.iOS\obj\iPhoneSimulator\Debug\ibtool\LaunchScreen.storyboardc\Info.plist
+C:\Users\sebas\Source\Repos\SMK\SMK\SMK.iOS\obj\iPhoneSimulator\Debug\ibtool\LaunchScreen.storyboardc\UIViewController-X5k-f2-b5h.nib
+C:\Users\sebas\Source\Repos\SMK\SMK\SMK.iOS\obj\iPhoneSimulator\Debug\ibtool\LaunchScreen.storyboardc\X5k-f2-b5h-view-yd7-JS-zBw.nib
 C:\Users\sebas\Source\Repos\SMK\SMK\SMK.iOS\obj\iPhoneSimulator\Debug\Default@2x.png
 C:\Users\sebas\Source\Repos\SMK\SMK\SMK.iOS\obj\iPhoneSimulator\Debug\Default-568h@2x.png
 C:\Users\sebas\Source\Repos\SMK\SMK\SMK.iOS\obj\iPhoneSimulator\Debug\Default-Portrait@2x.png
@@ -33,6 +36,3 @@ C:\Users\sebas\Source\Repos\SMK\SMK\SMK.iOS\obj\iPhoneSimulator\Debug\Default-La
 C:\Users\sebas\Source\Repos\SMK\SMK\SMK.iOS\obj\iPhoneSimulator\Debug\SMK.iOS.csprojResolveAssemblyReference.cache
 C:\Users\sebas\Source\Repos\SMK\SMK\SMK.iOS\obj\iPhoneSimulator\Debug\SMKiOS.exe
 C:\Users\sebas\Source\Repos\SMK\SMK\SMK.iOS\obj\iPhoneSimulator\Debug\SMKiOS.pdb
-C:\Users\sebas\Source\Repos\SMK\SMK\SMK.iOS\obj\iPhoneSimulator\Debug\ibtool\LaunchScreen.storyboardc\Info.plist
-C:\Users\sebas\Source\Repos\SMK\SMK\SMK.iOS\obj\iPhoneSimulator\Debug\ibtool\LaunchScreen.storyboardc\UIViewController-X5k-f2-b5h.nib
-C:\Users\sebas\Source\Repos\SMK\SMK\SMK.iOS\obj\iPhoneSimulator\Debug\ibtool\LaunchScreen.storyboardc\X5k-f2-b5h-view-yd7-JS-zBw.nib

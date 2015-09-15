@@ -20,7 +20,6 @@ C:\Users\sebas\Source\Repos\SMK\SMK\SMK\bin\Debug\Xamarin.Forms.Core.dll
 C:\Users\sebas\Source\Repos\SMK\SMK\SMK\bin\Debug\Xamarin.Forms.Xaml.dll
 C:\Users\sebas\Source\Repos\SMK\SMK\SMK\bin\Debug\Xamarin.Forms.Core.xml
 C:\Users\sebas\Source\Repos\SMK\SMK\SMK\bin\Debug\Xamarin.Forms.Xaml.xml
-C:\Users\sebas\Source\Repos\SMK\SMK\SMK\obj\Debug\SMK.csprojResolveAssemblyReference.cache
 C:\Users\sebas\Source\Repos\SMK\SMK\SMK\obj\Debug\MainPage_Xaml.xaml.g.cs
 C:\Users\sebas\Source\Repos\SMK\SMK\SMK\obj\Debug\LoginPage_Xaml.xaml.g.cs
 C:\Users\sebas\Source\Repos\SMK\SMK\SMK\obj\Debug\SMK.dll
