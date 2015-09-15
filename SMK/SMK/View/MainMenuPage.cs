@@ -68,12 +68,6 @@ namespace SMK.View
                                 HorizontalOptions = LayoutOptions.Center
                             },
 
-                            //new StackLayout
-                            //{
-                            //    VerticalOptions = LayoutOptions.Center,
-                            //    HorizontalOptions = LayoutOptions.Center,
-                            //    Children =
-                            //    {
                                     new Label
                                     {
                                         //Text = product.product_Name,
@@ -84,15 +78,7 @@ namespace SMK.View
                                         HorizontalOptions = LayoutOptions.Center
                                     },
 
-                                //    new Label
-                                //    {
-                                //        Text = product.product_Text,
-                                //        //VerticalOptions = LayoutOptions.Center,
-                                //        //HorizontalOptions = LayoutOptions.End
-                                //    }
-                                //}
                             }//ende stacklayout (innen)
-                       // }
                     }//ende stacklayout
                 };//frame ende
 
