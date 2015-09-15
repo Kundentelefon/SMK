@@ -46,6 +46,7 @@
     </Compile>
     <Compile Include="Model\PContent.cs" />
     <Compile Include="Model\Product.cs" />
+    <Compile Include="Model\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Support\IHash.cs" />
     <Compile Include="Support\localFileSystem.cs" />

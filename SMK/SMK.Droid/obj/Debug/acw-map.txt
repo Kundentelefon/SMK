@@ -1,3 +1,7 @@
+ImageGallary.Droid.SplashActivity, SMK.Droid;md510c405c2e50c58125f14e3eeae4b4412.SplashActivity
+ImageGallary.Droid.SplashActivity, SMK.Droid, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;md510c405c2e50c58125f14e3eeae4b4412.SplashActivity
+ImageGallary.Droid.SplashActivity;md510c405c2e50c58125f14e3eeae4b4412.SplashActivity
+imagegallary.droid.SplashActivity;md510c405c2e50c58125f14e3eeae4b4412.SplashActivity
 SMK.Droid.MainActivity, SMK.Droid;md53e64151e5298801bb81bae0b5023a6b2.MainActivity
 SMK.Droid.MainActivity, SMK.Droid, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;md53e64151e5298801bb81bae0b5023a6b2.MainActivity
 SMK.Droid.MainActivity;md53e64151e5298801bb81bae0b5023a6b2.MainActivity

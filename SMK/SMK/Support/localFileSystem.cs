@@ -78,5 +78,40 @@ namespace SMK.Support
 
             return (returnSuccess);
         }
+        /// <summary>
+        /// checks if user exists
+        /// </summary>
+        /// <returns></returns>
+        private Boolean userExist()
+        {
+            return (false);
+        }
+        /// <summary>
+        /// returns the User
+        /// </summary>
+        /// <returns></returns>
+         public User getUser()
+        {
+            User returnUser;
+            if (userExist())
+            {
+                returnUser = new User("","");
+            }
+            else
+            {
+                returnUser = null;
+            }
+            return (returnUser);
+        }
+
+        /// <summary>
+        /// saves the User to a local xml file and returns true or false
+        /// </summary>
+        /// <param name="inputUser"></param>
+        /// <returns></returns>
+        public Boolean saveUser(User inputUser)
+        {
+            return (true);
+        }
     }
 }
