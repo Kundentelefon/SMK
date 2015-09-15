@@ -1,8 +1,11 @@
-﻿using System;
+﻿using SMK.iOS.Support;
+using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
+using Xamarin.Forms;
 
+[assembly: Dependency(typeof(Hash))]
 namespace SMK.iOS.Support
 {
     class Hash : SMK.Support.IHash

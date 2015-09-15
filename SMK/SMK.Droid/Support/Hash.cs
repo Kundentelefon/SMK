@@ -10,7 +10,10 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using System.Security.Cryptography;
+using Xamarin.Forms;
+using SMK.Droid.Support;
 
+[assembly: Dependency(typeof(Hash))]
 namespace SMK.Droid.Support
 {
     class Hash : SMK.Support.IHash
