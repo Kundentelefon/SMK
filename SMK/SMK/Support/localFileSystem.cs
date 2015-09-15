@@ -43,15 +43,19 @@ namespace SMK.Support
                                                             };
             return (returnList);
         }
-
+        /// <summary>
+        /// Übergebe ein Product und bekomme eine Liste mit Allen Content für dieses Produkt
+        /// Content kann Null sein falls User Product nicht besitzt
+        /// </summary>
+        /// <param name="product"></param>
+        /// <returns></returns>
         public List<PContent> loadContentList(Product product)
         {
             List<PContent> completeList = loadContentList();
             List<PContent> returnList = new List<PContent>();
-            foreach(PContent content in completeList)
+            foreach (int item in product.product_PContents)
             {
-                if (product.product_ID == content.content_ID)
-                    returnList.Add(content);
+                returnList.Add(completeList[item]);
             }
             return returnList;
         }
