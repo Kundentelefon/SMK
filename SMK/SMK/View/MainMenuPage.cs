@@ -44,6 +44,7 @@ namespace SMK.View
 
                 Frame frame = new Frame
                 {
+                    
                     VerticalOptions = LayoutOptions.FillAndExpand,
                     HorizontalOptions = LayoutOptions.FillAndExpand,       
                     OutlineColor = Color.Accent,

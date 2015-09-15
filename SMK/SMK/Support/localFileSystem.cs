@@ -35,13 +35,25 @@ namespace SMK.Support
         }
         public List<PContent> loadContentList() { 
 
-            List<PContent> returnList = new List<PContent> {new PContent(0,0,"BilderGalarie", new List<String>(new String[] {"da.png","haha.png","devil.png"})),//"Resources/FischerTechnik/PContent/0_Icon.png"
+            List<PContent> returnList = new List<PContent> {new PContent(0,0,"BilderGalarie", new List<String>(new String[] {"SMK.FischerTechnik.0.da.jpg","haha.png","devil.png"})),//"Resources/FischerTechnik/PContent/0_Icon.png"
                                                            new PContent(1,0,"BilderGalarie",new List<String>(new String[]{"da.png","haha.png","devil.png"})),
                                                            new PContent(2,2,"WebView",new List<String>(new String[]{})),
                                                            new PContent(5,0,"BilderGalarie",new List<String>(new String[]{"da.png","haha.png","devil.png"})),//für diese Fehlt noch der Content da dieser Noch nicht "gedownloaded" wurde
                                                            new PContent(6,0,"BilderGalarie",new List<String>(new String[]{"da.png","haha.png","devil.png"}))//für diese Fehlt noch der Content da dieser Noch nicht "gedownloaded" wurde
                                                             };
             return (returnList);
+        }
+
+        public List<PContent> loadContentList(Product product)
+        {
+            List<PContent> completeList = loadContentList();
+            List<PContent> returnList = new List<PContent>();
+            foreach(PContent content in completeList)
+            {
+                if (product.product_ID == content.content_ID)
+                    returnList.Add(content);
+            }
+            return returnList;
         }
         public Boolean saveModelsLocal(List<Product> inputProducts, List<PContent> inputContents)
         {
