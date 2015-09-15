@@ -16,7 +16,6 @@ C:\Users\sebas\Source\Repos\SMK\SMK\SMK.Droid\obj\Debug\assemblies\System.Resour
 C:\Users\sebas\Source\Repos\SMK\SMK\SMK.Droid\obj\Debug\assemblies\System.Collections.dll
 C:\Users\sebas\Source\Repos\SMK\SMK\SMK.Droid\obj\Debug\assemblies\System.Diagnostics.Debug.dll
 C:\Users\sebas\Source\Repos\SMK\SMK\SMK.Droid\obj\Debug\assemblies\System.Threading.Tasks.dll
-C:\Users\sebas\Source\Repos\SMK\SMK\SMK.Droid\obj\Debug\assemblies\System.Linq.dll
 C:\Users\sebas\Source\Repos\SMK\SMK\SMK.Droid\obj\Debug\assemblies\System.ObjectModel.dll
 C:\Users\sebas\Source\Repos\SMK\SMK\SMK.Droid\obj\Debug\assemblies\System.ComponentModel.Composition.dll
 C:\Users\sebas\Source\Repos\SMK\SMK\SMK.Droid\obj\Debug\assemblies\System.IO.dll
@@ -28,6 +27,7 @@ C:\Users\sebas\Source\Repos\SMK\SMK\SMK.Droid\obj\Debug\assemblies\System.Reflec
 C:\Users\sebas\Source\Repos\SMK\SMK\SMK.Droid\obj\Debug\assemblies\System.Dynamic.Runtime.dll
 C:\Users\sebas\Source\Repos\SMK\SMK\SMK.Droid\obj\Debug\assemblies\System.Threading.dll
 C:\Users\sebas\Source\Repos\SMK\SMK\SMK.Droid\obj\Debug\assemblies\System.Runtime.Extensions.dll
+C:\Users\sebas\Source\Repos\SMK\SMK\SMK.Droid\obj\Debug\assemblies\System.Linq.dll
 C:\Users\sebas\Source\Repos\SMK\SMK\SMK.Droid\obj\Debug\assemblies\System.Reflection.Extensions.dll
 C:\Users\sebas\Source\Repos\SMK\SMK\SMK.Droid\obj\Debug\assemblies\System.Runtime.Serialization.dll
 C:\Users\sebas\Source\Repos\SMK\SMK\SMK.Droid\obj\Debug\assemblies\System.Net.Http.dll

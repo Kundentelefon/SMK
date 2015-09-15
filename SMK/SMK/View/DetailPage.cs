@@ -12,6 +12,8 @@ namespace SMK.View
 {
     public class DetailPage : ContentPage
     {
+        String imagePfadContent = "SMK.FischerTechnik.PContent.";
+        String imagePfadProduct = "SMK.FischerTechnik.Files.";
         Product product;
         localFileSystem files;
         List<PContent> pContent;
@@ -22,7 +24,7 @@ namespace SMK.View
             pContent = files.loadContentList(product);
             StackLayout stackLayout = new StackLayout();
             TapGestureRecognizer gesture = new TapGestureRecognizer();
-            string source = null;
+            List<string> source= new List<string>() ;
 
             if (pContent[0] != null)
             {
@@ -30,24 +32,33 @@ namespace SMK.View
                 {
                     if (content.content_Kind == 0)
                     {
-                        source = content.content_FileNames[0];
+                        //SMK.FischerTechnik.Files.1.png
+                        source.Add(imagePfadContent+content.content_ID.ToString()+".png");
                         break;
                     }
 
                 }
             }
-
-            if (source != null)
+            String test = imagePfadProduct + product.product_ID.ToString() + ".png";
+            stackLayout.Children.Add(
+            new Image
             {
-
-                stackLayout.Children.Add(
-                    new Image
-                    {
-                        Source = source
-                    }
-                    );
-
+                Source = imagePfadProduct + product.product_ID.ToString() + ".png"
             }
+            );
+            //if (source.Count() >= 0)
+            //{
+            //    foreach (var item in source)
+            //    {
+            //        stackLayout.Children.Add(
+            //        new Image
+            //        {
+            //            Source = item
+            //        }
+            //        );
+            //    }
+
+            //}
             Content = stackLayout;
         }//ende Construktor
     }

@@ -91,7 +91,6 @@ class MonoPackageManager_Resources {
 		"System.Collections.dll",
 		"System.Diagnostics.Debug.dll",
 		"System.Threading.Tasks.dll",
-		"System.Linq.dll",
 		"System.ObjectModel.dll",
 		"System.IO.dll",
 		"System.Globalization.dll",
@@ -102,6 +101,7 @@ class MonoPackageManager_Resources {
 		"System.Dynamic.Runtime.dll",
 		"System.Threading.dll",
 		"System.Runtime.Extensions.dll",
+		"System.Linq.dll",
 		"System.Reflection.Extensions.dll",
 		"System.Text.RegularExpressions.dll",
 	};
