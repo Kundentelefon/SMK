@@ -43,7 +43,7 @@ namespace SMK.View
                 stackLayout.Children.Add(
                     new Image
                     {
-                        Source = ImageSource.FromResource(source)
+                        Source = source
                     }
                     );
 

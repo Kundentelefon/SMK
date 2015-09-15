@@ -9,12 +9,11 @@ namespace SMK.Support
 {
     class localFileSystem
     {
-        List<Product> ProductList;
-        List<PContent> ContentList;
+         List<Product> ProductList;
+         List<PContent> ContentList;
         public localFileSystem()
         {
-            ProductList = loadProductList();
-            ContentList = loadContentList();
+         
         }
         public List<Product> loadProductList()
         {
@@ -64,7 +63,7 @@ namespace SMK.Support
         {
             List<PContent> content = null;
             content = loadContentList(product);
-            if (content == null)
+            if (content != null)
                 return true;
 
             return false;

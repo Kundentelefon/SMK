@@ -38,15 +38,15 @@ namespace SMK.View
 
             ScrollView scrollView = new ScrollView();
             StackLayout stackLayout = new StackLayout();
+            
 
             foreach (Product product in ProductCollection)
             {
                 TapGestureRecognizer gesture = new TapGestureRecognizer();
-                localFileSystem files = new localFileSystem();
-                //bool owned = files.hasContent(product);
+                bool owned = files.hasContent(product);
                 Color color = Color.Red;
-                //if (owned == true)
-                //    color = Color.Blue;
+                if (owned == true)
+                   color = Color.Blue;
 
                 Frame frame = new Frame
                 {
