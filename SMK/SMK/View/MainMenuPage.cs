@@ -6,6 +6,7 @@ using System.Text;
 using SMK.Model;
 using SMK.Support;
 
+
 using Xamarin.Forms;
 using System.Collections.ObjectModel;
 
@@ -39,6 +40,7 @@ namespace SMK.View
             ScrollView scrollView = new ScrollView();
             StackLayout stackLayout = new StackLayout();
             
+
 
             foreach (Product product in ProductCollection)
             {
