@@ -9,12 +9,12 @@ namespace SMK.Support
 {
     class localFileSystem
     {
-        List<Product> ProductList;
-        List<PContent> ContentList;
+        //List<Product> ProductList;
+        //List<PContent> ContentList;
         public localFileSystem()
         {
-            ProductList = loadProductList();
-            ContentList = loadContentList();
+            //ProductList = loadProductList();
+            //ContentList = loadContentList();
         }
         public List<Product> loadProductList()
         {
@@ -38,8 +38,12 @@ namespace SMK.Support
             List<PContent> returnList = new List<PContent> {new PContent(0,0,"BilderGalarie", new List<String>(new String[] {"SMK.FischerTechnik.0.da.jpg","haha.png","devil.png"})),//"Resources/FischerTechnik/PContent/0_Icon.png"
                                                            new PContent(1,0,"BilderGalarie",new List<String>(new String[]{"da.png","haha.png","devil.png"})),
                                                            new PContent(2,2,"WebView",new List<String>(new String[]{})),
+                                                           null,
+                                                           null,
                                                            new PContent(5,0,"BilderGalarie",new List<String>(new String[]{"da.png","haha.png","devil.png"})),//für diese Fehlt noch der Content da dieser Noch nicht "gedownloaded" wurde
-                                                           new PContent(6,0,"BilderGalarie",new List<String>(new String[]{"da.png","haha.png","devil.png"}))//für diese Fehlt noch der Content da dieser Noch nicht "gedownloaded" wurde
+                                                           new PContent(6,0,"BilderGalarie",new List<String>(new String[]{"da.png","haha.png","devil.png"})),//für diese Fehlt noch der Content da dieser Noch nicht "gedownloaded" wurde
+                                                           null,
+                                                           null
                                                             };
             return (returnList);
         }
@@ -59,12 +63,15 @@ namespace SMK.Support
             }
             return returnList;
         }
-
+        /// <summary>
+        /// falls Content nicht null gibt true zurück
+        /// </summary>
+        /// <param name="product"></param>
+        /// <returns></returns>
         public Boolean hasContent(Product product)
         {
-            List<PContent> content = null;
-            content = loadContentList(product);
-            if (content == null)
+            List<PContent> content = loadContentList(product);
+            if (content[0] != null)
                 return true;
 
             return false;
