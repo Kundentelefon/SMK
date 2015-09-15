@@ -9,8 +9,8 @@ namespace SMK.Support
 {
     class localFileSystem
     {
-        //List<Product> ProductList;
-        //List<PContent> ContentList;
+        List<Product> ProductList;
+        List<PContent> ContentList;
         public localFileSystem()
         {
             //ProductList = loadProductList();
