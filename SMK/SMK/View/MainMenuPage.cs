@@ -52,14 +52,14 @@ namespace SMK.View
                     {
                         Orientation = StackOrientation.Horizontal,
                         VerticalOptions = LayoutOptions.Center,
-                        HorizontalOptions = LayoutOptions.Center,
+                        HorizontalOptions = LayoutOptions.StartAndExpand,
                         Children =
                         {
                             new Image
                             {
                                 Source = ImageSource.FromResource(product.product_Thumbnail),
-                                VerticalOptions = LayoutOptions.CenterAndExpand,
-                                HorizontalOptions = LayoutOptions.CenterAndExpand
+                                VerticalOptions = LayoutOptions.Center,
+                                HorizontalOptions = LayoutOptions.Center
                             },
 
                             //new StackLayout
