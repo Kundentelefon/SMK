@@ -9,11 +9,19 @@ namespace SMK.Support
 {
     class localFileSystem
     {
+        List<Product> ProductList;
+        List<PContent> ContentList;
+        public localFileSystem()
+        {
+            ProductList = loadProductList();
+            ContentList = loadContentList();
+        }
         public List<Product> loadProductList()
         {
-            List<Product> returnList = new List<Product> { new Product(0, "Test","Resources/FischerTechnik/Files/0.png", "havesomeTextShit i hope you like it", new List<int>(new int[] { 0, 1, 2 })) ,
-                                                           new Product(1, "TestProductNotOwned",  "Resources/FischerTechnik/Files/1.png", "havesomeTextShit i hope you like it", new List<int>(new int[] { 3, 4})),
-                                                           new Product(2, "TestProductNotDownloaded",  "Resources/FischerTechnik/Files/2.png", "havesomeTextShit i hope you like it", new List<int>(new int[] { 5, 6 }))
+            List<Product> returnList = new List<Product> { new Product(0, "Test","SMK.FischerTechnik.Files.0.png", "have some Text i hope you like it fighting and burning from turning from who we really are, flying to close to the sun as we were invincible, around the world we grow weaker as we exterminate, we are the children of the sun", new List<int>(new int[] { 0, 1, 2 })) ,
+                                                           new Product(1, "Test ProductNotOwned",  "SMK.FischerTechnik.Files.1.png", "havesomeTextShit i hope you like it", new List<int>(new int[] { 3, 4})),
+                                                           new Product(2, "Test ProductNotOwned",  "SMK.FischerTechnik.Files.1.png", "havesomeTextShit i hope you like it", new List<int>(new int[] { 5, 6})),
+                                                           new Product(3, "Test ProductNotDownloaded",  "SMK.FischerTechnik.Files.2.png", "havesomeTextShit i hope you like it", new List<int>(new int[] { 7, 8 }))
                                                             };
 
             //dummies
@@ -27,13 +35,25 @@ namespace SMK.Support
         }
         public List<PContent> loadContentList() { 
 
-            List<PContent> returnList = new List<PContent> {new PContent(0,0,"BilderGalarie", new List<String>(new String[] {"da.png","haha.png","devil.png"})),//"Resources/FischerTechnik/PContent/0_Icon.png"
+            List<PContent> returnList = new List<PContent> {new PContent(0,0,"BilderGalarie", new List<String>(new String[] {"SMK.FischerTechnik.0.da.jpg","haha.png","devil.png"})),//"Resources/FischerTechnik/PContent/0_Icon.png"
                                                            new PContent(1,0,"BilderGalarie",new List<String>(new String[]{"da.png","haha.png","devil.png"})),
                                                            new PContent(2,2,"WebView",new List<String>(new String[]{})),
                                                            new PContent(5,0,"BilderGalarie",new List<String>(new String[]{"da.png","haha.png","devil.png"})),//für diese Fehlt noch der Content da dieser Noch nicht "gedownloaded" wurde
                                                            new PContent(6,0,"BilderGalarie",new List<String>(new String[]{"da.png","haha.png","devil.png"}))//für diese Fehlt noch der Content da dieser Noch nicht "gedownloaded" wurde
                                                             };
             return (returnList);
+        }
+
+        public List<PContent> loadContentList(Product product)
+        {
+            List<PContent> completeList = loadContentList();
+            List<PContent> returnList = new List<PContent>();
+            foreach(PContent content in completeList)
+            {
+                if (product.product_ID == content.content_ID)
+                    returnList.Add(content);
+            }
+            return returnList;
         }
         public Boolean saveModelsLocal(List<Product> inputProducts, List<PContent> inputContents)
         {

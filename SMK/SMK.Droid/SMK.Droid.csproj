@@ -93,21 +93,21 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Properties\AndroidManifest.xml" />
-    <BundleResource Include="Resources\FischerTechnik\Files\0.png" />
-    <BundleResource Include="Resources\FischerTechnik\Files\1.png" />
-    <BundleResource Include="Resources\FischerTechnik\Files\2.png" />
-    <BundleResource Include="Resources\FischerTechnik\PContent\0\da.jpg" />
-    <BundleResource Include="Resources\FischerTechnik\PContent\0\devil.png" />
-    <BundleResource Include="Resources\FischerTechnik\PContent\0\haha.png" />
-    <BundleResource Include="Resources\FischerTechnik\PContent\0.png" />
-    <BundleResource Include="Resources\FischerTechnik\PContent\1\da.jpg" />
-    <BundleResource Include="Resources\FischerTechnik\PContent\1\devil.png" />
-    <BundleResource Include="Resources\FischerTechnik\PContent\1\haha.png" />
-    <BundleResource Include="Resources\FischerTechnik\PContent\1.png" />
-    <BundleResource Include="Resources\FischerTechnik\PContent\2\test.html" />
-    <BundleResource Include="Resources\FischerTechnik\PContent\2.png" />
-    <BundleResource Include="Resources\FischerTechnik\PContent\5.png" />
-    <BundleResource Include="Resources\FischerTechnik\PContent\6.png" />
+    <EmbeddedResource Include="Resources\drawable\FischerTechnik\Files\0.png" />
+    <EmbeddedResource Include="Resources\drawable\FischerTechnik\Files\1.png" />
+    <EmbeddedResource Include="Resources\drawable\FischerTechnik\Files\2.png" />
+    <BundleResource Include="Resources\drawable\FischerTechnik\PContent\0\da.jpg" />
+    <BundleResource Include="Resources\drawable\FischerTechnik\PContent\0\devil.png" />
+    <BundleResource Include="Resources\drawable\FischerTechnik\PContent\0\haha.png" />
+    <BundleResource Include="Resources\drawable\FischerTechnik\PContent\0.png" />
+    <BundleResource Include="Resources\drawable\FischerTechnik\PContent\1\da.jpg" />
+    <BundleResource Include="Resources\drawable\FischerTechnik\PContent\1\devil.png" />
+    <BundleResource Include="Resources\drawable\FischerTechnik\PContent\1\haha.png" />
+    <BundleResource Include="Resources\drawable\FischerTechnik\PContent\1.png" />
+    <BundleResource Include="Resources\drawable\FischerTechnik\PContent\2\test.html" />
+    <BundleResource Include="Resources\drawable\FischerTechnik\PContent\2.png" />
+    <BundleResource Include="Resources\drawable\FischerTechnik\PContent\5.png" />
+    <BundleResource Include="Resources\drawable\FischerTechnik\PContent\6.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SMK\SMK.csproj">
