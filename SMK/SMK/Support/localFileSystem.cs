@@ -59,6 +59,18 @@ namespace SMK.Support
             }
             return returnList;
         }
+
+        public Boolean hasContent(Product product)
+        {
+            List<PContent> content = null;
+            content = loadContentList(product);
+            if (content == null)
+                return true;
+
+            return false;
+        }
+
+        
         public Boolean saveModelsLocal(List<Product> inputProducts, List<PContent> inputContents)
         {
             Boolean returnSuccess = false;

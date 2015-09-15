@@ -18,6 +18,7 @@ namespace SMK.View
         
         public MainMenuPage()
         {
+            
             files = new localFileSystem();
             //Toolbar
             ToolbarItem toolButton = new ToolbarItem
@@ -41,13 +42,18 @@ namespace SMK.View
             foreach (Product product in ProductCollection)
             {
                 TapGestureRecognizer gesture = new TapGestureRecognizer();
+                localFileSystem files = new localFileSystem();
+                //bool owned = files.hasContent(product);
+                Color color = Color.Red;
+                //if (owned == true)
+                //    color = Color.Blue;
 
                 Frame frame = new Frame
                 {
                     
+                    BackgroundColor = color,
                     VerticalOptions = LayoutOptions.FillAndExpand,
                     HorizontalOptions = LayoutOptions.FillAndExpand,       
-                    BackgroundColor = Color.Red,
                     Content = new StackLayout
                     {
                         Orientation = StackOrientation.Horizontal,
