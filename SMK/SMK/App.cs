@@ -24,14 +24,14 @@ namespace SMK
             // after login the next site to go
             if (isLoggedIn)
                 //  MainPage = Navigation_Page;
-                MainPage = new LoginPattern.Navigation_Page();
+                MainPage = Navigation_Page;
             else
                 MainPage = new LoginModalPage(this);
         }
 
         public void ShowMainPage()
         {
-            MainPage = new Navigation_Page();
+            MainPage = new NavigationPage(new MainMenuPage());
         }
 
         public void Logout()

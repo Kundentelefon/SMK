@@ -1,4 +1,3 @@
-C:\Users\Maddin\Source\Repos\SMK\SMK\SMK\obj\Debug\SMK.csprojResolveAssemblyReference.cache
 C:\Users\Maddin\Source\Repos\SMK\SMK\SMK\obj\Debug\MainPage_Xaml.xaml.g.cs
 C:\Users\Maddin\Source\Repos\SMK\SMK\SMK\obj\Debug\LoginPage_Xaml.xaml.g.cs
 C:\Users\Maddin\Source\Repos\SMK\SMK\SMK\bin\Debug\SMK.dll
