@@ -47,7 +47,7 @@ namespace SMK.View
                     
                     VerticalOptions = LayoutOptions.FillAndExpand,
                     HorizontalOptions = LayoutOptions.FillAndExpand,       
-                    OutlineColor = Color.Accent,
+                    BackgroundColor = Color.Red,
                     Content = new StackLayout
                     {
                         Orientation = StackOrientation.Horizontal,
@@ -62,30 +62,31 @@ namespace SMK.View
                                 HorizontalOptions = LayoutOptions.CenterAndExpand
                             },
 
-                            new StackLayout
-                            {
-                                VerticalOptions = LayoutOptions.CenterAndExpand,
-                                HorizontalOptions = LayoutOptions.CenterAndExpand,
-                                Children =
-                                {
+                            //new StackLayout
+                            //{
+                            //    VerticalOptions = LayoutOptions.Center,
+                            //    HorizontalOptions = LayoutOptions.Center,
+                            //    Children =
+                            //    {
                                     new Label
                                     {
                                         //Text = product.product_Name,
                                         FormattedText = product.product_Name,
-                                       // VerticalOptions = LayoutOptions.Center,
+                                        TextColor = Color.Black,
+                                        VerticalOptions = LayoutOptions.Center,
                                         FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
                                         HorizontalOptions = LayoutOptions.Center
                                     },
 
-                                    new Label
-                                    {
-                                        Text = product.product_Text,
-                                        //VerticalOptions = LayoutOptions.Center,
-                                        //HorizontalOptions = LayoutOptions.End
-                                    }
-                                }
+                                //    new Label
+                                //    {
+                                //        Text = product.product_Text,
+                                //        //VerticalOptions = LayoutOptions.Center,
+                                //        //HorizontalOptions = LayoutOptions.End
+                                //    }
+                                //}
                             }//ende stacklayout (innen)
-                        }
+                       // }
                     }//ende stacklayout
                 };//frame ende
 
@@ -100,6 +101,7 @@ namespace SMK.View
             
             scrollView.Content = stackLayout;
             Content = scrollView;
+            BackgroundColor = Color.White;
             //View Ende
 
         }
