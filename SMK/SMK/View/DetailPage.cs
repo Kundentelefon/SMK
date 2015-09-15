@@ -11,9 +11,10 @@ namespace SMK.View
 {
     public class DetailPage : ContentPage
     {
-        public DetailPage(Product product)
+        Product product;
+        public DetailPage(Product ResourceProduct)
         {
-
+            product = ResourceProduct;
         }
     }
 }

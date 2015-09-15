@@ -12,7 +12,7 @@ namespace SMK
     {
         public App()
         {
-            NavigationPage Navigation_Page = new NavigationPage(new LoginPage_Xaml());
+            NavigationPage Navigation_Page = new NavigationPage(new MainMenuPage());
             MainPage = Navigation_Page;
             
         }

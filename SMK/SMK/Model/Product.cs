@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SMK.Model
 {
-    class Product
+    public class Product
     {
 
         public int product_ID { get; set; }
