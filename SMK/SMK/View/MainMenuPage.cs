@@ -44,9 +44,10 @@ namespace SMK.View
             {
                 TapGestureRecognizer gesture = new TapGestureRecognizer();
                 bool owned = files.hasContent(product);
-                Color color = Color.Red;
+                Color color = Color.FromHex("E2001A");
+                    
                 if (owned == true)
-                   color = Color.Blue;
+                   color = Color.FromHex("006AB3"); 
 
                 Frame frame = new Frame
                 {
