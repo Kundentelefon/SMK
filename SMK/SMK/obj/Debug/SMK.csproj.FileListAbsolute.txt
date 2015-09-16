@@ -24,3 +24,14 @@ C:\Users\Maddin\Source\Repos\SMK\SMK\SMK\obj\Debug\MainPage_Xaml.xaml.g.cs
 C:\Users\Maddin\Source\Repos\SMK\SMK\SMK\obj\Debug\LoginPage_Xaml.xaml.g.cs
 C:\Users\Maddin\Source\Repos\SMK\SMK\SMK\obj\Debug\SMK.dll
 C:\Users\Maddin\Source\Repos\SMK\SMK\SMK\obj\Debug\SMK.pdb
+C:\Users\Maxwell\Source\Repos\SMK3\SMK\SMK\bin\Debug\SMK.dll
+C:\Users\Maxwell\Source\Repos\SMK3\SMK\SMK\bin\Debug\SMK.pdb
+C:\Users\Maxwell\Source\Repos\SMK3\SMK\SMK\bin\Debug\Xamarin.Forms.Core.dll
+C:\Users\Maxwell\Source\Repos\SMK3\SMK\SMK\bin\Debug\Xamarin.Forms.Xaml.dll
+C:\Users\Maxwell\Source\Repos\SMK3\SMK\SMK\bin\Debug\Xamarin.Forms.Core.xml
+C:\Users\Maxwell\Source\Repos\SMK3\SMK\SMK\bin\Debug\Xamarin.Forms.Xaml.xml
+C:\Users\Maxwell\Source\Repos\SMK3\SMK\SMK\obj\Debug\SMK.csprojResolveAssemblyReference.cache
+C:\Users\Maxwell\Source\Repos\SMK3\SMK\SMK\obj\Debug\MainPage_Xaml.xaml.g.cs
+C:\Users\Maxwell\Source\Repos\SMK3\SMK\SMK\obj\Debug\LoginPage_Xaml.xaml.g.cs
+C:\Users\Maxwell\Source\Repos\SMK3\SMK\SMK\obj\Debug\SMK.dll
+C:\Users\Maxwell\Source\Repos\SMK3\SMK\SMK\obj\Debug\SMK.pdb

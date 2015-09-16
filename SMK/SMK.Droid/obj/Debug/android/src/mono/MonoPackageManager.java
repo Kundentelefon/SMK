@@ -81,6 +81,7 @@ class MonoPackageManager_Resources {
 	public static final String[] Assemblies = new String[]{
 		"SMK.Droid.dll",
 		"FormsViewGroup.dll",
+		"Newtonsoft.Json.dll",
 		"SMK.dll",
 		"System.Runtime.dll",
 		"Xamarin.Android.Support.v4.dll",
@@ -91,6 +92,7 @@ class MonoPackageManager_Resources {
 		"System.Collections.dll",
 		"System.Diagnostics.Debug.dll",
 		"System.Threading.Tasks.dll",
+		"System.Text.RegularExpressions.dll",
 		"System.ObjectModel.dll",
 		"System.IO.dll",
 		"System.Globalization.dll",
@@ -103,9 +105,8 @@ class MonoPackageManager_Resources {
 		"System.Runtime.Extensions.dll",
 		"System.Linq.dll",
 		"System.Reflection.Extensions.dll",
-		"System.Text.RegularExpressions.dll",
 	};
 	public static final String[] Dependencies = new String[]{
 	};
-	public static final String ApiPackageName = "Mono.Android.Platform.ApiLevel_21";
+	public static final String ApiPackageName = "Mono.Android.Platform.ApiLevel_22";
 }

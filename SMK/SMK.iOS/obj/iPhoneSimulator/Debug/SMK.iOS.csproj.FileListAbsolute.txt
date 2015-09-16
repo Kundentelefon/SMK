@@ -36,3 +36,16 @@ C:\Users\sebas\Source\Repos\SMK\SMK\SMK.iOS\obj\iPhoneSimulator\Debug\Default-La
 C:\Users\sebas\Source\Repos\SMK\SMK\SMK.iOS\obj\iPhoneSimulator\Debug\SMK.iOS.csprojResolveAssemblyReference.cache
 C:\Users\sebas\Source\Repos\SMK\SMK\SMK.iOS\obj\iPhoneSimulator\Debug\SMKiOS.exe
 C:\Users\sebas\Source\Repos\SMK\SMK\SMK.iOS\obj\iPhoneSimulator\Debug\SMKiOS.pdb
+C:\Users\Maxwell\Source\Repos\SMK3\SMK\SMK.iOS\bin\iPhoneSimulator\Debug\SMKiOS.exe
+C:\Users\Maxwell\Source\Repos\SMK3\SMK\SMK.iOS\bin\iPhoneSimulator\Debug\SMKiOS.pdb
+C:\Users\Maxwell\Source\Repos\SMK3\SMK\SMK.iOS\bin\iPhoneSimulator\Debug\SMK.dll
+C:\Users\Maxwell\Source\Repos\SMK3\SMK\SMK.iOS\bin\iPhoneSimulator\Debug\Xamarin.Forms.Core.dll
+C:\Users\Maxwell\Source\Repos\SMK3\SMK\SMK.iOS\bin\iPhoneSimulator\Debug\Xamarin.Forms.Platform.iOS.dll
+C:\Users\Maxwell\Source\Repos\SMK3\SMK\SMK.iOS\bin\iPhoneSimulator\Debug\Xamarin.Forms.Xaml.dll
+C:\Users\Maxwell\Source\Repos\SMK3\SMK\SMK.iOS\bin\iPhoneSimulator\Debug\SMK.pdb
+C:\Users\Maxwell\Source\Repos\SMK3\SMK\SMK.iOS\bin\iPhoneSimulator\Debug\Xamarin.Forms.Core.xml
+C:\Users\Maxwell\Source\Repos\SMK3\SMK\SMK.iOS\bin\iPhoneSimulator\Debug\Xamarin.Forms.Xaml.xml
+C:\Users\Maxwell\Source\Repos\SMK3\SMK\SMK.iOS\obj\iPhoneSimulator\Debug\
+C:\Users\Maxwell\Source\Repos\SMK3\SMK\SMK.iOS\obj\iPhoneSimulator\Debug\SMK.iOS.csprojResolveAssemblyReference.cache
+C:\Users\Maxwell\Source\Repos\SMK3\SMK\SMK.iOS\obj\iPhoneSimulator\Debug\SMKiOS.exe
+C:\Users\Maxwell\Source\Repos\SMK3\SMK\SMK.iOS\obj\iPhoneSimulator\Debug\SMKiOS.pdb
