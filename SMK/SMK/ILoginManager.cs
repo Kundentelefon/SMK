@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LoginPattern
+namespace SMK
 {
     public interface ILoginManager
     {

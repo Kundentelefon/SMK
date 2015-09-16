@@ -1,5 +1,4 @@
-﻿using LoginPattern;
-using SMK.View;
+﻿using SMK.View;
 using System;
 using Xamarin.Forms;
 

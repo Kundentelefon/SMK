@@ -1,7 +1,7 @@
 ﻿using System;
 using Xamarin.Forms;
 
-namespace LoginPattern
+namespace SMK
 {
     public class CreateAccountPage : ContentPage
     {
