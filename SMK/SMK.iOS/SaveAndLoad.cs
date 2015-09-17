@@ -176,6 +176,11 @@ namespace SMK.iOS
             return (false);
 
         }
+
+        public void deleteUser(String location)
+        {
+            System.IO.File.Delete(getpath(location));
+        }
     }
 
 

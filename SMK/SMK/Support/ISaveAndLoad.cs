@@ -64,5 +64,7 @@ namespace SMK.Support
 
         String getpath(String location);
         void createOrdner(String path);
+
+        void deleteUser(String path);
     }
 }

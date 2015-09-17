@@ -252,5 +252,10 @@ namespace SMK.Support
             DependencyService.Get<ISaveAndLoad>().createOrdner(pContentLocation+"folder");
         }
 
+        public void deleteUser()
+        {
+            DependencyService.Get<ISaveAndLoad>().deleteUser(userLocation);
+        }
+
     }
 }
