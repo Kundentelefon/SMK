@@ -34,10 +34,10 @@ namespace SMK.View
                    button
                 }
             };
-            button.Clicked += (sender, e) => { sendData(); };
+            button.Clicked += (sender, e) => { sendData(entry); };
         }
 
-        public void sendData()
+        public void sendData(Entry entry)
         {
 
         }
