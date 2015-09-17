@@ -73,6 +73,9 @@ namespace SMK.View
                 }
                 );//Child Added: Klappentext
 
+            if(owned == true)
+            stackLayout.Children.Add(new StackLayout {Orientation = StackOrientation.Horizontal, Children = { new Label { Text = "Bilder", TextColor = Color.Black, FontSize = Device.GetNamedSize(NamedSize.Medium,typeof(Label)) }, new Label {Text = "("+ imageStack.Children.Count + ")", FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)), TextColor = Color.Black } } });
+
             initImageStack();
             //Image scrolllayout hinzugefügt
             initHTMLStack();
@@ -157,7 +160,10 @@ namespace SMK.View
 
         public void initHTMLStack()
         {
+            foreach(PContent content in contentHtml)
+            {
 
+            }
         }
     }
 }

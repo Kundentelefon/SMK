@@ -35,11 +35,12 @@ namespace SMK.View
                 }
             };
             button.Clicked += (sender, e) => { sendData(entry); };
+            
         }
 
         public void sendData(Entry entry)
         {
-
+            
         }
     }
 }
