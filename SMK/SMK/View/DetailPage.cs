@@ -46,10 +46,6 @@ namespace SMK.View
                 Source = ImageSource.FromResource(image_path)
             }
             );//Child added: Image
-
-
-           
-
             Content = stackLayout;
             BackgroundColor = Color.White;
             Padding = new Thickness(5, Device.OnPlatform(0, 15, 0), 5, 5);
