@@ -13,7 +13,7 @@ namespace SMK
 
         public App()
         {
-
+            
             NavigationPage Navigation_Page = new NavigationPage();
             MainPage = Navigation_Page;
             Current = this;

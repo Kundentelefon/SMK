@@ -12,7 +12,7 @@ namespace SMK.View
 {
     public class DetailPage : ContentPage
     {
-        String imagePfadContent = "SMK.FischerTechnik.PContent.";
+        String imagePfadContent = "SMK.FischerTechnik.PContent.p";
         String imagePfadProduct = "SMK.FischerTechnik.Product.";
         Product product;
         localFileSystem files;
@@ -73,9 +73,7 @@ namespace SMK.View
                 }
                 );//Child Added: Klappentext
 
-            if(owned == true)
-            stackLayout.Children.Add(new StackLayout {Orientation = StackOrientation.Horizontal, Children = { new Label { Text = "Bilder", TextColor = Color.Black, FontSize = Device.GetNamedSize(NamedSize.Medium,typeof(Label)) }, new Label {Text = "("+ imageStack.Children.Count + ")", FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)), TextColor = Color.Black } } });
-
+           
             initImageStack();
             //Image scrolllayout hinzugefügt
             initHTMLStack();
@@ -152,6 +150,11 @@ namespace SMK.View
             {
                 await Navigation.PushAsync(carousel);
             };
+
+            if (owned == true)
+                stackLayout.Children.Add(new StackLayout { Orientation = StackOrientation.Horizontal, Children = { new Label { Text = "Bilder", TextColor = Color.Black, FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)) }, new Label { Text = "(" + imageStack.Children.Count + ")", FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)), TextColor = Color.Black } } });
+
+
             imageStack.GestureRecognizers.Add(reco);
             imageScroll.Content = imageStack;
             stackLayout.Children.Add(imageScroll);
