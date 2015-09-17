@@ -32,34 +32,27 @@ namespace SMK.View
                 {
                     if (content.content_Kind == 0)
                     {
-                        //
+                        //SMK.FischerTechnik.Files.1.png
                         source.Add(imagePfadContent+content.content_ID.ToString()+".png");
-                        break;
+                        
                     }
 
                 }
             }
-            String test = imagePfadProduct + product.product_ID.ToString() + ".png";
+            String image_path = imagePfadProduct + product.product_ID.ToString() + ".png";
             stackLayout.Children.Add(
             new Image
             {
-                Source = imagePfadProduct + product.product_ID.ToString() + ".png"
+                Source = ImageSource.FromResource(image_path)
             }
-            );
-            //if (source.Count() >= 0)
-            //{
-            //    foreach (var item in source)
-            //    {
-            //        stackLayout.Children.Add(
-            //        new Image
-            //        {
-            //            Source = item
-            //        }
-            //        );
-            //    }
+            );//Child added: Image
 
-            //}
+
+           
+
             Content = stackLayout;
+            BackgroundColor = Color.White;
+            Padding = new Thickness(5, Device.OnPlatform(0, 15, 0), 5, 5);
         }//ende Construktor
     }
 }

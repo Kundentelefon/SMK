@@ -1,8 +1,9 @@
 ﻿using SMK;
 using System;
+using System.Text.RegularExpressions;
 using Xamarin.Forms;
 
-namespace LoginPattern
+namespace SMK
 {
     public class LoginPage : ContentPage
     {
@@ -16,6 +17,10 @@ namespace LoginPattern
                 if (String.IsNullOrEmpty(username.Text) || String.IsNullOrEmpty(password.Text))
                 {
                     DisplayAlert("Abfragefehler", "E-Mail und Passwort bitte angeben", "Neue Eingabe");
+                }
+                else if (!IsValidEmail(username.Text))
+                {
+                    DisplayAlert("Ungültige E-Mail", "E-Mail ist in einem ungültigen Format angegeben worden", "Neue Eingabe");
                 }
                 else
                 {
@@ -47,6 +52,16 @@ namespace LoginPattern
                 }
             };
         }
+
+            public static bool IsValidEmail(string strIn)
+            {
+                // Return true if strIn is in valid e-mail format.
+                return Regex.IsMatch(strIn,
+                       @"^(?("")("".+?""@)|(([0-9a-zA-Z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=[0-9a-zA-Z])@))" +
+                       @"(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,6}))$");
+            }
+        
+
     }
 }
 

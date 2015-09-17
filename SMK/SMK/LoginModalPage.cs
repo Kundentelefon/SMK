@@ -1,5 +1,4 @@
-﻿using LoginPattern;
-using System;
+﻿using System;
 using Xamarin.Forms;
 
 namespace SMK
