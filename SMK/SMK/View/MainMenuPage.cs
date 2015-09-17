@@ -39,7 +39,9 @@ namespace SMK.View
                 Icon = null,
                 Command = new Command(() => Navigation.PushAsync(new AddProduktPage()))
             };
-            this.ToolbarItems.Add(toolButton); 
+            this.ToolbarItems.Add(toolButton);
+
+            initLogout();
             
             //Ende Toolbar
 
@@ -113,6 +115,21 @@ namespace SMK.View
 
         }
 
-      
+        public void initLogout()
+        {
+            //Command logoutCommand = new Command(() => { Navigation.PushAsync(new LoginPage(ILoginManager ilm));
+            //funktion für user löschen einfügen
+            //                                            });
+            
+                ToolbarItem logoutButton = new ToolbarItem
+                {
+                    Text = "Logout",
+                    Order = ToolbarItemOrder.Primary,
+                    
+                   // Command = logoutCommand
+                };
+                this.ToolbarItems.Add(logoutButton);
+
+            }
     }
 }

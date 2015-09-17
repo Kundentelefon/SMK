@@ -8,6 +8,7 @@ namespace SMK
     public class LoginPage : ContentPage
     {
         Entry username, password;
+        
         public LoginPage(ILoginManager ilm)
         {
             BackgroundColor = new Color(255, 255, 255, 1);
@@ -36,6 +37,7 @@ namespace SMK
 
             username = new Entry { Text = "", BackgroundColor = Color.FromHex("3f3f3f") };
             password = new Entry { Text = "", BackgroundColor = Color.FromHex("3f3f3f") };
+            
 
 
             Content = new StackLayout

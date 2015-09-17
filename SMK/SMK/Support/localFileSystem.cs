@@ -27,7 +27,7 @@ namespace SMK.Support
         public void initaldummies()
         {
             string testText = "have some Text i hope you like it fighting and burning from turning from who we really are, flying to close to the sun as we were invincible, around the world we grow weaker as we exterminate, we are the children of the sun bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb";
-
+            
             //List<Product> returnList = new List<Product> { new Product(0, "Test","SMK.FischerTechnik.Files.0.png", testText, new List<int>(new int[] { 0, 1, 2 })) ,
             //                                               new Product(1, "Test ProductNotOwned",  "SMK.FischerTechnik.Files.1.png", "havesomeTextShit i hope you like it", new List<int>(new int[] { 3, 4})),
             //                                               new Product(2, "Test ProductNotOwned",  "SMK.FischerTechnik.Files.1.png", "havesomeTextShit i hope you like it", new List<int>(new int[] { 5, 6})),
@@ -128,7 +128,7 @@ namespace SMK.Support
             returnList2.Add(content9);
             //if (DependencyService.Get<ISaveAndLoad>().fileExist(pContentLocation))
             //{
-                
+            
             //}
             //else
             //{
@@ -147,7 +147,7 @@ namespace SMK.Support
             return (returnList);
 
         }
-        public List<PContent> loadContentList() {
+        public List<PContent> loadContentList() { 
             List<PContent> returnList = new List<PContent>();
             if (DependencyService.Get<ISaveAndLoad>().fileExist(productLocation))
             {
@@ -186,9 +186,9 @@ namespace SMK.Support
                 content.Add(Pcontent[item]);
             }
             if (content.Count()>0)
-            {
-                if (content[0] != null)
-                    return true;
+        {
+            if (content[0] != null)
+                return true;
             }
             return false;
         }
