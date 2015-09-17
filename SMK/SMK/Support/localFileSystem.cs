@@ -38,21 +38,21 @@ namespace SMK.Support
             Product pro1 = new Product();
             pro1.product_ID =0;
             pro1.product_Name= "Test";
-            pro1.product_Thumbnail = "SMK.FischerTechnik.Files.0.png";
+            pro1.product_Thumbnail = "SMK.FischerTechnik.Product.0.png";
             pro1.product_Text = testText;
             pro1.product_PContents = new List<int>(new int[] { 0, 1, 2 });
 
             Product pro2 = new Product();
             pro2.product_ID =1;
             pro2.product_Name= "Test";
-            pro2.product_Thumbnail = "SMK.FischerTechnik.Files.0.png";
+            pro2.product_Thumbnail = "SMK.FischerTechnik.Product.1.png";
             pro2.product_Text = testText;
             pro2.product_PContents = new List<int>(new int[] { 3, 4 });
 
             Product pro3 = new Product();
             pro3.product_ID =2;
             pro3.product_Name= "Test";
-            pro3.product_Thumbnail = "SMK.FischerTechnik.Files.0.png";
+            pro3.product_Thumbnail = "SMK.FischerTechnik.Product.2.png";
             pro3.product_Text = testText;
             pro3.product_PContents = new List<int>(new int[] { 5, 6 });
 
@@ -82,13 +82,13 @@ namespace SMK.Support
 
             List<PContent> returnList2 = new List<PContent>();
             PContent content1 = new PContent();
-            content1.content_FileNames= new List<String>(new String[] { "SMK.FischerTechnik.0.da.jpg", "haha.png", "devil.png" });
+            content1.content_FileNames= new List<String>(new String[] { "0.da.jpg", "0.haha.png", "0.devil.png" });
             content1.content_ID = 0;
             content1.content_Kind = 0;
             content1.content_Title = "BilderGalarie";
 
             PContent content2 = new PContent();
-            content2.content_FileNames = new List<String>(new String[] { "da.png", "haha.png", "devil.png" });
+            content2.content_FileNames = new List<String>(new String[] { "1.da.png", "1.haha.png", "1.devil.png" });
             content2.content_ID = 1;
             content2.content_Kind = 0;
             content2.content_Title = "BilderGalarie";
@@ -104,13 +104,13 @@ namespace SMK.Support
             PContent content5 = null;
 
             PContent content6 = new PContent();
-            content6.content_FileNames = new List<String>(new String[] { "da.png", "haha.png", "devil.png" });
+            content6.content_FileNames = new List<String>(new String[] { "1.da.png", "1.haha.png", "1.devil.png" });
             content6.content_ID = 5;
             content6.content_Kind = 0;
             content6.content_Title = "BilderGalarie";
 
             PContent content7 = new PContent();
-            content7.content_FileNames = new List<String>(new String[] { "da.png", "haha.png", "devil.png" });
+            content7.content_FileNames = new List<String>(new String[] { "0.da.png", "0.haha.png", "0.devil.png" });
             content7.content_ID = 6;
             content7.content_Kind = 0;
             content7.content_Title = "BilderGalarie";
