@@ -18,26 +18,30 @@ namespace SMK.View
         localFileSystem files;
         List<PContent> pContent;
         bool owned;
+        StackLayout imageStack;
+        StackLayout stackLayout;
+        ScrollView imageScroll;
         List<PContent> contentPictureGalarie;
         List<PContent> contentPdf;
         List<PContent> contentHtml;
         List<PContent> contentVideo;
+        Color color;
 
         public DetailPage(Product ResourceProduct)
         {
             product = ResourceProduct;
             files = new localFileSystem();
             pContent = files.loadContentList(product);
-            StackLayout stackLayout = new StackLayout();
-            StackLayout imageStack = new StackLayout();
-            ScrollView imageScroll = new ScrollView();
+            stackLayout = new StackLayout();
+            imageStack = new StackLayout();
+            imageScroll = new ScrollView();
             TapGestureRecognizer gesture = new TapGestureRecognizer();
             contentPictureGalarie = new List<PContent>() ;
             contentPdf = new List<PContent>();
             contentHtml = new List<PContent>();
             contentVideo = new List<PContent>();
             owned = false;
-            Color color = Color.FromHex("E2001A");
+            color = Color.FromHex("E2001A");
 
             initContentLists();
            
@@ -68,41 +72,7 @@ namespace SMK.View
                 }
                 );//Child Added: Klappentext
 
-            //Images des Produktes werden initalisiert
-            imageScroll.Orientation = ScrollOrientation.Horizontal;
-            imageStack.Orientation = StackOrientation.Horizontal;
-            List<ContentPage> pages = new List<ContentPage>();
-            TapGestureRecognizer reco = new TapGestureRecognizer();
-            CarouselPage carousel = new CarouselPage();
-
-            foreach (PContent content in contentPictureGalarie)
-            {
-                foreach (string image_source in content.content_FileNames)
-                {
-                    string source = imagePfadContent + image_source;
-                  
-                    Frame frame = new Frame
-                    {
-                        OutlineColor = color,
-                        Content = new Image
-                        {
-                            Source = ImageSource.FromResource(source)
-                        }
-                    };
-                    imageStack.Children.Add(frame);
-                    carousel.Children.Add(new ContentPage { Content = new Image { Source = ImageSource.FromResource(source) } });
-                    
-                }
-            }
-
-            
-            reco.Tapped += async (sender, e) =>
-            {
-                await Navigation.PushAsync(carousel);
-            };
-            imageStack.GestureRecognizers.Add(reco);
-            imageScroll.Content = imageStack;
-            stackLayout.Children.Add(imageScroll);
+            initImageStack();
             //Image scrolllayout hinzugefügt
 
             Content = stackLayout;
@@ -142,6 +112,45 @@ namespace SMK.View
 
                 }
             }
+        }
+        public void initImageStack()
+        {
+            //Images des Produktes werden initalisiert
+            imageScroll.Orientation = ScrollOrientation.Horizontal;
+            imageStack.Orientation = StackOrientation.Horizontal;
+            List<ContentPage> pages = new List<ContentPage>();
+            TapGestureRecognizer reco = new TapGestureRecognizer();
+            CarouselPage carousel = new CarouselPage();
+
+            foreach (PContent content in contentPictureGalarie)
+            {
+                foreach (string image_source in content.content_FileNames)
+                {
+                    string source = imagePfadContent + image_source;
+
+                    Frame frame = new Frame
+                    {
+                        OutlineColor = color,
+                        Content = new Image
+                        {
+                            Source = ImageSource.FromResource(source)
+                        }
+                    };
+                    imageStack.Children.Add(frame);
+                    carousel.Children.Add(new ContentPage { Content = new Image { Source = ImageSource.FromResource(source) } });
+
+                }
+            }
+
+
+            reco.Tapped += async (sender, e) =>
+            {
+                await Navigation.PushAsync(carousel);
+            };
+            imageStack.GestureRecognizers.Add(reco);
+            imageScroll.Content = imageStack;
+            stackLayout.Children.Add(imageScroll);
+            //Image scrolllayout hinzugefügt
         }
     }
 }
