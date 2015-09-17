@@ -6,7 +6,6 @@ using System.Text;
 using SMK.Model;
 using SMK.Support;
 
-
 using Xamarin.Forms;
 using System.Collections.ObjectModel;
 
@@ -19,8 +18,19 @@ namespace SMK.View
         
         public MainMenuPage()
         {
-            
+            ////localFileSystem sys = new localFileSystem();
+            ////sys.createInitalFolders();
+            //User user = new User();
+            //user.user_Email = "test";
+            //user.user_Password = "test";
+            //DependencyService.Get<ISaveAndLoad>().saveModelXml("User",user);//test
+            //Object test= DependencyService.Get<ISaveAndLoad>().loadUserXml("User");//test
+
+
             files = new localFileSystem();
+            //läd dummies 
+            // entfernen bevor go live
+            files.initaldummies();
             //Toolbar
             ToolbarItem toolButton = new ToolbarItem
             {
@@ -38,6 +48,7 @@ namespace SMK.View
             //View
             ProductCollection = new Collection<Product>();
             ProductCollection = files.loadProductList();
+            List<PContent> PcontentCollection = files.loadContentList();
 
             ScrollView scrollView = new ScrollView();
             StackLayout stackLayout = new StackLayout();
@@ -47,7 +58,7 @@ namespace SMK.View
             foreach (Product product in ProductCollection)
             {
                 TapGestureRecognizer gesture = new TapGestureRecognizer();
-                bool owned = files.hasContent(product);
+                bool owned = files.hasContent(product, PcontentCollection);
                 Color color = Color.FromHex("E2001A");
                     
                 if (owned == true)

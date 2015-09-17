@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SMK.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,5 +19,50 @@ namespace SMK.Support
                 //};
         void SaveText(string filename, string text);
         string LoadText(string filename);
+
+        void saveModelXml(String location, Object inputObject);
+        /// <summary>
+        /// saves a Object to the location ()
+        /// </summary>
+        /// <param name="location"></param>
+        /// <param name="inputObject"></param>
+        void saveUserXml(String location, Object inputObject);
+        /// <summary>
+        /// load an xml file 
+        /// </summary>
+        /// <param name="location"></param>
+        /// <returns></returns>
+        User loadUserXml(String location);
+
+
+        /// <summary>
+        /// saves a Object to the location ()
+        /// </summary>
+        /// <param name="location"></param>
+        /// <param name="inputObject"></param>
+        void savePContentsXml(String location, Object inputObject);
+        /// <summary>
+        /// load an xml file 
+        /// </summary>
+        /// <param name="location"></param>
+        /// <returns></returns>
+        PContents loadPcontentsXml(String location);
+        /// <summary>
+        /// saves a Object to the location ()
+        /// </summary>
+        /// <param name="location"></param>
+        /// <param name="inputObject"></param>
+        void saveProductsXml(String location, Object inputObject);
+        /// <summary>
+        /// load an xml file 
+        /// </summary>
+        /// <param name="location"></param>
+        /// <returns></returns>
+        Products loadProductsXml(String location);
+
+        Boolean fileExist(String inputString);
+
+        String getpath(String location);
+        void createOrdner(String path);
     }
 }

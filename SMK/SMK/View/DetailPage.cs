@@ -13,7 +13,7 @@ namespace SMK.View
     public class DetailPage : ContentPage
     {
         String imagePfadContent = "SMK.FischerTechnik.PContent.";
-        String imagePfadProduct = "SMK.FischerTechnik.Files.";
+        String imagePfadProduct = "SMK.FischerTechnik.Product.";
         Product product;
         localFileSystem files;
         List<PContent> pContent;
