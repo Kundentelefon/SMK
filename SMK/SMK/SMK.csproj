@@ -56,6 +56,7 @@
     <Compile Include="Support\ISaveAndLoad.cs" />
     <Compile Include="Support\localFileSystem.cs" />
     <Compile Include="View\AddProduktPage.cs" />
+    <Compile Include="View\DetailCarousel.cs" />
     <Compile Include="View\DetailPage.cs" />
     <Compile Include="View\LoginPage_Xaml.xaml.cs">
       <DependentUpon>LoginPage_Xaml.xaml</DependentUpon>
