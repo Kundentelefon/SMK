@@ -23,17 +23,22 @@ namespace SMK.View
             files = new localFileSystem();
             pContent = files.loadContentList(product);
             StackLayout stackLayout = new StackLayout();
+            StackLayout buttonStack = new StackLayout();
             TapGestureRecognizer gesture = new TapGestureRecognizer();
-            List<string> source= new List<string>() ;
+            List<string> picture_galarie = new List<string>() ;
+            bool owned = false;
+            Color color = Color.FromHex("E2001A");
+
 
             if (pContent[0] != null)
             {
+                owned = true;
                 foreach (PContent content in pContent)
                 {
                     if (content.content_Kind == 0)
                     {
                         //SMK.FischerTechnik.Files.1.png
-                        source.Add(imagePfadContent+content.content_ID.ToString()+".png");
+                        picture_galarie.Add(imagePfadContent+content.content_ID.ToString()+".png");
                         
                     }
 
@@ -46,6 +51,28 @@ namespace SMK.View
                 Source = ImageSource.FromResource(image_path)
             }
             );//Child added: Image
+
+            if(owned == true)
+              color = Color.FromHex("006AB3");
+
+            stackLayout.Children.Add(
+                new ScrollView
+                {
+                    Content = new Frame
+                    {
+                        OutlineColor = color,
+                        BackgroundColor = color,
+                        Content = new Label
+                        {
+                            Text = product.product_Text,
+                            TextColor = Color.Black
+                        }
+                    }
+                }
+                );//Child Added: Klappentext
+           
+            
+
             Content = stackLayout;
             BackgroundColor = Color.White;
             Padding = new Thickness(5, Device.OnPlatform(0, 15, 0), 5, 5);
