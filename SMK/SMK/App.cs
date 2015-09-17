@@ -14,7 +14,7 @@ namespace SMK
         public App()
         {
 
-            NavigationPage Navigation_Page = new NavigationPage(new MainMenuPage());
+            NavigationPage Navigation_Page = new NavigationPage();
             MainPage = Navigation_Page;
             Current = this;
 
@@ -23,7 +23,7 @@ namespace SMK
             // after login the next site to go
             if (isLoggedIn)
                 //  MainPage = Navigation_Page;
-                MainPage = Navigation_Page;
+                MainPage = new MainMenuPage();
             else
                 MainPage = new LoginModalPage(this);
         }
