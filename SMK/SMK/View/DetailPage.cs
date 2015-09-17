@@ -131,7 +131,7 @@ namespace SMK.View
             {
                 foreach (string image_source in content.content_FileNames)
                 {
-                    string source = imagePfadContent + image_source;
+                    string source = imagePfadContent +"p"+ image_source;
 
                     Frame frame = new Frame
                     {
