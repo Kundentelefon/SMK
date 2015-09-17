@@ -18,99 +18,107 @@ namespace SMK.Droid
     [Activity(Label = "SMK", Icon = "@drawable/icon", ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsApplicationActivity
     {
-
-        private List<Contact> mContacts;
-        private WebClient mclient;
-        private Uri mUrl;
-        private BaseAdapter<Contact> mAdapter;
-
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
             LoadApplication(new App());
-
-            // server connection to list
-            mContacts = new List<Contact>();
-
-            mclient = new WebClient();
-            mUrl = new Uri("http://localhost/UpdateContact.php");
-
-            //Call the PHP file and get the json string
-            mclient.DownloadDataAsync(mUrl); // no premeters to give to select context, because json is used
-            mclient.DownloadDataCompleted += mclient_DownloadDataCompleted;
-
         }
 
-        private void mclient_DownloadDataCompleted(object sender, DownloadDataCompletedEventArgs e)
-        {
-            RunOnUiThread(() =>
-            {
-                //deserializes json
-                string json = Encoding.UTF8.GetString(e.Result);
-                // parse it
-                mContacts = JsonConvert.DeserializeObject<List<Contact>>(json);
+        // disable android connection
+        //    private List<Contact> mContacts;
+        //    private WebClient mclient;
+        //    private Uri mUrl;
+        //    private BaseAdapter<Contact> mAdapter;
 
-                // TODO: Implement Action
-                //mAdapter = new ContactListAdapter(this, Resource.Layout.row_contact, mContacts, action);
-            });
-        }
+        //    protected override void OnCreate(Bundle bundle)
+        //    {
+        //        base.OnCreate(bundle);
 
-        protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
-        {
-            base.OnActivityResult(requestCode, resultCode, data);
+        //        global::Xamarin.Forms.Forms.Init(this, bundle);
+        //        LoadApplication(new App());
 
-            if (resultCode == Result.Ok)
-            {
+        //        // server connection to list
+        //        mContacts = new List<Contact>();
 
-                WebClient client = new WebClient();
-                System.Uri uri = new System.Uri("http://localhost/UpdateContact.php");
+        //        mclient = new WebClient();
+        //        mUrl = new Uri("http://localhost/UpdateContact.php");
 
-                NameValueCollection parameters = new NameValueCollection();
+        //        //Call the PHP file and get the json string
+        //        mclient.DownloadDataAsync(mUrl); // no premeters to give to select context, because json is used
+        //        mclient.DownloadDataCompleted += mclient_DownloadDataCompleted;
 
-                //TODO: ContactID
-                //parameters.Add("ContactID", contactID.ToString());
+        //    }
 
-                client.UploadValuesAsync(uri, parameters);
-                client.UploadValuesCompleted += Client_UploadValuesCompleted;
-            }
-        }
+        //    private void mclient_DownloadDataCompleted(object sender, DownloadDataCompletedEventArgs e)
+        //    {
+        //        RunOnUiThread(() =>
+        //        {
+        //            //deserializes json
+        //            string json = Encoding.UTF8.GetString(e.Result);
+        //            // parse it
+        //            mContacts = JsonConvert.DeserializeObject<List<Contact>>(json);
 
-        private void Client_UploadValuesCompleted(object sender, UploadValuesCompletedEventArgs e)
-        {
-            RunOnUiThread(() =>
-            {
-                Console.WriteLine(Encoding.UTF8.GetString(e.Result));
-            });
-        }
+        //            // TODO: Implement Action
+        //            //mAdapter = new ContactListAdapter(this, Resource.Layout.row_contact, mContacts, action);
+        //        });
+        //    }
 
-        public override bool OnOptionsItemSelected(IMenuItem item)
-        {
-            switch (item.ItemId)
-            {
-                // TODO: using Xamarin Forms XAML 
-                //case Resource.Id.add:
+        //    protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
+        //    {
+        //        base.OnActivityResult(requestCode, resultCode, data);
 
-                //    CreateContactDialog dialog = new CreateContactDialog();
-                //    FragmentTransaction transaction = FragmentManager.BeginTransaction();
+        //        if (resultCode == Result.Ok)
+        //        {
 
-                //    //Subscribe to event
-                //    dialog.OnCreateContact += dialog_OnCreateContact;
-                //    dialog.Show(transaction, "create contact");
-                //    return true;
+        //            WebClient client = new WebClient();
+        //            System.Uri uri = new System.Uri("http://localhost/UpdateContact.php");
 
-                default:
-                    return base.OnOptionsItemSelected(item);
-            }
+        //            NameValueCollection parameters = new NameValueCollection();
 
-        }
+        //            //TODO: ContactID
+        //            //parameters.Add("ContactID", contactID.ToString());
 
-        private void dialog_OnCreateContact(object sender, CreateContactEventArgs e)
-        {
-            mContacts.Add(new Contact() { ID = e.ID, Name = e.Name, Number = e.Number });
-            mAdapter.NotifyDataSetChanged();
-        }
+        //            client.UploadValuesAsync(uri, parameters);
+        //            client.UploadValuesCompleted += Client_UploadValuesCompleted;
+        //        }
+        //    }
+
+        //    private void Client_UploadValuesCompleted(object sender, UploadValuesCompletedEventArgs e)
+        //    {
+        //        RunOnUiThread(() =>
+        //        {
+        //            Console.WriteLine(Encoding.UTF8.GetString(e.Result));
+        //        });
+        //    }
+
+        //    public override bool OnOptionsItemSelected(IMenuItem item)
+        //    {
+        //        switch (item.ItemId)
+        //        {
+        //            // TODO: using Xamarin Forms XAML 
+        //            //case Resource.Id.add:
+
+        //            //    CreateContactDialog dialog = new CreateContactDialog();
+        //            //    FragmentTransaction transaction = FragmentManager.BeginTransaction();
+
+        //            //    //Subscribe to event
+        //            //    dialog.OnCreateContact += dialog_OnCreateContact;
+        //            //    dialog.Show(transaction, "create contact");
+        //            //    return true;
+
+        //            default:
+        //                return base.OnOptionsItemSelected(item);
+        //        }
+
+        //    }
+
+        //    private void dialog_OnCreateContact(object sender, CreateContactEventArgs e)
+        //    {
+        //        mContacts.Add(new Contact() { ID = e.ID, Name = e.Name, Number = e.Number });
+        //        mAdapter.NotifyDataSetChanged();
+        //    }
     }
 
 }
