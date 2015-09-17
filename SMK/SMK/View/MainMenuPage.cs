@@ -29,7 +29,7 @@ namespace SMK.View
                 Icon = null,
                 Command = new Command(() => Navigation.PushAsync(new AddProduktPage()))
             };
-            //Navigation.ToolbarItems.Add(toolButton); 
+            this.ToolbarItems.Add(toolButton); 
             
             //Ende Toolbar
 
@@ -97,6 +97,7 @@ namespace SMK.View
             scrollView.Content = stackLayout;
             Content = scrollView;
             BackgroundColor = Color.White;
+            Padding = new Thickness(5, Device.OnPlatform(0, 15, 0), 5, 5);
             //View Ende
 
         }
