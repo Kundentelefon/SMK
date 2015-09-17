@@ -46,6 +46,7 @@ namespace SMK.View
             initContentLists();
            
             String image_path = imagePfadProduct + product.product_ID.ToString() + ".png";
+
             stackLayout.Children.Add(
             new Image
             {
@@ -74,6 +75,7 @@ namespace SMK.View
 
             initImageStack();
             //Image scrolllayout hinzugefügt
+            initHTMLStack();
 
             Content = stackLayout;
             BackgroundColor = Color.White;
@@ -151,6 +153,11 @@ namespace SMK.View
             imageScroll.Content = imageStack;
             stackLayout.Children.Add(imageScroll);
             //Image scrolllayout hinzugefügt
+        }
+
+        public void initHTMLStack()
+        {
+
         }
     }
 }
