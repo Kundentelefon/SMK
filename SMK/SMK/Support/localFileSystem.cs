@@ -38,8 +38,8 @@ namespace SMK.Support
         }
         public List<PContent> loadContentList() { 
 
-            List<PContent> returnList = new List<PContent> {new PContent(0,0,"BilderGalarie", new List<String>(new String[] {"0.da.jpg","haha.png","devil.png"})),//"Resources/FischerTechnik/PContent/0_Icon.png"
-                                                           new PContent(1,0,"BilderGalarie",new List<String>(new String[]{"da.png","haha.png","devil.png"})),
+            List<PContent> returnList = new List<PContent> {new PContent(0,0,"BilderGalarie", new List<String>(new String[] {"p0.da.jpg","p0.haha.png","p0.devil.png"})),//"Resources/FischerTechnik/PContent/0_Icon.png"
+                                                           new PContent(1,0,"BilderGalarie",new List<String>(new String[]{"p1.da.png","p1.haha.png","p1.devil.png"})),
                                                            new PContent(2,2,"WebView",new List<String>(new String[]{})),
                                                            null,
                                                            null,

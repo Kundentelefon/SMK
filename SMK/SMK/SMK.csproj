@@ -105,31 +105,31 @@
     <EmbeddedResource Include="FischerTechnik\Files\2.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="FischerTechnik\PContent\0\da.jpg" />
+    <EmbeddedResource Include="FischerTechnik\PContent\p0\da.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="FischerTechnik\PContent\0\devil.png" />
+    <EmbeddedResource Include="FischerTechnik\PContent\p0\devil.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="FischerTechnik\PContent\0\haha.png" />
+    <EmbeddedResource Include="FischerTechnik\PContent\p0\haha.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FischerTechnik\PContent\0.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="FischerTechnik\PContent\1\da.jpg" />
+    <EmbeddedResource Include="FischerTechnik\PContent\p1\da.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="FischerTechnik\PContent\1\devil.png" />
+    <EmbeddedResource Include="FischerTechnik\PContent\p1\devil.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="FischerTechnik\PContent\1\haha.png" />
+    <EmbeddedResource Include="FischerTechnik\PContent\p1\haha.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FischerTechnik\PContent\1.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="FischerTechnik\PContent\2\test.html" />
+    <BundleResource Include="FischerTechnik\PContent\p2\test.html" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FischerTechnik\PContent\2.png" />
