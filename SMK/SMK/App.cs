@@ -15,7 +15,6 @@ namespace SMK
         {
             
             NavigationPage Navigation_Page = new NavigationPage(new MainMenuPage());
-            Navigation_Page.PopToRootAsync();
             MainPage = Navigation_Page;
             Current = this;
 

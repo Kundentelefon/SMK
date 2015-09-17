@@ -11,6 +11,7 @@ namespace SMK
         
         public LoginPage(ILoginManager ilm)
         {
+            
             BackgroundColor = new Color(255, 255, 255, 1);
 
             var button = new Button { Text = "Login", BackgroundColor = Color.FromHex("006AB3") };
