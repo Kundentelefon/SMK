@@ -25,7 +25,10 @@ namespace SMK.View
             StackLayout stackLayout = new StackLayout();
             StackLayout buttonStack = new StackLayout();
             TapGestureRecognizer gesture = new TapGestureRecognizer();
-            List<string> picture_galarie = new List<string>() ;
+            List<PContent> contentPictureGalarie = new List<PContent>() ;
+            List<PContent> contentPdf = new List<PContent>();
+            List<PContent> contentHtml = new List<PContent>();
+            List<PContent> contentVideo = new List<PContent>();
             bool owned = false;
             Color color = Color.FromHex("E2001A");
 
@@ -37,9 +40,25 @@ namespace SMK.View
                 {
                     if (content.content_Kind == 0)
                     {
+                        contentPictureGalarie.Add(content);
                         //SMK.FischerTechnik.Files.1.png
-                        picture_galarie.Add(imagePfadContent+content.content_ID.ToString()+".png");
+                        //picture_galarie.Add(imagePfadContent+content.content_ID.ToString()+".png");
                         
+                    }
+                    if (content.content_Kind == 1)
+                    {
+                        contentPdf.Add(content);
+
+                    }
+                    if (content.content_Kind == 2)
+                    {
+                        contentHtml.Add(content);
+
+                    }
+                    if (content.content_Kind == 3)
+                    {
+                        contentVideo.Add(content);
+
                     }
 
                 }
