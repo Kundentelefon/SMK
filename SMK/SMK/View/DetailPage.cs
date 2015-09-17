@@ -32,7 +32,7 @@ namespace SMK.View
                 {
                     if (content.content_Kind == 0)
                     {
-                        //SMK.FischerTechnik.Files.1.png
+                        //
                         source.Add(imagePfadContent+content.content_ID.ToString()+".png");
                         break;
                     }
