@@ -15,7 +15,7 @@ namespace SMK.View
     {
         ICollection<Product> ProductCollection;
         localFileSystem files;
-     
+        
         
         public MainMenuPage()
         {
@@ -33,6 +33,7 @@ namespace SMK.View
             //läd dummies 
             // entfernen bevor go live
             files.initaldummies();
+            //files.createInitalFolders();//+userId
             //Toolbar
             ToolbarItem toolButton = new ToolbarItem
             {
@@ -64,6 +65,9 @@ namespace SMK.View
                 Color color = Color.FromHex("E2001A");
                 DetailPage detailPage = new DetailPage(product);
                     
+                //Boolean test2 = DependencyService.Get<ISaveAndLoad>().fileExist("Products");
+                //Boolean test=DependencyService.Get<ISaveAndLoad>().fileExistExact("sdcard/Android/data/SMK.Droid/files/Products");
+                //DependencyService.Get<ISaveAndLoad>().getpath("Product/") + product.product_ID + "." + product.product_Thumbnail
                 if (owned == true)
                    color = Color.FromHex("006AB3"); 
 
@@ -82,7 +86,9 @@ namespace SMK.View
                         {
                             new Image
                             {
-                                Source = ImageSource.FromResource(product.product_Thumbnail),
+                                //"SMK.FischerTechnik.Product.0.png"
+                                Source=ImageSource.FromResource("SMK.zeug.Product."+product.product_ID.ToString()+".png"),
+                                //Source = ImageSource.FromResource(DependencyService.Get<ISaveAndLoad>().getpath()+User.Email+"Product/"+product.product_ID+"."+product.product_Thumbnail),
                                 VerticalOptions = LayoutOptions.Center,
                                 HorizontalOptions = LayoutOptions.Center
                             },

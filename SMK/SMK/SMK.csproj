@@ -81,6 +81,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="zeug\PContent\p5\1 Oeco Energy_D_2.Aufl.indd.pdf" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MainPage_Xaml.xaml">
@@ -98,55 +99,52 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="FischerTechnik\Product\0.png" />
+    <EmbeddedResource Include="zeug\Product\0.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="FischerTechnik\Product\1.png" />
+    <EmbeddedResource Include="zeug\Product\1.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="FischerTechnik\Product\2.png" />
+    <EmbeddedResource Include="zeug\Product\2.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="FischerTechnik\PContent\p0\da.jpg" />
+    <EmbeddedResource Include="zeug\PContent\p0\da.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="FischerTechnik\PContent\p0\devil.png" />
+    <EmbeddedResource Include="zeug\PContent\p0\devil.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="FischerTechnik\PContent\p0\haha.png" />
+    <EmbeddedResource Include="zeug\PContent\p0\haha.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="FischerTechnik\PContent\0.png" />
+    <EmbeddedResource Include="zeug\PContent\p4\da.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="FischerTechnik\PContent\p1\da.jpg" />
+    <EmbeddedResource Include="zeug\PContent\p4\devil.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="FischerTechnik\PContent\p1\devil.png" />
+    <EmbeddedResource Include="zeug\PContent\p4\haha.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="FischerTechnik\PContent\p1\haha.png" />
+    <BundleResource Include="zeug\PContent\p2\test.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="FischerTechnik\PContent\1.png" />
+    <EmbeddedResource Include="zeug\PContent\Thumbnail\5.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="FischerTechnik\PContent\p2\test.html" />
+    <AndroidResource Include="zeug\Files\icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="FischerTechnik\PContent\2.png" />
+    <EmbeddedResource Include="zeug\Product\3.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="FischerTechnik\PContent\5.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="FischerTechnik\PContent\6.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="FischerTechnik\Files\icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="FischerTechnik\Product\3.png" />
+    <EmbeddedResource Include="zeug\PContent\p1\haha.png" />
+    <EmbeddedResource Include="zeug\PContent\p1\devil.png" />
+    <EmbeddedResource Include="zeug\PContent\p1\da.jpg" />
+    <Content Include="zeug\PContent\p3\World_of_fischertechnik_10sek.mp4" />
+    <Content Include="zeug\PContent\Thumbnail\2.png" />
+    <Content Include="zeug\PContent\Thumbnail\4.png" />
+    <Content Include="zeug\PContent\Thumbnail\3.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Forms.1.3.3.6323\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.1.3.3.6323\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
