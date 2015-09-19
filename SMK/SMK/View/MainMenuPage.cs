@@ -16,6 +16,7 @@ namespace SMK.View
         ICollection<Product> ProductCollection;
         localFileSystem files;
         
+        
         public MainMenuPage()
         {
             ////localFileSystem sys = new localFileSystem();
@@ -62,19 +63,20 @@ namespace SMK.View
                 TapGestureRecognizer gesture = new TapGestureRecognizer();
                 bool owned = files.hasContent(product, PcontentCollection);
                 Color color = Color.FromHex("E2001A");
-
+                DetailPage detailPage = new DetailPage(product);
+                    
                 //Boolean test2 = DependencyService.Get<ISaveAndLoad>().fileExist("Products");
                 //Boolean test=DependencyService.Get<ISaveAndLoad>().fileExistExact("sdcard/Android/data/SMK.Droid/files/Products");
                 //DependencyService.Get<ISaveAndLoad>().getpath("Product/") + product.product_ID + "." + product.product_Thumbnail
                 if (owned == true)
-                   color = Color.FromHex("006AB3");
+                   color = Color.FromHex("006AB3"); 
 
                 Frame frame = new Frame
                 {
-
+                    
                     BackgroundColor = color,
                     VerticalOptions = LayoutOptions.FillAndExpand,
-                    HorizontalOptions = LayoutOptions.FillAndExpand,
+                    HorizontalOptions = LayoutOptions.FillAndExpand,       
                     Content = new StackLayout
                     {
                         Orientation = StackOrientation.Horizontal,
@@ -108,7 +110,7 @@ namespace SMK.View
                 stackLayout.Children.Add(frame);
                 gesture.Tapped += async (sender, e) =>
                 {
-                    await Navigation.PushAsync(new DetailPage(product));
+                    await Navigation.PushAsync(detailPage);
                 };
                 frame.GestureRecognizers.Add(gesture);
             }

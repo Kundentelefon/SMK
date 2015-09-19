@@ -162,7 +162,7 @@ namespace SMK.View
 
             reco.Tapped += async (sender, e) =>
             {
-                await Navigation.PushAsync(carousel);
+               await Navigation.PushAsync(carousel);
             };
 
             if (owned == true)
@@ -172,7 +172,9 @@ namespace SMK.View
             imageStack.GestureRecognizers.Add(reco);
             imageScroll.Content = imageStack;
             stackLayout.Children.Add(imageScroll);
-            //Image scrolllayout hinzugefügt
+            //Image scrolllayout 
+
+            
         }
 
         public void initHTMLStack()
