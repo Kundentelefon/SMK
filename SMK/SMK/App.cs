@@ -41,6 +41,7 @@ namespace SMK
         }
         protected override void OnStart()
         {
+            ShowMainPage();
             // Handle when your app starts
         }
 
@@ -51,6 +52,7 @@ namespace SMK
 
         protected override void OnResume()
         {
+            ShowMainPage();
             // Handle when your app resumes
         }
 

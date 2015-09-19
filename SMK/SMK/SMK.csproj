@@ -57,6 +57,7 @@
     <Compile Include="Support\IHash.cs" />
     <Compile Include="Support\ISaveAndLoad.cs" />
     <Compile Include="Support\localFileSystem.cs" />
+    <Compile Include="View\LocalUrl.cs" />
     <Compile Include="View\AddProduktPage.cs" />
     <Compile Include="View\DetailCarousel.cs" />
     <Compile Include="View\DetailPage.cs" />
@@ -142,7 +143,7 @@
     <EmbeddedResource Include="zeug\PContent\p1\devil.png" />
     <EmbeddedResource Include="zeug\PContent\p1\da.jpg" />
     <Content Include="zeug\PContent\p3\World_of_fischertechnik_10sek.mp4" />
-    <Content Include="zeug\PContent\Thumbnail\2.png" />
+    <EmbeddedResource Include="zeug\PContent\Thumbnail\2.png" />
     <Content Include="zeug\PContent\Thumbnail\4.png" />
     <Content Include="zeug\PContent\Thumbnail\3.png" />
   </ItemGroup>

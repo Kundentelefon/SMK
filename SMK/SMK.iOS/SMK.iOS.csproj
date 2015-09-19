@@ -88,6 +88,8 @@
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="BaseUrlWebViewRenderer.cs" />
+    <Compile Include="BaseUrl_iOS.cs" />
     <Compile Include="SaveAndLoad.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />

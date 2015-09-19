@@ -15,16 +15,18 @@ namespace SMK.View
         //müssen noch geändert werden sobald der server steht
         //String imagePfadContent = DependencyService.Get<ISaveAndLoad>().getpath("PContent/p");
         //String imagePfadProduct = DependencyService.Get<ISaveAndLoad>().getpath("Product/"); 
-        String imagePfadContent = "SMK.zeug.PContent.p";
+        String imagePfadContent = "SMK.zeug.PContent.";
         String imagePfadProduct = "SMK.zeug.Product.";
-        String thumbnail = "SMK.zeug.Thumbnail";
+        String thumbnail = "SMK.zeug.PContent.Thumbnail.";
         Product product;
         localFileSystem files;
         List<PContent> pContent;
         bool owned;
         StackLayout imageStack;
+        StackLayout WebStack;
         StackLayout stackLayout;
         ScrollView imageScroll;
+        ScrollView imageScrollWeb;
         List<PContent> contentPictureGalarie;
         List<PContent> contentPdf;
         List<PContent> contentHtml;
@@ -38,7 +40,9 @@ namespace SMK.View
             pContent = files.loadContentList(product);
             stackLayout = new StackLayout();
             imageStack = new StackLayout();
+            WebStack = new StackLayout();
             imageScroll = new ScrollView();
+            imageScrollWeb = new ScrollView();
             TapGestureRecognizer gesture = new TapGestureRecognizer();
             contentPictureGalarie = new List<PContent>() ;
             contentPdf = new List<PContent>();
@@ -135,7 +139,7 @@ namespace SMK.View
             {
                 foreach (string image_source in content.content_FileNames)
                 {
-                    string source = imagePfadContent +content.content_ID+"."+ image_source;
+                    string source = imagePfadContent+"p" + content.content_ID.ToString() + "."+ image_source;
                     // if file doesn´t exist don`t create a frame
                     // enable this if kunde is rdy
                     //if (DependencyService.Get<ISaveAndLoad>().fileExistExact(source))
@@ -173,10 +177,47 @@ namespace SMK.View
 
         public void initHTMLStack()
         {
-            foreach(PContent content in contentHtml)
+            imageScrollWeb.Orientation = ScrollOrientation.Horizontal;
+            WebStack.Orientation = StackOrientation.Horizontal;
+            List<ContentPage> pages = new List<ContentPage>();
+            TapGestureRecognizer reco = new TapGestureRecognizer();
+            foreach (PContent content in contentHtml)
             {
+                string source = thumbnail + content.content_ID.ToString() + ".png";
+                //string source = "SMK.zeug.PContent.p0.da.jpg";
+                // if file doesn´t exist don`t create a frame
+                // enable this if kunde is rdy
+                //if (DependencyService.Get<ISaveAndLoad>().fileExistExact(source))
+                //{
+                Frame frame = new Frame
+                {
+                    OutlineColor = color,
+                    Content = new Image
+                    {
+                        Source = ImageSource.FromResource(source)
+                    }
+                };
+                    
+                //}
 
+                
+                WebStack.Children.Add(frame);
+                reco.Tapped += async (sender, e) =>
+                {
+                    await Navigation.PushAsync(new LocalUrl(content));
+                };
             }
+
+            if (owned == true)
+                stackLayout.Children.Add(new StackLayout { Orientation = StackOrientation.Horizontal, Children =
+                    { new Label { Text = "WebView", TextColor = Color.Black, FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)) },
+                        new Label { Text = "(" + WebStack.Children.Count + ")", FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
+                            TextColor = Color.Black } } });
+
+
+            WebStack.GestureRecognizers.Add(reco);
+            imageScrollWeb.Content = WebStack;
+            stackLayout.Children.Add(imageScrollWeb);
         }
     }
 }
