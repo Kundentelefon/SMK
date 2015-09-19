@@ -23,50 +23,16 @@ namespace SMK.Droid
     public class SaveAndLoad : ISaveAndLoad
     {
         /// <summary>
-        /// saves a Text to the personal folder 
-        /// </summary>
-        /// <param name="filename"></param>
-        /// <param name="text"></param>
-        public void SaveText(string location, string text)
-        {
-            //var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-            //var filePath = Path.Combine(documentsPath, filename);
-            System.IO.File.WriteAllText(getpath(location), text);
-        }
-        public string LoadText(string location)
-        {
-            //var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-            //var filePath = Path.Combine(documentsPath, filename);
-            return System.IO.File.ReadAllText(getpath(location));
-        }
-
-        public void saveModelXml(String location, Object inputObject)
-        {
-            if (inputObject.GetType() == typeof(User))
-            {
-                saveUserXml( location,  inputObject);
-            }
-            else if (inputObject.GetType() == typeof(PContents))
-            {
-                savePContentsXml(location, inputObject);
-            }
-            else if (inputObject.GetType() == typeof(Products))
-            {
-                saveProductsXml(location, inputObject);
-            }
-        }
-
-
-
-
-
-        /// <summary>
         /// saves a Object to the location ()
         /// </summary>
         /// <param name="location"></param>
         /// <param name="inputObject"></param>
         public void saveUserXml(String location, Object inputObject)
         {
+            if (fileExist(location))
+            {
+                deleteFile(location);
+            }
             XmlSerializer ser = new XmlSerializer(typeof(User));
 
             System.IO.FileStream file = System.IO.File.Create(getpath(location));
@@ -96,6 +62,10 @@ namespace SMK.Droid
         /// <param name="inputObject"></param>
         public void savePContentsXml(String location, Object inputObject)
         {
+            if (fileExist(location))
+            {
+                deleteFile(location);
+            }
             XmlSerializer ser = new XmlSerializer(typeof(PContents));
 
             System.IO.FileStream file = System.IO.File.Create(getpath(location));
@@ -123,6 +93,10 @@ namespace SMK.Droid
         /// <param name="inputObject"></param>
         public void saveProductsXml(String location, Object inputObject)
         {
+            if (fileExist(location))
+            {
+                deleteFile(location);
+            }
             XmlSerializer ser = new XmlSerializer(typeof(Products));
 
             System.IO.FileStream file = System.IO.File.Create(getpath(location));
@@ -156,7 +130,7 @@ namespace SMK.Droid
         /// <returns></returns>
         public String getpath(String inputPath)
         {
-            String contentlPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal)+"/"+ inputPath;
+            String contentlPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal) + "/" + inputPath;
             return (contentlPath);
         }
         /// <summary>
@@ -185,13 +159,15 @@ namespace SMK.Droid
 
         }
 
-
-        public void deleteUser(String location)
+        public void deleteFile(String location)
         {
             System.IO.File.Delete(getpath(location));
         }
     }
 
 
-        
+
 }
+
+
+        

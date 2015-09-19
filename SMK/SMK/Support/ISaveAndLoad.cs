@@ -17,10 +17,10 @@ namespace SMK.Support
                 //    loadButton.Clicked += (sender, e) => {
                 //    output.Text = DependencyService.Get<ISaveAndLoad>().LoadText("temp.txt");
                 //};
-        void SaveText(string filename, string text);
-        string LoadText(string filename);
+        //void SaveText(string filename, string text);
+        //string LoadText(string filename);
 
-        void saveModelXml(String location, Object inputObject);
+        //void saveModelXml(String location, Object inputObject);
         /// <summary>
         /// saves a Object to the location ()
         /// </summary>
@@ -65,6 +65,6 @@ namespace SMK.Support
         String getpath(String location);
         void createOrdner(String path);
 
-        void deleteUser(String path);
+        void deleteFile(String path);
     }
 }

@@ -254,7 +254,7 @@ namespace SMK.Support
 
         public void deleteUser()
         {
-            DependencyService.Get<ISaveAndLoad>().deleteUser(userLocation);
+            DependencyService.Get<ISaveAndLoad>().deleteFile(userLocation);
         }
 
     }
