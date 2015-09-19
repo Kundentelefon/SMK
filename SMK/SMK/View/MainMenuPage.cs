@@ -26,6 +26,7 @@ namespace SMK.View
             //DependencyService.Get<ISaveAndLoad>().saveModelXml("User",user);//test
             //Object test= DependencyService.Get<ISaveAndLoad>().loadUserXml("User");//test
 
+            
 
             files = new localFileSystem();
             //läd dummies 
@@ -120,13 +121,13 @@ namespace SMK.View
             //Command logoutCommand = new Command(() => { Navigation.PushAsync(new LoginPage(ILoginManager ilm));
             //funktion für user löschen einfügen
             //                                            });
-            
+           Command logoutCommand = new Command(() => App.Current.Logout());
                 ToolbarItem logoutButton = new ToolbarItem
                 {
                     Text = "Logout",
                     Order = ToolbarItemOrder.Primary,
                     
-                   // Command = logoutCommand
+                    Command = logoutCommand
                 };
                 this.ToolbarItems.Add(logoutButton);
 
