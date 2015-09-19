@@ -29,15 +29,18 @@ namespace SMK.Droid
         /// <param name="inputObject"></param>
         public void saveUserXml(String location, Object inputObject)
         {
-            if (fileExist(location))
-            {
-                deleteFile(location);
-            }
-            XmlSerializer ser = new XmlSerializer(typeof(User));
+            try {
+                if (fileExist(location))
+                {
+                    deleteFile(location);
+                }
+                XmlSerializer ser = new XmlSerializer(typeof(User));
 
-            System.IO.FileStream file = System.IO.File.Create(getpath(location));
-            ser.Serialize(file, inputObject);
-            file.Close();
+                System.IO.FileStream file = System.IO.File.Create(getpath(location));
+                ser.Serialize(file, inputObject);
+                file.Close();
+            }
+            catch(Exception e) { Console.WriteLine("" + e); }
         }
         /// <summary>
         /// load an xml file 
@@ -46,11 +49,15 @@ namespace SMK.Droid
         /// <returns></returns>
         public User loadUserXml(String location)
         {
-            XmlSerializer ser = new XmlSerializer(typeof(User));
-            FileStream fs = new FileStream(getpath(location), FileMode.Open);
-            XmlReader reader = XmlReader.Create(fs);
-            User retrunObject = (User)ser.Deserialize(reader);
-            fs.Close();
+            User retrunObject = new User();
+            try {
+                XmlSerializer ser = new XmlSerializer(typeof(User));
+                FileStream fs = new FileStream(getpath(location), FileMode.Open);
+                XmlReader reader = XmlReader.Create(fs);
+                retrunObject = (User)ser.Deserialize(reader);
+                fs.Close();                
+            }
+            catch (Exception e) { Console.WriteLine("" + e); }
             return (retrunObject);
         }
 
@@ -62,15 +69,18 @@ namespace SMK.Droid
         /// <param name="inputObject"></param>
         public void savePContentsXml(String location, Object inputObject)
         {
-            if (fileExist(location))
-            {
-                deleteFile(location);
-            }
-            XmlSerializer ser = new XmlSerializer(typeof(PContents));
+            try {
+                if (fileExist(location))
+                {
+                    deleteFile(location);
+                }
+                XmlSerializer ser = new XmlSerializer(typeof(PContents));
 
-            System.IO.FileStream file = System.IO.File.Create(getpath(location));
-            ser.Serialize(file, inputObject);
-            file.Close();
+                System.IO.FileStream file = System.IO.File.Create(getpath(location));
+                ser.Serialize(file, inputObject);
+                file.Close();
+            }
+            catch (Exception e) { Console.WriteLine("" + e); }
         }
         /// <summary>
         /// load an xml file 
@@ -79,11 +89,16 @@ namespace SMK.Droid
         /// <returns></returns>
         public PContents loadPcontentsXml(String location)
         {
-            XmlSerializer ser = new XmlSerializer(typeof(PContents));
-            FileStream fs = new FileStream(getpath(location), FileMode.Open);
-            XmlReader reader = XmlReader.Create(fs);
-            PContents retrunObject = (PContents)ser.Deserialize(reader);
-            fs.Close();
+            PContents retrunObject = new PContents();
+            try {
+                XmlSerializer ser = new XmlSerializer(typeof(PContents));
+                FileStream fs = new FileStream(getpath(location), FileMode.Open);
+                XmlReader reader = XmlReader.Create(fs);
+                retrunObject = (PContents)ser.Deserialize(reader);
+                fs.Close();
+                
+            }
+            catch (Exception e) { Console.WriteLine("" + e); }
             return (retrunObject);
         }
         /// <summary>
@@ -93,15 +108,18 @@ namespace SMK.Droid
         /// <param name="inputObject"></param>
         public void saveProductsXml(String location, Object inputObject)
         {
-            if (fileExist(location))
-            {
-                deleteFile(location);
-            }
-            XmlSerializer ser = new XmlSerializer(typeof(Products));
+            try {
+                if (fileExist(location))
+                {
+                    deleteFile(location);
+                }
+                XmlSerializer ser = new XmlSerializer(typeof(Products));
 
-            System.IO.FileStream file = System.IO.File.Create(getpath(location));
-            ser.Serialize(file, inputObject);
-            file.Close();
+                System.IO.FileStream file = System.IO.File.Create(getpath(location));
+                ser.Serialize(file, inputObject);
+                file.Close();
+            }
+            catch (Exception e) { Console.WriteLine("" + e); }
         }
         /// <summary>
         /// load an xml file 
@@ -110,11 +128,16 @@ namespace SMK.Droid
         /// <returns></returns>
         public Products loadProductsXml(String location)
         {
-            XmlSerializer ser = new XmlSerializer(typeof(Products));
-            FileStream fs = new FileStream(getpath(location), FileMode.Open);
-            XmlReader reader = XmlReader.Create(fs);
-            Products retrunObject = (Products)ser.Deserialize(reader);
-            fs.Close();
+            Products retrunObject = new Products();
+            try {
+                XmlSerializer ser = new XmlSerializer(typeof(Products));
+                FileStream fs = new FileStream(getpath(location), FileMode.Open);
+                XmlReader reader = XmlReader.Create(fs);
+                retrunObject = (Products)ser.Deserialize(reader);
+                fs.Close();
+      
+            }
+            catch (Exception e) { Console.WriteLine("" + e); }
             return (retrunObject);
         }
 
@@ -139,11 +162,14 @@ namespace SMK.Droid
         /// <param name="path"></param>
         public void createOrdner(String path)
         {
-            path = getpath(path);
-            if (!(Directory.Exists(path)))
-            {
-                Directory.CreateDirectory(path);
+            try {
+                path = getpath(path);
+                if (!(Directory.Exists(path)))
+                {
+                    Directory.CreateDirectory(path);
+                }
             }
+            catch (Exception e) { Console.WriteLine("" + e); }
 
         }
 
@@ -159,9 +185,22 @@ namespace SMK.Droid
 
         }
 
+        public Boolean fileExistExact(String inputString)
+        {
+            if (File.Exists(inputString))
+            {
+                return (true);
+            }
+            return (false);
+
+        }
+
         public void deleteFile(String location)
         {
-            System.IO.File.Delete(getpath(location));
+            try {
+                System.IO.File.Delete(getpath(location));
+            }
+            catch (Exception e) { Console.WriteLine("" + e); }
         }
     }
 

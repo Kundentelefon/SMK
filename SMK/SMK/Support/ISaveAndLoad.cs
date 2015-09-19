@@ -61,6 +61,7 @@ namespace SMK.Support
         Products loadProductsXml(String location);
 
         Boolean fileExist(String inputString);
+        Boolean fileExistExact(String inputString);
 
         String getpath(String location);
         void createOrdner(String path);

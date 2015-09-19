@@ -59,7 +59,7 @@ namespace SMK.Support
             Product pro4 = new Product();
             pro4.product_ID =3;
             pro4.product_Name= "Test";
-            pro4.product_Thumbnail = "SMK.FischerTechnik.Files.0.png";
+            pro4.product_Thumbnail = "SMK.FischerTechnik.Product.3.png";
             pro4.product_Text = testText;
             pro4.product_PContents = new List<int>(new int[] { 7, 8 });
 
@@ -82,13 +82,13 @@ namespace SMK.Support
 
             List<PContent> returnList2 = new List<PContent>();
             PContent content1 = new PContent();
-            content1.content_FileNames= new List<String>(new String[] { "0.da.jpg", "0.haha.png", "0.devil.png" });
+            content1.content_FileNames= new List<String>(new String[] { "da.jpg", "haha.png", "devil.png" });
             content1.content_ID = 0;
             content1.content_Kind = 0;
             content1.content_Title = "BilderGalarie";
 
             PContent content2 = new PContent();
-            content2.content_FileNames = new List<String>(new String[] { "1.da.png", "1.haha.png", "1.devil.png" });
+            content2.content_FileNames = new List<String>(new String[] { "da.jpg", "haha.png", "devil.png" });
             content2.content_ID = 1;
             content2.content_Kind = 0;
             content2.content_Title = "BilderGalarie";
@@ -104,13 +104,13 @@ namespace SMK.Support
             PContent content5 = null;
 
             PContent content6 = new PContent();
-            content6.content_FileNames = new List<String>(new String[] { "1.da.png", "1.haha.png", "1.devil.png" });
+            content6.content_FileNames = new List<String>(new String[] { "da.jpg", "haha.png", "devil.png" });
             content6.content_ID = 5;
             content6.content_Kind = 0;
             content6.content_Title = "BilderGalarie";
 
             PContent content7 = new PContent();
-            content7.content_FileNames = new List<String>(new String[] { "0.da.png", "0.haha.png", "0.devil.png" });
+            content7.content_FileNames = new List<String>(new String[] { "da.jpg", "haha.png", "devil.png" });
             content7.content_ID = 6;
             content7.content_Kind = 0;
             content7.content_Title = "BilderGalarie";

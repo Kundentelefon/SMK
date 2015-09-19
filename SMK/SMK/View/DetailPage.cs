@@ -12,6 +12,7 @@ namespace SMK.View
 {
     public class DetailPage : ContentPage
     {
+        //müssen noch geändert werden sobald der server steht
         String imagePfadContent = "SMK.FischerTechnik.PContent.p";
         String imagePfadProduct = "SMK.FischerTechnik.Product.";
         Product product;
@@ -129,18 +130,21 @@ namespace SMK.View
             {
                 foreach (string image_source in content.content_FileNames)
                 {
-                    string source = imagePfadContent +"p"+ image_source;
-
-                    Frame frame = new Frame
-                    {
-                        OutlineColor = color,
-                        Content = new Image
+                    string source = imagePfadContent +content.content_ID+"."+ image_source;
+                    // if file doesn´t exist don`t create a frame
+                    // enable this if kunde is rdy
+                    //if(DependencyService.Get<ISaveAndLoad>().fileExistExact(source)){
+                        Frame frame = new Frame
                         {
-                            Source = ImageSource.FromResource(source)
-                        }
-                    };
-                    imageStack.Children.Add(frame);
-                    carousel.Children.Add(new ContentPage { Content = new Image { Source = ImageSource.FromResource(source) } });
+                            OutlineColor = color,
+                            Content = new Image
+                            {
+                                Source = ImageSource.FromResource(source)
+                            }
+                        };
+                        imageStack.Children.Add(frame);
+                        carousel.Children.Add(new ContentPage { Content = new Image { Source = ImageSource.FromResource(source) } });
+                    //}
 
                 }
             }
