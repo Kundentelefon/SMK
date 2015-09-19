@@ -15,6 +15,7 @@ namespace SMK.View
     {
         ICollection<Product> ProductCollection;
         localFileSystem files;
+     
         
         public MainMenuPage()
         {
@@ -61,6 +62,7 @@ namespace SMK.View
                 TapGestureRecognizer gesture = new TapGestureRecognizer();
                 bool owned = files.hasContent(product, PcontentCollection);
                 Color color = Color.FromHex("E2001A");
+                DetailPage detailPage = new DetailPage(product);
                     
                 if (owned == true)
                    color = Color.FromHex("006AB3"); 
@@ -102,7 +104,7 @@ namespace SMK.View
                 stackLayout.Children.Add(frame);
                 gesture.Tapped += async (sender, e) =>
                 {
-                    await Navigation.PushAsync(new DetailPage(product));
+                    await Navigation.PushAsync(detailPage);
                 };
                 frame.GestureRecognizers.Add(gesture);
             }
