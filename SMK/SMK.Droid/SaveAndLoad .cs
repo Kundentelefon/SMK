@@ -187,6 +187,7 @@ namespace SMK.Droid
 
         public Boolean fileExistExact(String inputString)
         {
+            //var test=Directory.GetCurrentDirectory();
             if (File.Exists(inputString))
             {
                 return (true);

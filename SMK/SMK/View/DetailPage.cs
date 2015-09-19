@@ -13,8 +13,11 @@ namespace SMK.View
     public class DetailPage : ContentPage
     {
         //müssen noch geändert werden sobald der server steht
-        String imagePfadContent = "SMK.FischerTechnik.PContent.p";
-        String imagePfadProduct = "SMK.FischerTechnik.Product.";
+        //String imagePfadContent = DependencyService.Get<ISaveAndLoad>().getpath("PContent/p");
+        //String imagePfadProduct = DependencyService.Get<ISaveAndLoad>().getpath("Product/"); 
+        String imagePfadContent = "SMK.zeug.PContent.p";
+        String imagePfadProduct = "SMK.zeug.Product.";
+        String thumbnail = "SMK.zeug.Thumbnail";
         Product product;
         localFileSystem files;
         List<PContent> pContent;
@@ -45,13 +48,15 @@ namespace SMK.View
             color = Color.FromHex("E2001A");
 
             initContentLists();
-           
             String image_path = imagePfadProduct + product.product_ID.ToString() + ".png";
+            //String image_path = "/sdcard/data/0.png";
+
 
             stackLayout.Children.Add(
             new Image
             {
                 Source = ImageSource.FromResource(image_path)
+                //Source = ImageSource.FromFile(image_path)
             }
             );//Child added: Image
 
@@ -133,7 +138,8 @@ namespace SMK.View
                     string source = imagePfadContent +content.content_ID+"."+ image_source;
                     // if file doesn´t exist don`t create a frame
                     // enable this if kunde is rdy
-                    //if(DependencyService.Get<ISaveAndLoad>().fileExistExact(source)){
+                    //if (DependencyService.Get<ISaveAndLoad>().fileExistExact(source))
+                    //{
                         Frame frame = new Frame
                         {
                             OutlineColor = color,
