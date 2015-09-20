@@ -25,9 +25,11 @@ namespace SMK.View
         IRotation rotHandler;
         StackLayout imageStack;
         StackLayout WebStack;
+        StackLayout pdfStack;
         StackLayout stackLayout;
         ScrollView imageScroll;
         ScrollView imageScrollWeb;
+        ScrollView imageScrollPDF;
         List<PContent> contentPictureGalarie;
         List<PContent> contentPdf;
         List<PContent> contentHtml;
@@ -42,8 +44,10 @@ namespace SMK.View
             stackLayout = new StackLayout();
             imageStack = new StackLayout();
             WebStack = new StackLayout();
+            pdfStack = new StackLayout();
             imageScroll = new ScrollView();
             imageScrollWeb = new ScrollView();
+            imageScrollPDF = new ScrollView();
             TapGestureRecognizer gesture = new TapGestureRecognizer();
             contentPictureGalarie = new List<PContent>() ;
             contentPdf = new List<PContent>();
@@ -88,11 +92,13 @@ namespace SMK.View
             initImageStack();
             //Image scrolllayout hinzugefügt
             initHTMLStack();
+            initPDFStack();
 
             Content = stackLayout;
             BackgroundColor = Color.White;
             Padding = new Thickness(5, Device.OnPlatform(0, 15, 0), 5, 5);
-            rotHandler.disableRotation();
+
+            //rotHandler.disableRotation();
         }//ende Construktor
 
         public void initContentLists()
@@ -222,6 +228,50 @@ namespace SMK.View
             WebStack.GestureRecognizers.Add(reco);
             imageScrollWeb.Content = WebStack;
             stackLayout.Children.Add(imageScrollWeb);
+        }
+
+        public void initPDFStack()
+        {
+            imageScrollPDF.Orientation = ScrollOrientation.Horizontal;
+            pdfStack.Orientation = StackOrientation.Horizontal;
+
+            foreach (PContent content in contentPdf)
+            {
+                foreach (string pdf_source in content.content_FileNames)
+                {
+                    TapGestureRecognizer reco = new TapGestureRecognizer();
+                    string source_pdf = imagePfadContent + "p" + content.content_ID.ToString() + "." + pdf_source;
+                    string source_thumb = thumbnail + content.content_ID.ToString() + ".png";
+
+                    Frame frame = new Frame
+                    {
+                        OutlineColor = color,
+                        Content = new Image
+                        {
+                            Source = ImageSource.FromResource(source_thumb)
+                        }
+                    };
+
+                    reco.Tapped += async (sender, e) =>
+                    {
+                        await Navigation.PushAsync(new ContentPage {Content = new WebView { Source = source_pdf } });
+                    };
+                    frame.GestureRecognizers.Add(reco);
+                    pdfStack.Children.Add(frame);
+                }
+            }
+            if (owned == true)
+                stackLayout.Children.Add(new StackLayout
+                {
+                    Orientation = StackOrientation.Horizontal,
+                    Children =
+                    { new Label { Text = "PDF", TextColor = Color.Black, FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)) },
+                        new Label { Text = "(" + pdfStack.Children.Count + ")", FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
+                            TextColor = Color.Black } }
+                });
+
+            imageScrollPDF.Content = pdfStack;
+            stackLayout.Children.Add(imageScrollPDF);
         }
     }
 }

@@ -23,9 +23,9 @@ namespace SMK.Droid
         public void disableRotation()
         {
                
-           [ Activity(Label = "CodeLayoutActivity",
-            ConfigurationChanges= Android.Content.PM.ConfigChanges.Orientation |Android.Content.PM.ConfigChanges.ScreenSize, 
-            ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
+           //[ Activity(Label = "CodeLayoutActivity",
+           // ConfigurationChanges= Android.Content.PM.ConfigChanges.Orientation |Android.Content.PM.ConfigChanges.ScreenSize, 
+           // ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
         }
     }
 }
