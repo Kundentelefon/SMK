@@ -1,9 +1,5 @@
 ﻿using SMK.Model;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace SMK.Support
@@ -16,15 +12,26 @@ namespace SMK.Support
    
     public class LocalUrl : ContentPage
     {
-        String imagePfadContent = "SMK.zeug.PContent.p";
+       
         public LocalUrl(PContent content)
         {
+            String imagePfadContent = "SMK.zeug.PContent.p";
             var browser = new BaseUrlWebView(); // temporarily use this so we can custom-render in iOS
 
             var htmlSource = new HtmlWebViewSource();
             var source = imagePfadContent + content.content_ID + content.content_FileNames[0] ;
 
-            htmlSource.Html = @"<a href="""+ source + @""">";
+            //htmlSource.Html = @"<a href="""+ source + @""">";
+            htmlSource.Html = @"<html>
+                                <head>
+                                </head>
+                                <body>
+                                <h1>Xamarin.Forms</h1>
+                                <p>The CSS and image are loaded from local files!</p>
+                                <img src='XamarinLogo.png'/>
+                                
+                                </body>
+                                </html>";
 
 
             if (Device.OS != TargetPlatform.iOS)
