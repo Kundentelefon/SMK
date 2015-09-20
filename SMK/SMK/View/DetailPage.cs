@@ -22,6 +22,7 @@ namespace SMK.View
         localFileSystem files;
         List<PContent> pContent;
         bool owned;
+        IRotation rotHandler;
         StackLayout imageStack;
         StackLayout WebStack;
         StackLayout stackLayout;
@@ -91,6 +92,7 @@ namespace SMK.View
             Content = stackLayout;
             BackgroundColor = Color.White;
             Padding = new Thickness(5, Device.OnPlatform(0, 15, 0), 5, 5);
+            rotHandler.disableRotation();
         }//ende Construktor
 
         public void initContentLists()
