@@ -1,17 +1,11 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
+using Xamarin.Forms;
+using TestLocalWebsite.Droid;
+using TestLocalWebsite;
 using SMK.Support;
 
-namespace SMK.Droid
+[assembly: Dependency(typeof(BaseUrl_Android))]
+namespace TestLocalWebsite.Droid
 {
     public class BaseUrl_Android : IBaseUrl
     {

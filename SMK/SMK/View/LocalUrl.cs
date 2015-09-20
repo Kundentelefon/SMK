@@ -4,7 +4,7 @@ using Xamarin.Forms;
 
 namespace SMK.Support
 {
-    public interface IBaseUrl { string Get(); }
+
 
     // required temporarily for iOS, due to BaseUrl bug
     public class BaseUrlWebView : WebView { }
