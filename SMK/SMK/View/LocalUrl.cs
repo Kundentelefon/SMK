@@ -19,19 +19,12 @@ namespace SMK.Support
             var browser = new BaseUrlWebView(); // temporarily use this so we can custom-render in iOS
 
             var htmlSource = new HtmlWebViewSource();
-            var source = imagePfadContent + content.content_ID + content.content_FileNames[0] ;
+            //var source ="/p"+ content.content_ID + "/" + content.content_FileNames[0] + ".html";
+            var source = @"local.html";
+            // < meta http - equiv = "refresh" content = "0; url=http://example.com/" />
+            //htmlSource.Html = @"<html> < a href=""" + source + @""">";
+            htmlSource.Html = @"<meta http-equiv=""refresh"" content=""0; url ="+source+@""" />"; 
 
-            //htmlSource.Html = @"<a href="""+ source + @""">";
-            htmlSource.Html = @"<html>
-                                <head>
-                                </head>
-                                <body>
-                                <h1>Xamarin.Forms</h1>
-                                <p>The CSS and image are loaded from local files!</p>
-                                <img src='XamarinLogo.png'/>
-                                
-                                </body>
-                                </html>";
 
 
             if (Device.OS != TargetPlatform.iOS)

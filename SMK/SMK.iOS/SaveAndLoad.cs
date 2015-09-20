@@ -27,8 +27,8 @@ namespace SMK.iOS
         //}
         //public string LoadText(string location)
         //{
-        //    //var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-        //    //var filePath = Path.Combine(documentsPath, filename);
+        //    var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+        //    var filePath = Path.Combine(documentsPath, filename);
         //    return System.IO.File.ReadAllText(getpath(location));
         //}
 
