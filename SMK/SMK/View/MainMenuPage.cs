@@ -6,7 +6,6 @@ using System.Text;
 using SMK.Model;
 using SMK.Support;
 
-
 using Xamarin.Forms;
 using System.Collections.ObjectModel;
 
@@ -17,10 +16,24 @@ namespace SMK.View
         ICollection<Product> ProductCollection;
         localFileSystem files;
         
+        
         public MainMenuPage()
         {
+            ////localFileSystem sys = new localFileSystem();
+            ////sys.createInitalFolders();
+            //User user = new User();
+            //user.user_Email = "test";
+            //user.user_Password = "test";
+            //DependencyService.Get<ISaveAndLoad>().saveModelXml("User",user);//test
+            //Object test= DependencyService.Get<ISaveAndLoad>().loadUserXml("User");//test
+
             
+
             files = new localFileSystem();
+            //läd dummies 
+            // entfernen bevor go live
+            files.initaldummies();
+            //files.createInitalFolders();//+userId
             //Toolbar
             ToolbarItem toolButton = new ToolbarItem
             {
@@ -29,13 +42,16 @@ namespace SMK.View
                 Icon = null,
                 Command = new Command(() => Navigation.PushAsync(new AddProduktPage()))
             };
-            this.ToolbarItems.Add(toolButton); 
+            this.ToolbarItems.Add(toolButton);
+
+            initLogout();
             
             //Ende Toolbar
 
             //View
             ProductCollection = new Collection<Product>();
             ProductCollection = files.loadProductList();
+            List<PContent> PcontentCollection = files.loadContentList();
 
             ScrollView scrollView = new ScrollView();
             StackLayout stackLayout = new StackLayout();
@@ -45,9 +61,13 @@ namespace SMK.View
             foreach (Product product in ProductCollection)
             {
                 TapGestureRecognizer gesture = new TapGestureRecognizer();
-                bool owned = files.hasContent(product);
+                bool owned = files.hasContent(product, PcontentCollection);
                 Color color = Color.FromHex("E2001A");
+                DetailPage detailPage = new DetailPage(product);
                     
+                //Boolean test2 = DependencyService.Get<ISaveAndLoad>().fileExist("Products");
+                //Boolean test=DependencyService.Get<ISaveAndLoad>().fileExistExact("sdcard/Android/data/SMK.Droid/files/Products");
+                //DependencyService.Get<ISaveAndLoad>().getpath("Product/") + product.product_ID + "." + product.product_Thumbnail
                 if (owned == true)
                    color = Color.FromHex("006AB3"); 
 
@@ -66,7 +86,9 @@ namespace SMK.View
                         {
                             new Image
                             {
-                                Source = ImageSource.FromResource(product.product_Thumbnail),
+                                //"SMK.FischerTechnik.Product.0.png"
+                                Source=ImageSource.FromResource("SMK.zeug.Product."+product.product_ID.ToString()+".png"),
+                                //Source = ImageSource.FromResource(DependencyService.Get<ISaveAndLoad>().getpath()+User.Email+"Product/"+product.product_ID+"."+product.product_Thumbnail),
                                 VerticalOptions = LayoutOptions.Center,
                                 HorizontalOptions = LayoutOptions.Center
                             },
@@ -88,7 +110,7 @@ namespace SMK.View
                 stackLayout.Children.Add(frame);
                 gesture.Tapped += async (sender, e) =>
                 {
-                    await Navigation.PushAsync(new DetailPage(product));
+                    await Navigation.PushAsync(detailPage);
                 };
                 frame.GestureRecognizers.Add(gesture);
             }
@@ -102,6 +124,21 @@ namespace SMK.View
 
         }
 
-      
+        public void initLogout()
+        {
+            //Command logoutCommand = new Command(() => { Navigation.PushAsync(new LoginPage(ILoginManager ilm));
+            //funktion für user löschen einfügen
+            //                                            });
+           Command logoutCommand = new Command(() => App.Current.Logout());
+                ToolbarItem logoutButton = new ToolbarItem
+                {
+                    Text = "Logout",
+                    Order = ToolbarItemOrder.Primary,
+                    
+                    Command = logoutCommand
+                };
+                this.ToolbarItems.Add(logoutButton);
+
+            }
     }
 }

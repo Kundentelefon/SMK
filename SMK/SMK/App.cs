@@ -13,8 +13,8 @@ namespace SMK
 
         public App()
         {
-
-            NavigationPage Navigation_Page = new NavigationPage(new MainMenuPage());
+            
+            NavigationPage Navigation_Page = new NavigationPage();
             MainPage = Navigation_Page;
             Current = this;
 
@@ -23,7 +23,7 @@ namespace SMK
             // after login the next site to go
             if (isLoggedIn)
                 //  MainPage = Navigation_Page;
-                MainPage = Navigation_Page;
+                MainPage = new MainMenuPage();
             else
                 MainPage = new LoginModalPage(this);
         }
@@ -38,6 +38,22 @@ namespace SMK
             // It will set true on the Main Page
             Properties["IsLoggedIn"] = false;
             MainPage = new LoginModalPage(this);
+        }
+        protected override void OnStart()
+        {
+            ShowMainPage();
+            // Handle when your app starts
+        }
+
+        protected override void OnSleep()
+        {
+            // Handle when your app sleeps
+        }
+
+        protected override void OnResume()
+        {
+            ShowMainPage();
+            // Handle when your app resumes
         }
 
     }
