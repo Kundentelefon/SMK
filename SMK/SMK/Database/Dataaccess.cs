@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SMK_Database
+namespace SMK.Database
 {
     //Dataaccess handler
     //Dataaccess interface

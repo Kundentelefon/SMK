@@ -60,6 +60,7 @@
     <Compile Include="Support\IRotation.cs" />
     <Compile Include="Support\ISaveAndLoad.cs" />
     <Compile Include="Support\localFileSystem.cs" />
+    <Compile Include="Support\LocalUrl.cs" />
     <Compile Include="user.cs" />
     <Compile Include="View\AddProduktPage.cs" />
     <Compile Include="View\DetailCarousel.cs" />

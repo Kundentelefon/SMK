@@ -48,8 +48,8 @@ namespace SMK
                 MessagingCenter.Send<ContentPage>(this, "Erstellen");
             };
 
-            username = new Entry { Text = "", BackgroundColor = Color.FromHex("3f3f3f") };
-            password = new Entry { Text = "", BackgroundColor = Color.FromHex("3f3f3f"), IsPassword = true };
+            username = new Entry { Text = "dummy@rofl.lol", BackgroundColor = Color.FromHex("3f3f3f") };
+            password = new Entry { Text = "bla", BackgroundColor = Color.FromHex("3f3f3f"), IsPassword = true };
             
 
 
@@ -79,11 +79,10 @@ namespace SMK
 
         public static bool IsValidLogin(string username, string password)
         {
+            return true;
             String passwordHash = DependencyService.Get<Dataaccess>().PasswordHash(password);
-            bool isValid = false;
             try
             {
-
                 var client = new RestClient("http://10.0.2.2");
                 var request = new RestRequest("getUser.php", Method.GET);
                 request.AddParameter("user_Email", username);
@@ -98,16 +97,8 @@ namespace SMK
 
                 var model = Newtonsoft.Json.JsonConvert.DeserializeObject<List<user>>(response.Content);
 
-                foreach (var user in model)
-                {
-                    if (passwordHash.Equals(password))
-                        isValid = true;
-                    else
-                        isValid = false;
-                }
-                return isValid;
+                return model.Count > 0 && passwordHash.Equals(model[0].Password);
             }
-
             catch (InvalidOperationException ex)
             {
                 System.Diagnostics.Debug.WriteLine(ex);
@@ -117,7 +108,7 @@ namespace SMK
 
         public void rememberLogin(string username, string password)
         {
-            String passwordHash = DependencyService.Get<Dataaccess>().PasswordHash(password);
+            //String passwordHash = DependencyService.Get<Dataaccess>().PasswordHash(password);
             //TODO: save with json
 
 
