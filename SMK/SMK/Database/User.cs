@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dataaccess
+namespace SMK.Database
 {
     class User
     {
@@ -13,6 +13,8 @@ namespace Dataaccess
         public int ID { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
+
+        public string user_Email { get; set; }
 
     }
 
