@@ -26,7 +26,9 @@ namespace SMK.View
         StackLayout imageStack;
         StackLayout WebStack;
         StackLayout pdfStack;
+        StackLayout convertedStack;
         StackLayout stackLayout;
+        ScrollView imageScrollConverted;
         ScrollView imageScroll;
         ScrollView imageScrollWeb;
         ScrollView imageScrollPDF;
@@ -34,6 +36,7 @@ namespace SMK.View
         List<PContent> contentPdf;
         List<PContent> contentHtml;
         List<PContent> contentVideo;
+        List<PContent> contentConvertedPdf;
         Color color;
 
         public DetailPage(Product ResourceProduct)
@@ -45,14 +48,17 @@ namespace SMK.View
             imageStack = new StackLayout();
             WebStack = new StackLayout();
             pdfStack = new StackLayout();
+            convertedStack = new StackLayout();
             imageScroll = new ScrollView();
             imageScrollWeb = new ScrollView();
             imageScrollPDF = new ScrollView();
+            imageScrollConverted = new ScrollView();
             TapGestureRecognizer gesture = new TapGestureRecognizer();
             contentPictureGalarie = new List<PContent>() ;
             contentPdf = new List<PContent>();
             contentHtml = new List<PContent>();
             contentVideo = new List<PContent>();
+            contentConvertedPdf = new List<PContent>();
             owned = false;
             color = Color.FromHex("E2001A");
 
@@ -93,6 +99,7 @@ namespace SMK.View
             //Image scrolllayout hinzugefügt
             initHTMLStack();
             initPDFStack();
+            initConvertedStack();
 
             Content = stackLayout;
             BackgroundColor = Color.White;
@@ -129,6 +136,10 @@ namespace SMK.View
                     {
                         contentVideo.Add(content);
 
+                    }
+                    if(content.content_Kind == 4)
+                    {
+                        contentConvertedPdf.Add(content);
                     }
 
                 }
@@ -272,6 +283,49 @@ namespace SMK.View
 
             imageScrollPDF.Content = pdfStack;
             stackLayout.Children.Add(imageScrollPDF);
+        }
+
+        public void initConvertedStack()
+        {
+            imageScrollConverted.Orientation = ScrollOrientation.Horizontal;
+            convertedStack.Orientation = StackOrientation.Horizontal;
+            CarouselPage carousel;
+
+            foreach(PContent content in contentConvertedPdf)
+            {
+                carousel = new CarouselPage();
+                TapGestureRecognizer reco = new TapGestureRecognizer();
+                string source_thumb = thumbnail + content.content_ID.ToString() + ".png";
+                string source_image;
+
+                Frame frame = new Frame
+                {
+                    OutlineColor = color,
+                    Content = new Image
+                    {
+                        Source = ImageSource.FromResource(source_thumb)
+                    }
+                };
+
+                foreach(string source in content.content_FileNames)
+                {
+                    source_image = imagePfadContent + "p" + content.content_ID.ToString()+ "." + source;
+                    carousel.Children.Add(new ContentPage { Content = new Image { Source = ImageSource.FromResource(source_image) } });
+                }
+
+                reco.Tapped += async (sender, e) =>
+                {
+                    await Navigation.PushAsync(carousel);
+                };
+
+               
+                frame.GestureRecognizers.Add(reco);
+                convertedStack.Children.Add(frame);
+            }
+            if (owned == true)
+                stackLayout.Children.Add(new StackLayout { Orientation = StackOrientation.Horizontal, Children = { new Label { Text = "Lernmaterial", TextColor = Color.Black, FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)) }, new Label { Text = "(" + convertedStack.Children.Count + ")", FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)), TextColor = Color.Black } } });
+            imageScrollConverted.Content = convertedStack;
+            stackLayout.Children.Add(imageScrollConverted);
         }
     }
 }
