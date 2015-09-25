@@ -18,7 +18,7 @@ namespace SMK
 
         public User CurrentUser { get; private set; }
 
-        public bool IsLoggedIn { get { return CurrentUser != null; } }
+        public bool IsLoggedIn { get { return CurrentUser != null && CurrentUser.user_Password != null; } }
 
         private App()
         {}
@@ -26,8 +26,8 @@ namespace SMK
         public void Logout()
         {
             // It will set true on the Main Page
-            CurrentUser = null;
-            DependencyService.Get<ISaveAndLoad>().deleteFile(UserLoginDataFilePath());
+            CurrentUser.user_Password = null;
+            rememberLogin(CurrentUser);
         }
 
         public void Login(User user)
@@ -59,7 +59,13 @@ namespace SMK
 
         public async void rememberLogin(User user)
         {
-            await Task.Run(() => DependencyService.Get<ISaveAndLoad>().saveUserXml(UserLoginDataFilePath(), user));
+            await Task.Run(() => {
+                string userLoginDataFilePath = UserLoginDataFilePath();
+                ISaveAndLoad saveAndLoad = DependencyService.Get<ISaveAndLoad>();
+                if(saveAndLoad.fileExist(userLoginDataFilePath))
+                    saveAndLoad.deleteFile(userLoginDataFilePath);
+                saveAndLoad.saveUserXml(userLoginDataFilePath, user);
+            });
         }
 
         private string UserLoginDataFilePath()

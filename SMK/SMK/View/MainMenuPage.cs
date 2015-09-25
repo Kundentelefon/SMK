@@ -126,15 +126,16 @@ namespace SMK.View
 
         public void initLogout()
         {
-            Command logoutCommand = new Command(() => {
+            Command logoutCommand = new Command(() =>
+            {
                 App.Current.Logout();
-                Navigation.PushAsync(new MainMenuPage());
+                Navigation.PushAsync(new LoginPage());
             });
             ToolbarItem logoutButton = new ToolbarItem
             {
                 Text = "Logout",
                 Order = ToolbarItemOrder.Primary,
-                Command = App.Current.IsLoggedIn ? logoutCommand
+                Command = logoutCommand
             };
             this.ToolbarItems.Add(logoutButton);
 

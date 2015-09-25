@@ -39,14 +39,14 @@ namespace SMK
                 string passwordHash = DependencyService.Get<IHash>().SHA512StringHash(password.Text);
                 password.Text = new string('0', password.Text.Length);
                 User validUser = await IsValidLogin(new User(username.Text, passwordHash));
-                if (null != validUser)
+                if (null == validUser)
                 {
                     await DisplayAlert("Ungültiger Login", "E-Mail oder Passwort falsch angegeben", "Neue Eingabe");
                 }
                 else
                 {
                     App.Current.Login(validUser);
-                    Navigation.PushModalAsync(new MainMenuPage());
+                    Navigation.PushAsync(new MainMenuPage());
                 }
             };
             var create = new Button { Text = "Account erstellen", BackgroundColor = Color.FromHex("E2001A") };
@@ -55,8 +55,8 @@ namespace SMK
                 MessagingCenter.Send<ContentPage>(this, "Erstellen");
             };
 
-            username = new Entry { Text = "dummy@rofl.lol", BackgroundColor = Color.FromHex("3f3f3f") };
-            password = new Entry { Text = "bla", BackgroundColor = Color.FromHex("3f3f3f"), IsPassword = true };
+            username = new Entry { Text = App.Current.CurrentUser != null ? App.Current.CurrentUser.user_Email : "", BackgroundColor = Color.FromHex("3f3f3f") };
+            password = new Entry { Text = "", BackgroundColor = Color.FromHex("3f3f3f"), IsPassword = true };
 
             Content = new StackLayout
             {
@@ -89,7 +89,7 @@ namespace SMK
             {
                 var client = new RestClient("http://10.0.2.2");
                 var request = new RestRequest("getUser.php", Method.GET);
-                request.AddParameter("user_Email", username);
+                request.AddParameter("user_Email", user.user_Email);
 
                 IRestResponse response = await client.ExecuteGetTaskAsync(request);
 

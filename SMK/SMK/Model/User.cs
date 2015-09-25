@@ -9,6 +9,8 @@ namespace SMK.Model
     //[Preserve(AllMembers = true)]
     public class User
     {
+        public User() { }
+
         public User(string email, string password)
         {
             user_ID = -1;
