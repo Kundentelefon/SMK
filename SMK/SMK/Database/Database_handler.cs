@@ -26,19 +26,6 @@ namespace SMK.Database
 
             //client.DownloadData(request).SaveAs(path);
         }
-
-        // json test
-        public void JsonStringTest()
-        {
-            User person = new User { Username = "Bob", ID = 0, Password = "1" };
-            string output = Newtonsoft.Json.JsonConvert.SerializeObject(person);
-            Debug.WriteLine(output);
-
-            person = Newtonsoft.Json.JsonConvert.DeserializeObject<User>(output);
-            Debug.WriteLine("{0} - {1}", person.Username, person.ID, person.Password);
-
-
-        }
     }
 
 public class Placeobject

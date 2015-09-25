@@ -41,7 +41,6 @@
     <Compile Include="Database\DatabaseDialog.cs" />
     <Compile Include="Database\DatabaseUpdate.cs" />
     <Compile Include="Database\Database_handler.cs" />
-    <Compile Include="Database\User.cs" />
     <Compile Include="ILoginManager.cs" />
     <Compile Include="LoginModalPage.cs" />
     <Compile Include="LoginPage.cs" />
@@ -61,7 +60,6 @@
     <Compile Include="Support\ISaveAndLoad.cs" />
     <Compile Include="Support\localFileSystem.cs" />
     <Compile Include="Support\LocalUrl.cs" />
-    <Compile Include="user.cs" />
     <Compile Include="View\AddProduktPage.cs" />
     <Compile Include="View\DetailCarousel.cs" />
     <Compile Include="View\DetailPage.cs" />

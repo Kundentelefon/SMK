@@ -1,11 +1,15 @@
 ﻿using RestSharp;
 using SMK;
 using SMK.Database;
+using SMK.Support;
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using Xamarin.Forms;
+using System.Threading.Tasks;
+using SMK.Model;
 
 namespace SMK
 {
@@ -19,24 +23,28 @@ namespace SMK
             BackgroundColor = new Color(255, 255, 255, 1);
 
             var button = new Button { Text = "Login", BackgroundColor = Color.FromHex("006AB3") };
-            button.Clicked += (sender, e) =>
+            button.Clicked += async (sender, e) =>
             {
                 if (String.IsNullOrEmpty(username.Text) || String.IsNullOrEmpty(password.Text))
                 {
-                    DisplayAlert("Abfragefehler", "E-Mail und Passwort bitte angeben", "Neue Eingabe");
+                    await DisplayAlert("Abfragefehler", "E-Mail und Passwort bitte angeben", "Neue Eingabe");
+                    return;
                 }
-                else if (!IsValidEmail(username.Text))
+                if (!IsValidEmail(username.Text))
                 {
-                    DisplayAlert("Ungültige E-Mail", "E-Mail ist in einem ungültigen Format angegeben worden", "Neue Eingabe");
+                    await DisplayAlert("Ungültige E-Mail", "E-Mail ist in einem ungültigen Format angegeben worden", "Neue Eingabe");
+                    return;
                 }
-                else if (!IsValidLogin(username.Text, password.Text))
+                string passwordHash = DependencyService.Get<IHash>().SHA512StringHash(password.Text);
+                password.Text = new string('0', password.Text.Length);
+                if (!await IsValidLogin(username.Text, passwordHash))
                 {
-                    DisplayAlert("Ungültiger Login", "E-Mail oder Passwort falsch angegeben", "Neue Eingabe");
+                    await DisplayAlert("Ungültiger Login", "E-Mail oder Passwort falsch angegeben", "Neue Eingabe");
                 }
                 else
                 {
                     //rememberLogin
-                    rememberLogin(username.Text, username.Text);
+                    rememberLogin(username.Text, passwordHash);
                     // saves the login status
                     App.Current.Properties["IsLoggedIn"] = true;
                     ilm.ShowMainPage();
@@ -77,27 +85,30 @@ namespace SMK
                    @"(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,6}))$");
         }
 
-        public static bool IsValidLogin(string username, string password)
+        public async Task<bool> IsValidLogin(string username, string passwordHash)
         {
             return true;
-            String passwordHash = DependencyService.Get<Dataaccess>().PasswordHash(password);
             try
             {
                 var client = new RestClient("http://10.0.2.2");
                 var request = new RestRequest("getUser.php", Method.GET);
                 request.AddParameter("user_Email", username);
 
-                var response = client.Execute(request);
+                IRestResponse response = await client.ExecuteGetTaskAsync(request);
 
                 // TODO: Display alert
-                //if (response.ErrorException != null)
-                //{
-                //    DisplayAlert("Keine Verbindung zum Server", "Keine Rückmeldung vom Server erhalten.", "OK");
-                //}
+                if (response.ErrorException != null)
+                {
+                    await DisplayAlert("Keine Verbindung zum Server", "Keine Rückmeldung vom Server erhalten.", "OK");
+                    return false;
+                }
 
-                var model = Newtonsoft.Json.JsonConvert.DeserializeObject<List<user>>(response.Content);
+                if (response.Content == "0 results")
+                    return false;
 
-                return model.Count > 0 && passwordHash.Equals(model[0].Password);
+                var model = Newtonsoft.Json.JsonConvert.DeserializeObject<List<User>>(response.Content);
+
+                return model.Count > 0 && passwordHash.Equals(model[0].user_Password);
             }
             catch (InvalidOperationException ex)
             {
@@ -106,12 +117,19 @@ namespace SMK
             }
         }
 
-        public void rememberLogin(string username, string password)
+        public async void rememberLogin(string username, string passwordHash)
         {
-            //String passwordHash = DependencyService.Get<Dataaccess>().PasswordHash(password);
-            //TODO: save with json
+            await Task.Run(() => {
+                User user = new User();
+                user.user_Email = username;
+                user.user_Password = passwordHash;
 
+                ISaveAndLoad saveAndLoad = DependencyService.Get<ISaveAndLoad>();
 
+                string filePath = saveAndLoad.getpath("loginData.xml");
+
+                saveAndLoad.saveUserXml(filePath, user);
+            });
         }
     }
 }

@@ -7,6 +7,7 @@ using SMK.Database;
 using Xamarin.Forms;
 using RestSharp;
 using System.Threading.Tasks;
+using SMK.Support;
 
 namespace SMK
 {
@@ -112,11 +113,9 @@ namespace SMK
                 var client = new RestClient("http://10.0.2.2");
                     var req = new RestRequest("createUser.php", Method.POST);
                     req.AddParameter("user_Email", username);
-                    req.AddParameter("user_Password", password);
+                    req.AddParameter("user_Password", DependencyService.Get<IHash>().SHA512StringHash(password));
                     client.Execute(req);
-                
             }
-
             catch (InvalidOperationException ex)
             {
                 System.Diagnostics.Debug.WriteLine(ex);

@@ -153,7 +153,7 @@ namespace SMK.Droid
         /// <returns></returns>
         public String getpath(String inputPath)
         {
-            String contentlPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal) + "/" + inputPath;
+            String contentlPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), inputPath);
             return (contentlPath);
         }
         /// <summary>
