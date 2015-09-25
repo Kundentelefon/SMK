@@ -8,6 +8,8 @@ using Newtonsoft.Json;
 using System.Net;
 using System.IO;
 using System.Diagnostics;
+using RestSharp;
+using RestSharp.Extensions;
 
 namespace SMK.Database
 {
@@ -16,14 +18,14 @@ namespace SMK.Database
     {
         public void activateProduct(string key)
         {
-            //ftpServer = "http://smktest.bugs3.com";
-            //file = "FISCHERTECHNIK_Logo.JPG";
-            //path = @"C:\Users\Maxwell\Desktop\fisch.jpg";
+            //string ftpServer = "http://localhost";
+            //string file = "FISCHERTECHNIK_Logo.JPG";
+            //string path = @"C:\Users\Maxwell\Desktop\fisch.jpg";
             //var client = new RestClient(ftpServer);
             //var request = new RestRequest(file);
-            //var request = new RestRequest("{id}", Method.GET);
+            ////var request = new RestRequest("{id}", Method.GET);
             //request.AddUrlSegment("id", "\\FISCHERTECHNIK_Logo.JPG"); // replaces matching token in request.Resource
-
+            //
             //client.DownloadData(request).SaveAs(path);
         }
     }

@@ -54,6 +54,7 @@
     <Compile Include="Model\Products.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Support\FTPHelper.cs" />
     <Compile Include="Support\IBaseUrl.cs" />
     <Compile Include="Support\IHash.cs" />
     <Compile Include="Support\IRotation.cs" />

@@ -93,6 +93,7 @@
     <Compile Include="SaveAndLoad.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
+    <Compile Include="Support\FileHelper.cs" />
     <Compile Include="Support\Hash.cs" />
     <Compile Include="test.cs" />
     <None Include="Entitlements.plist" />
