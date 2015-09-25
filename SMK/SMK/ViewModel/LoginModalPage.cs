@@ -5,6 +5,9 @@ namespace SMK
 {
     public class LoginModalPage : CarouselPage
     {
+        /// <summary>
+        /// Hopefully deprecated
+        /// </summary>
         ContentPage login, create;
         public LoginModalPage()
         {

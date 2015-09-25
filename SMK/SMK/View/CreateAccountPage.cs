@@ -17,32 +17,35 @@ namespace SMK
         Entry username, password1, password2;
 
         /// <summary>
-        /// 
+        /// Checks: if Account is already in the database, if inserted String is a valid Email format, if entry password1 is equal entry password2. Adds then the User to the Database with hashed Password and continous to the MainPage().
         /// </summary>
         /// <param name="ilm"></param>
         /// <param name="task"></param>
         public CreateAccountPage()
         {
-            
             //bool isDuplicated = true;
 
             var button = new Button { Text = "Account erstellen", BackgroundColor = Color.FromHex("E2001A") };
             button.Clicked += async (sender, e) =>
             {
                 bool isDuplicated = await IsDuplicatedAsync(username.Text);
+                //Checks if the User is already in the database 
                 if (isDuplicated)
                 {
                     DisplayAlert("Account bereits vorhanden!", "Anderen account angeben", "OK");
                 }
+                //Checks if the User is in a Valid Email Format
                 else if (!LoginPage.IsValidEmail(username.Text))
                 {
                     DisplayAlert("Ungültige E-Mail", "E-Mail ist in einem ungültigen Format angegeben worden", "Neue Eingabe");
                 }
+                // Checks if password1 equals password2
                 else if (!(password1.Text.Equals(password2.Text)))
                 {
                     DisplayAlert("Passwort wiederholen!", "Passwörter sind nicht identisch", "OK");
                 }
 
+                // Adds the user to the database with hashed password
                 else
                 {
                     AddUser(username.Text, password1.Text);
@@ -56,7 +59,7 @@ namespace SMK
                 MessagingCenter.Send<ContentPage>(this, "Login");
             };
 
-            username = new Entry { Text = "", Placeholder = "Username ..." };
+            username = new Entry { Text = "",};
             password1 = new Entry { Text = "", IsPassword = true };
             password2 = new Entry { Text = "", IsPassword = true };
 
@@ -76,23 +79,21 @@ namespace SMK
             };
         }
 
-
+        /// <summary>
+        /// Async Connects with the Server with URI (Emulator Standard is http://10.0.2.2) and receives the User Datainformation with a REST Web Request from a .php GET Method Request. Checks if the user if null. Returns true if the user exist and returns null if the user dont exist
+        /// </summary>
+        /// <param name="strIn"></param>
+        /// <returns></returns>
         public static async Task<bool> IsDuplicatedAsync(string strIn)
         {
             bool duplicated = false;
             try
             {
-                
                 var client = new RestClient("http://10.0.2.2");
                 var request = new RestRequest("getUser.php", Method.GET);
                 request.AddParameter("user_Email", strIn);
-                System.Diagnostics.Debug.WriteLine("async start2");
-                System.Diagnostics.Debug.WriteLine(request);
 
                 var response = await client.ExecuteGetTaskAsync(request);
-                //var response = client.Execute(request);
-
-                System.Diagnostics.Debug.WriteLine("async end2");
 
                 //Because of the isValidEmail Method, a Account with the name "0 results" can never happen
                 return !response.Content.ToString().Equals("0 results");
@@ -106,11 +107,15 @@ namespace SMK
 
         }
 
+        /// <summary>
+        /// Connects with the Server with URI (Emulator Standard is http://10.0.2.2) send with a REST Web Request from a .php POST Method Request. Creates on the Database a new User with a new ID
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
         public void AddUser(string username, string password)
         {
             try
             {
-                System.Diagnostics.Debug.WriteLine("here!");
                 var client = new RestClient("http://10.0.2.2");
                     var req = new RestRequest("createUser.php", Method.POST);
                     req.AddParameter("user_Email", username);

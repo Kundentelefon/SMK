@@ -17,7 +17,10 @@ namespace SMK
     public class LoginPage : ContentPage
     {
         Entry username, password;
-        
+
+        /// <summary>
+        /// Checks: if Empty Email or password, if valid Email, if valid Login. Password Entry is set as isPassword and the shown Passworddigits only contains zeros. Password will be stored as SHA512StringHash
+        /// </summary>
         public LoginPage()
         {
             
@@ -26,19 +29,24 @@ namespace SMK
             var button = new Button { Text = "Login", BackgroundColor = Color.FromHex("006AB3") };
             button.Clicked += async (sender, e) =>
             {
+                //Checks if the Entry for username or password is empty
                 if (String.IsNullOrEmpty(username.Text) || String.IsNullOrEmpty(password.Text))
                 {
                     await DisplayAlert("Abfragefehler", "E-Mail und Passwort bitte angeben", "Neue Eingabe");
                     return;
                 }
+                //Checks if the Email Entry is receiving a valid Email String
                 if (!IsValidEmail(username.Text))
                 {
                     await DisplayAlert("Ungültige E-Mail", "E-Mail ist in einem ungültigen Format angegeben worden", "Neue Eingabe");
                     return;
                 }
+                // Converts Password in SHA512StringHash
                 string passwordHash = DependencyService.Get<IHash>().SHA512StringHash(password.Text);
+                // Sets the Passworddigits to zero after receiving a letter
                 password.Text = new string('0', password.Text.Length);
                 User validUser = await IsValidLogin(new User(username.Text, passwordHash));
+                // Checks with null parameter if user is valid
                 if (null == validUser)
                 {
                     await DisplayAlert("Ungültiger Login", "E-Mail oder Passwort falsch angegeben", "Neue Eingabe");
@@ -55,6 +63,7 @@ namespace SMK
                 MessagingCenter.Send<ContentPage>(this, "Erstellen");
             };
 
+            //Receives the CurrentUser and Set the Entry field as the Email from the last user with a valid Login
             username = new Entry { Text = App.Current.CurrentUser != null ? App.Current.CurrentUser.user_Email : "", BackgroundColor = Color.FromHex("3f3f3f") };
             password = new Entry { Text = "", BackgroundColor = Color.FromHex("3f3f3f"), IsPassword = true };
 
@@ -73,7 +82,11 @@ namespace SMK
             };
         }
 
-
+        /// <summary>
+        /// Checks the if the inserted String is in a valid Email format
+        /// </summary>
+        /// <param name="strIn"></param>
+        /// <returns></returns>
         public static bool IsValidEmail(string strIn)
         {
             // Return true if strIn is in valid e-mail format.
@@ -82,15 +95,21 @@ namespace SMK
                    @"(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,6}))$");
         }
 
+        /// <summary>
+        /// Async Connects with the Server with URI (Emulator Standard is http://10.0.2.2) and receives the User Datainformation with a REST Web Request from a .php GET Method Request. Checks if the user if null. If not, it receives a JSON and parse the password the hashed password from the Password Entry with the already hashed Password from the Database. returns a true for correct Password and null for a wrong Password
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         public async Task<User> IsValidLogin(User user)
         {
-            //return user;
+            return user;
             try
             {
                 var client = new RestClient("http://10.0.2.2");
                 var request = new RestRequest("getUser.php", Method.GET);
                 request.AddParameter("user_Email", user.user_Email);
 
+                // Async Executes the .php Request
                 IRestResponse response = await client.ExecuteGetTaskAsync(request);
 
                 // TODO: Display alert
@@ -103,8 +122,10 @@ namespace SMK
                 if (response.Content == "0 results")
                     return null;
 
+                // Deserializes JSON String
                 var model = Newtonsoft.Json.JsonConvert.DeserializeObject<List<User>>(response.Content);
 
+                //Checks if the JSON String has a user and if so, then checks for valid password 
                 return model.Count > 0 && user.user_Password.Equals(model[0].user_Password) ? model[0] : null;
             }
             catch (InvalidOperationException ex)

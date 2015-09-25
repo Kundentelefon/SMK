@@ -21,16 +21,29 @@ namespace SMK.Droid.Support
     {
         private FileStream _fileStream;
 
+        /// <summary>
+        /// Android: Open Files
+        /// </summary>
+        /// <param name="file"></param>
         public void OpenFile(string file)
         {
             _fileStream = File.OpenWrite(file);
         }
 
+        /// <summary>
+        /// Android: Filestream writing a byte array, knows when offset starts and counts length
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <param name="offset"></param>
+        /// <param name="count"></param>
         public void Write(byte[] bytes, int offset, int count)
         {
             _fileStream.Write(bytes, offset, count);
         }
 
+        /// <summary>
+        /// Android: Close File
+        /// </summary>
         public void CloseFile()
         {
             _fileStream.Close();

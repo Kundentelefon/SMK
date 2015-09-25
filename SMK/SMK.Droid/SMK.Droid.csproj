@@ -83,9 +83,6 @@
   <ItemGroup>
     <Compile Include="BaseUrl_Android.cs" />
     <Compile Include="RotationHandler.cs" />
-    <Compile Include="Contact.cs" />
-    <Compile Include="ContactListAdapter.cs" />
-    <Compile Include="CreateContactDialog.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

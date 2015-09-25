@@ -11,6 +11,11 @@ namespace SMK.Model
     {
         public User() { }
 
+        /// <summary>
+        /// Constructor: User with an initialized invalid ID
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="password"></param>
         public User(string email, string password)
         {
             user_ID = -1;
