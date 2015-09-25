@@ -1,47 +1,49 @@
-﻿using SMK.View;
+﻿using SMK.Model;
+using SMK.Support;
+using SMK.View;
 using System;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 
 namespace SMK
 {
-    public class App : Application, ILoginManager
+    public class App : Application
     {
-        static ILoginManager loginManager;
-        public static App Current;
-
-
-        public App()
+        private static App _current;
+        public static App Current
         {
-            
-            NavigationPage Navigation_Page = new NavigationPage();
-            MainPage = Navigation_Page;
-            Current = this;
-
-            var isLoggedIn = Properties.ContainsKey("IsLoggedIn") ? (bool)Properties["IsLoggedIn"] : false;
-
-            // after login the next site to go
-            if (isLoggedIn)
-                //  MainPage = Navigation_Page;
-                MainPage = new MainMenuPage();
-            else
-                MainPage = new LoginModalPage(this);
+            get { return _current ?? (_current = new App()); }
         }
 
-        public void ShowMainPage()
-        {
-            MainPage = new NavigationPage(new MainMenuPage());
-        }
+        public User CurrentUser { get; private set; }
+
+        public bool IsLoggedIn { get { return CurrentUser != null; } }
+
+        private App()
+        {}
 
         public void Logout()
         {
             // It will set true on the Main Page
-            Properties["IsLoggedIn"] = false;
-            MainPage = new LoginModalPage(this);
+            CurrentUser = null;
+            DependencyService.Get<ISaveAndLoad>().deleteFile(UserLoginDataFilePath());
         }
+
+        public void Login(User user)
+        {
+            CurrentUser = user;
+            rememberLogin(user);
+        }
+
         protected override void OnStart()
         {
-            ShowMainPage();
+            CurrentUser = DependencyService.Get<ISaveAndLoad>().loadUserXml(UserLoginDataFilePath());
+
+            if (IsLoggedIn)
+                MainPage = new NavigationPage(new MainMenuPage());
+            else
+                MainPage = new NavigationPage(new LoginPage());
             // Handle when your app starts
         }
 
@@ -52,9 +54,17 @@ namespace SMK
 
         protected override void OnResume()
         {
-            ShowMainPage();
             // Handle when your app resumes
         }
 
+        public async void rememberLogin(User user)
+        {
+            await Task.Run(() => DependencyService.Get<ISaveAndLoad>().saveUserXml(UserLoginDataFilePath(), user));
+        }
+
+        private string UserLoginDataFilePath()
+        {
+            return DependencyService.Get<ISaveAndLoad>().getpath("loginData.xml");
+        }
     }
 }

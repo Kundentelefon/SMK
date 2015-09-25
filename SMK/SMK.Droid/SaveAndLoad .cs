@@ -49,16 +49,16 @@ namespace SMK.Droid
         /// <returns></returns>
         public User loadUserXml(String location)
         {
-            User retrunObject = new User();
+            User returnObject = null;
             try {
                 XmlSerializer ser = new XmlSerializer(typeof(User));
                 FileStream fs = new FileStream(getpath(location), FileMode.Open);
                 XmlReader reader = XmlReader.Create(fs);
-                retrunObject = (User)ser.Deserialize(reader);
+                returnObject = (User)ser.Deserialize(reader);
                 fs.Close();                
             }
             catch (Exception e) { Console.WriteLine("" + e); }
-            return (retrunObject);
+            return (returnObject);
         }
 
 

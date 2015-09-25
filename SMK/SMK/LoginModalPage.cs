@@ -6,10 +6,10 @@ namespace SMK
     public class LoginModalPage : CarouselPage
     {
         ContentPage login, create;
-        public LoginModalPage(ILoginManager ilm)
+        public LoginModalPage()
         {
-            login = new LoginPage(ilm);
-            create = new CreateAccountPage(ilm);
+            login = new LoginPage();
+            create = new CreateAccountPage();
             this.Children.Add(login);
             this.Children.Add(create);
 

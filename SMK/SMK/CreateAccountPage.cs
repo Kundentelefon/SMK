@@ -8,6 +8,7 @@ using Xamarin.Forms;
 using RestSharp;
 using System.Threading.Tasks;
 using SMK.Support;
+using SMK.View;
 
 namespace SMK
 {
@@ -20,7 +21,7 @@ namespace SMK
         /// </summary>
         /// <param name="ilm"></param>
         /// <param name="task"></param>
-        public CreateAccountPage(ILoginManager ilm)
+        public CreateAccountPage()
         {
             
             //bool isDuplicated = true;
@@ -46,7 +47,7 @@ namespace SMK
                 {
                     AddUser(username.Text, password1.Text);
                     DisplayAlert("Account erstellt!", "Neuer Account wurde erstellt", "OK");
-                    ilm.ShowMainPage();
+                    Navigation.PushModalAsync(new MainMenuPage());
                 }
             };
             var cancel = new Button { Text = "Zurück", BackgroundColor = Color.FromHex("006AB3") };

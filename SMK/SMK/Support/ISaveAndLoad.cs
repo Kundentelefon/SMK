@@ -31,7 +31,7 @@ namespace SMK.Support
         /// load an xml file 
         /// </summary>
         /// <param name="location"></param>
-        /// <returns></returns>
+        /// <returns>Returns the remembered user and null if no user is saved.</returns>
         User loadUserXml(String location);
 
 

@@ -10,6 +10,7 @@ using System.Text.RegularExpressions;
 using Xamarin.Forms;
 using System.Threading.Tasks;
 using SMK.Model;
+using SMK.View;
 
 namespace SMK
 {
@@ -17,7 +18,7 @@ namespace SMK
     {
         Entry username, password;
         
-        public LoginPage(ILoginManager ilm)
+        public LoginPage()
         {
             
             BackgroundColor = new Color(255, 255, 255, 1);
@@ -37,17 +38,15 @@ namespace SMK
                 }
                 string passwordHash = DependencyService.Get<IHash>().SHA512StringHash(password.Text);
                 password.Text = new string('0', password.Text.Length);
-                if (!await IsValidLogin(username.Text, passwordHash))
+                User validUser = await IsValidLogin(new User(username.Text, passwordHash));
+                if (null != validUser)
                 {
                     await DisplayAlert("Ungültiger Login", "E-Mail oder Passwort falsch angegeben", "Neue Eingabe");
                 }
                 else
                 {
-                    //rememberLogin
-                    rememberLogin(username.Text, passwordHash);
-                    // saves the login status
-                    App.Current.Properties["IsLoggedIn"] = true;
-                    ilm.ShowMainPage();
+                    App.Current.Login(validUser);
+                    Navigation.PushModalAsync(new MainMenuPage());
                 }
             };
             var create = new Button { Text = "Account erstellen", BackgroundColor = Color.FromHex("E2001A") };
@@ -58,8 +57,6 @@ namespace SMK
 
             username = new Entry { Text = "dummy@rofl.lol", BackgroundColor = Color.FromHex("3f3f3f") };
             password = new Entry { Text = "bla", BackgroundColor = Color.FromHex("3f3f3f"), IsPassword = true };
-            
-
 
             Content = new StackLayout
             {
@@ -85,9 +82,9 @@ namespace SMK
                    @"(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,6}))$");
         }
 
-        public async Task<bool> IsValidLogin(string username, string passwordHash)
+        public async Task<User> IsValidLogin(User user)
         {
-            return true;
+            //return user;
             try
             {
                 var client = new RestClient("http://10.0.2.2");
@@ -100,37 +97,23 @@ namespace SMK
                 if (response.ErrorException != null)
                 {
                     await DisplayAlert("Keine Verbindung zum Server", "Keine Rückmeldung vom Server erhalten.", "OK");
-                    return false;
+                    return null;
                 }
 
                 if (response.Content == "0 results")
-                    return false;
+                    return null;
 
                 var model = Newtonsoft.Json.JsonConvert.DeserializeObject<List<User>>(response.Content);
 
-                return model.Count > 0 && passwordHash.Equals(model[0].user_Password);
+                return model.Count > 0 && user.user_Password.Equals(model[0].user_Password) ? model[0] : null;
             }
             catch (InvalidOperationException ex)
             {
                 System.Diagnostics.Debug.WriteLine(ex);
-                return false;
+                return null;
             }
         }
 
-        public async void rememberLogin(string username, string passwordHash)
-        {
-            await Task.Run(() => {
-                User user = new User();
-                user.user_Email = username;
-                user.user_Password = passwordHash;
-
-                ISaveAndLoad saveAndLoad = DependencyService.Get<ISaveAndLoad>();
-
-                string filePath = saveAndLoad.getpath("loginData.xml");
-
-                saveAndLoad.saveUserXml(filePath, user);
-            });
-        }
     }
 }
 

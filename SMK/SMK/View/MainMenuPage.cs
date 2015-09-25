@@ -126,19 +126,18 @@ namespace SMK.View
 
         public void initLogout()
         {
-            //Command logoutCommand = new Command(() => { Navigation.PushAsync(new LoginPage(ILoginManager ilm));
-            //funktion für user löschen einfügen
-            //                                            });
-           Command logoutCommand = new Command(() => App.Current.Logout());
-                ToolbarItem logoutButton = new ToolbarItem
-                {
-                    Text = "Logout",
-                    Order = ToolbarItemOrder.Primary,
-                    
-                    Command = logoutCommand
-                };
-                this.ToolbarItems.Add(logoutButton);
+            Command logoutCommand = new Command(() => {
+                App.Current.Logout();
+                Navigation.PushAsync(new MainMenuPage());
+            });
+            ToolbarItem logoutButton = new ToolbarItem
+            {
+                Text = "Logout",
+                Order = ToolbarItemOrder.Primary,
+                Command = App.Current.IsLoggedIn ? logoutCommand
+            };
+            this.ToolbarItems.Add(logoutButton);
 
-            }
+        }
     }
 }
