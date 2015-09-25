@@ -36,10 +36,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
+    <Compile Include="Database\ProductAccess.cs" />
+    <Compile Include="Model\PContentFiles.cs" />
     <Compile Include="View\CreateAccountPage.cs" />
     <Compile Include="Database\Dataaccess.cs" />
     <Compile Include="Database\DatabaseDialog.cs" />
-    <Compile Include="Database\DatabaseUpdate.cs" />
     <Compile Include="Database\Database_handler.cs" />
     <Compile Include="ViewModel\ILoginManager.cs" />
     <Compile Include="ViewModel\LoginModalPage.cs" />

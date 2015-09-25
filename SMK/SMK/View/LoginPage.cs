@@ -123,10 +123,10 @@ namespace SMK
                     return null;
 
                 // Deserializes JSON String
-                var model = Newtonsoft.Json.JsonConvert.DeserializeObject<List<User>>(response.Content);
+                var model = Newtonsoft.Json.JsonConvert.DeserializeObject<User>(response.Content);
 
                 //Checks if the JSON String has a user and if so, then checks for valid password 
-                return model.Count > 0 && user.user_Password.Equals(model[0].user_Password) ? model[0] : null;
+                return user.user_Password.Equals(model.user_Password) ? model : null;
             }
             catch (InvalidOperationException ex)
             {

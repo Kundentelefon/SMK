@@ -156,7 +156,7 @@ namespace SMK.View
 
             foreach (PContent content in contentPictureGalarie)
             {
-                foreach (string image_source in content.content_FileNames)
+                foreach (string image_source in content.files)
                 {
                     string source = imagePfadContent+"p" + content.content_ID.ToString() + "."+ image_source;
                     // if file doesn´t exist don`t create a frame
@@ -248,7 +248,7 @@ namespace SMK.View
 
             foreach (PContent content in contentPdf)
             {
-                foreach (string pdf_source in content.content_FileNames)
+                foreach (string pdf_source in content.files)
                 {
                     TapGestureRecognizer reco = new TapGestureRecognizer();
                     string source_pdf = imagePfadContent + "p" + content.content_ID.ToString() + "." + pdf_source;
@@ -307,7 +307,7 @@ namespace SMK.View
                     }
                 };
 
-                foreach(string source in content.content_FileNames)
+                foreach(string source in content.files)
                 {
                     source_image = imagePfadContent + "p" + content.content_ID.ToString()+ "." + source;
                     carousel.Children.Add(new ContentPage { Content = new Image { Source = ImageSource.FromResource(source_image) } });

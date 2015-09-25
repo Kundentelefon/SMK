@@ -58,6 +58,13 @@ namespace SMK
         /// </summary>
         protected override void OnStart()
         {
+            // Test For Downloading the whole content of  a directory path
+            //IFtpClient client = DependencyService.Get<IFtpClient>();
+            //client.DownloadDirectoryAsync(
+            //    "Folder", 
+            //    DependencyService.Get<ISaveAndLoad>().getpath("zeug2"), 
+            //    "ipfromServer", "UserFTPserver", "PasswordFTPserver");
+
             CurrentUser = DependencyService.Get<ISaveAndLoad>().loadUserXml(UserLoginDataFilePath());
 
             if (IsLoggedIn)

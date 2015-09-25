@@ -36,32 +36,32 @@ namespace SMK.Support
 
             List<Product> returnList = new List<Product>();
             Product pro1 = new Product();
-            pro1.product_ID =0;
+            pro1.product_ID = 0;
             pro1.product_Name= "Test";
             pro1.product_Thumbnail = "png";
             pro1.product_Text = testText;
-            pro1.product_PContents = new List<int>(new int[] { 0, 1, 2 });
+            pro1.PContents = new List<int> { 0, 1, 2 };
 
             Product pro2 = new Product();
-            pro2.product_ID =1;
+            pro2.product_ID = 1;
             pro2.product_Name= "Test";
             pro2.product_Thumbnail = "png";
             pro2.product_Text = testText;
-            pro2.product_PContents = new List<int>(new int[] { 3, 4 });
+            pro2.PContents = new List<int> { 3, 4 };
 
             Product pro3 = new Product();
             pro3.product_ID =2;
             pro3.product_Name= "Test";
             pro3.product_Thumbnail = "png";
             pro3.product_Text = testText;
-            pro3.product_PContents = new List<int>(new int[] { 5, 6 });
+            pro3.PContents = new List<int> { 5, 6 };
 
             Product pro4 = new Product();
             pro4.product_ID =3;
             pro4.product_Name= "Test";
             pro4.product_Thumbnail = "png";
             pro4.product_Text = testText;
-            pro4.product_PContents = new List<int>(new int[] { 7, 8 });
+            pro4.PContents = new List<int> { 7, 8 };
 
             returnList.Add(pro1);
             returnList.Add(pro2);
@@ -82,43 +82,43 @@ namespace SMK.Support
 
             List<PContent> returnList2 = new List<PContent>();
             PContent content1 = new PContent();
-            content1.content_FileNames= new List<String>(new String[] { "da.jpg", "haha.png", "devil.png" });
+            content1.files = new List<string>(new [] { "da.jpg", "haha.png", "devil.png" });
             content1.content_ID = 0;
             content1.content_Kind = 0;
             content1.content_Title = "BilderGalarie";
 
             PContent content2 = new PContent();
-            content2.content_FileNames = new List<String>(new String[] { "da.jpg", "haha.png", "devil.png" });
+            content2.files = new List<string>(new [] { "da.jpg", "haha.png", "devil.png" });
             content2.content_ID = 1;
             content2.content_Kind = 0;
             content2.content_Title = "BilderGalarie";
 
             PContent content3 = new PContent();
-            content3.content_FileNames = new List<String>(new String[] { "test" });
+            content3.files = new List<string>(new [] { "test" });
             content3.content_ID = 2;
             content3.content_Kind = 2;
             content3.content_Title = "WebView";
 
             PContent content4 = new PContent();
-            content4.content_FileNames = new List<String>(new String[] { "World_of_fischertechnik_10sek.mp4" });
+            content4.files = new List<string>(new [] { "World_of_fischertechnik_10sek.mp4" });
             content4.content_ID = 3;
             content4.content_Kind = 3;
             content4.content_Title = "Video";
 
             PContent content5 = new PContent();
-            content4.content_FileNames = new List<String>(new String[] { "da.jpg", "haha.png", "devil.png" });
+            content4.files = new List<string>(new [] { "da.jpg", "haha.png", "devil.png" });
             content4.content_ID = 4;
             content4.content_Kind = 4;
             content4.content_Title = "gallary";
 
             PContent content6 = new PContent();
-            content6.content_FileNames = new List<String>(new String[] { "1 Oeco Energy_D_2.Aufl.indd.pdf" });
+            content6.files = new List<string>(new [] { "1 Oeco Energy_D_2.Aufl.indd.pdf" });
             content6.content_ID = 5;
             content6.content_Kind = 1;
             content6.content_Title = "PDF";
 
             PContent content7 = new PContent();
-            content7.content_FileNames = new List<String>(new String[] { "da.jpg", "haha.png", "devil.png" });
+            content7.files = new List<string>(new [] { "da.jpg", "haha.png", "devil.png" });
             content7.content_ID = 6;
             content7.content_Kind = 0;
             content7.content_Title = "BilderGalarie";
@@ -174,7 +174,7 @@ namespace SMK.Support
         {
             List<PContent> completeList = loadContentList();
             List<PContent> returnList = new List<PContent>();
-            foreach (var item in product.product_PContents)
+            foreach (var item in product.PContents)
             {
                 returnList.Add(completeList[item]);
             }
@@ -189,7 +189,7 @@ namespace SMK.Support
         public Boolean hasContent(Product product, List<PContent> Pcontent)
         {
             List<PContent> content = new List<PContent>();
-            foreach (var item in product.product_PContents)
+            foreach (var item in product.PContents)
             {
                 content.Add(Pcontent[item]);
             }

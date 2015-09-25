@@ -13,7 +13,8 @@ namespace SMK.Model
         public String product_Name { get; set; }
         public String product_Thumbnail { get; set; }
         public String product_Text { get; set; }
-        public List<int> product_PContents { get; set; }
+
+        public List<int> PContents { get; set; } 
 
         //public Product(int product_ID, String product_Name, String product_Thumbnail, String product_Text, List<int> product_PContents)
         //{

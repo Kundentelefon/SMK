@@ -11,9 +11,8 @@ namespace SMK.Model
         public int content_ID { get; set; }
         public int content_Kind { get; set; }
         public String content_Title { get; set; }
-        //Namen der Elemente im Orderner // FischerTechnik/PContent/0(ContentID)
-        public List<String> content_FileNames { get; set; }
+        public int product_ID { get; set; }
 
-
+        public List<string> files;
     }
 }
