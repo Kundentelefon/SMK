@@ -59,7 +59,7 @@ namespace SMK
                 MessagingCenter.Send<ContentPage>(this, "Login");
             };
 
-            username = new Entry { Text = "",};
+            username = new Entry { Text = ""};
             password1 = new Entry { Text = "", IsPassword = true };
             password2 = new Entry { Text = "", IsPassword = true };
 

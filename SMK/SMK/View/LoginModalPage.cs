@@ -6,7 +6,7 @@ namespace SMK
     public class LoginModalPage : CarouselPage
     {
         /// <summary>
-        /// Hopefully deprecated
+        /// Needed to get the swipe to create account
         /// </summary>
         ContentPage login, create;
         public LoginModalPage()

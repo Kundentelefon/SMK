@@ -40,8 +40,8 @@
     <Compile Include="DataAccess\DataAccessMySqlPhp.cs" />
     <Compile Include="DataAccess\IDataAccess.cs" />
     <Compile Include="View\CreateAccountPage.cs" />
-    <Compile Include="ViewModel\ILoginManager.cs" />
-    <Compile Include="ViewModel\LoginModalPage.cs" />
+    <Compile Include="View\ILoginManager.cs" />
+    <Compile Include="View\LoginModalPage.cs" />
     <Compile Include="View\LoginPage.cs" />
     <Compile Include="MainPage.cs" />
     <Compile Include="MainPage_Xaml.xaml.cs">
@@ -118,7 +118,9 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="ViewModel\" />
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="View\LoginPage_Xaml.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>

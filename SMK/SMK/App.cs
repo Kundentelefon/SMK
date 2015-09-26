@@ -5,11 +5,12 @@ using System;
 using System.Threading.Tasks;
 using SMK.DataAccess;
 using Xamarin.Forms;
+using SMK;
 
 
 namespace SMK
 {
-    public class App : Application
+    public class App : Application, ILoginManager
     {
         private static App _current;
 
@@ -69,11 +70,10 @@ namespace SMK
             DataAccessHandler.InitDataAccess(DataAccessHandler.InterfaceType.MySqlPhp);
 
             CurrentUser = DependencyService.Get<ISaveAndLoad>().loadUserXml(UserLoginDataFilePath());
-
             if (IsLoggedIn)
                 MainPage = new NavigationPage(new MainMenuPage());
             else
-                MainPage = new NavigationPage(new LoginPage());
+                MainPage = new LoginModalPage();
             // Handle when your app starts
         }
 
@@ -109,6 +109,11 @@ namespace SMK
         private string UserLoginDataFilePath()
         {
             return DependencyService.Get<ISaveAndLoad>().getpath("loginData.xml");
+        }
+
+        public void ShowMainPage()
+        {
+            MainPage = new NavigationPage(new MainMenuPage());
         }
     }
 }
