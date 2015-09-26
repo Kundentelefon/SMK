@@ -1,6 +1,6 @@
 ﻿using RestSharp;
 using SMK;
-using SMK.Database;
+using SMK.DataAccess;
 using SMK.Support;
 using System;
 using System.IO;
@@ -95,44 +95,18 @@ namespace SMK
                    @"(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,6}))$");
         }
 
-        /// <summary>
-        /// Async Connects with the Server with URI (Emulator Standard is http://10.0.2.2) and receives the User Datainformation with a REST Web Request from a .php GET Method Request. Checks if the user if null. If not, it receives a JSON and parse the password the hashed password from the Password Entry with the already hashed Password from the Database. returns a true for correct Password and null for a wrong Password
-        /// </summary>
-        /// <param name="user"></param>
-        /// <returns></returns>
         public async Task<User> IsValidLogin(User user)
         {
             return user;
             try
             {
-                var client = new RestClient("http://10.0.2.2");
-                var request = new RestRequest("getUser.php", Method.GET);
-                request.AddParameter("user_Email", user.user_Email);
-
-                // Async Executes the .php Request
-                IRestResponse response = await client.ExecuteGetTaskAsync(request);
-
-                // TODO: Display alert
-                if (response.ErrorException != null)
-                {
-                    await DisplayAlert("Keine Verbindung zum Server", "Keine Rückmeldung vom Server erhalten.", "OK");
-                    return null;
-                }
-
-                if (response.Content == "0 results")
-                    return null;
-
-                // Deserializes JSON String
-                var model = Newtonsoft.Json.JsonConvert.DeserializeObject<User>(response.Content);
-
-                //Checks if the JSON String has a user and if so, then checks for valid password 
-                return user.user_Password.Equals(model.user_Password) ? model : null;
+                return await DataAccessHandler.DataAccess.ValidateUser(user);
             }
-            catch (InvalidOperationException ex)
+            catch (Exception)
             {
-                System.Diagnostics.Debug.WriteLine(ex);
-                return null;
+                await DisplayAlert("Connection Error", "Unable to connect to Server", "OK");
             }
+            return null;
         }
 
     }

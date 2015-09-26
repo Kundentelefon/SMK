@@ -3,6 +3,7 @@ using SMK.Support;
 using SMK.View;
 using System;
 using System.Threading.Tasks;
+using SMK.DataAccess;
 using Xamarin.Forms;
 
 
@@ -64,6 +65,8 @@ namespace SMK
             //    "Folder", 
             //    DependencyService.Get<ISaveAndLoad>().getpath("zeug2"), 
             //    "ipfromServer", "UserFTPserver", "PasswordFTPserver");
+
+            DataAccessHandler.InitDataAccess(DataAccessHandler.InterfaceType.MySqlPhp);
 
             CurrentUser = DependencyService.Get<ISaveAndLoad>().loadUserXml(UserLoginDataFilePath());
 

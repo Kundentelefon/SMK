@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Emit;
 using System.Text;
-
+using SMK.DataAccess;
+using SMK.Model;
 using Xamarin.Forms;
 
 namespace SMK.View
@@ -37,9 +38,15 @@ namespace SMK.View
             button.Clicked += (sender, e) => { AddProduct(entry.Text); };
         }
 
-        public void AddProduct(string productCode)
+        public async void AddProduct(string productCode)
         {
-            
+            if (!await DataAccessHandler.DataAccess.IsValidKey(productCode))
+            {
+                //TODO: Alert
+                return;
+            }
+            Product product = await DataAccessHandler.DataAccess.GetProductByKey(productCode);
+            DataAccessHandler.DataAccess.AddProductToUser(product.product_ID, App.Current.CurrentUser);
         }
     }
 }

@@ -36,12 +36,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
-    <Compile Include="Database\ProductAccess.cs" />
-    <Compile Include="Model\PContentFiles.cs" />
+    <Compile Include="DataAccess\DataAccessHandler.cs" />
+    <Compile Include="DataAccess\DataAccessMySqlPhp.cs" />
+    <Compile Include="DataAccess\IDataAccess.cs" />
     <Compile Include="View\CreateAccountPage.cs" />
-    <Compile Include="Database\Dataaccess.cs" />
-    <Compile Include="Database\DatabaseDialog.cs" />
-    <Compile Include="Database\Database_handler.cs" />
     <Compile Include="ViewModel\ILoginManager.cs" />
     <Compile Include="ViewModel\LoginModalPage.cs" />
     <Compile Include="View\LoginPage.cs" />
@@ -55,7 +53,7 @@
     <Compile Include="Model\Products.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Support\FTPHelper.cs" />
+    <Compile Include="Support\IFtpClient.cs" />
     <Compile Include="Support\IBaseUrl.cs" />
     <Compile Include="Support\IHash.cs" />
     <Compile Include="Support\IRotation.cs" />
