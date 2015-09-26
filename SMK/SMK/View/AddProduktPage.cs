@@ -40,13 +40,16 @@ namespace SMK.View
 
         public async void AddProduct(string productCode)
         {
+            // TODO: unable to connect to server exception
             if (!await DataAccessHandler.DataAccess.IsValidKey(productCode))
             {
                 //TODO: Alert
+                
                 return;
             }
             Product product = await DataAccessHandler.DataAccess.GetProductByKey(productCode);
             DataAccessHandler.DataAccess.AddProductToUser(product.product_ID, App.Current.CurrentUser);
+            DataAccessHandler.DataAccess.SetProductKeyInvalid(productCode);
         }
     }
 }

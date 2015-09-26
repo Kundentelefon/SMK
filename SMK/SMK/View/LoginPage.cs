@@ -95,6 +95,11 @@ namespace SMK
                    @"(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,6}))$");
         }
 
+        /// <summary>
+        /// Checks if the user is already in the Database with the ValidateUser REST API
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         public async Task<User> IsValidLogin(User user)
         {
             return user;

@@ -21,6 +21,14 @@ namespace SMK.Droid.Support
 {
     internal class FtpClient : IFtpClient
     {
+        /// <summary>
+        /// Connects with WebRequest to FTPServer. Download the file with a filestream
+        /// </summary>
+        /// <param name="src"></param>
+        /// <param name="dest"></param>
+        /// <param name="host"></param>
+        /// <param name="user"></param>
+        /// <param name="password"></param>
         public void DownloadFile(string src, string dest, string host, string user, string password)
         {
             WebRequest request = WebRequest.Create("ftp://" + host + "/" + src);
@@ -31,7 +39,7 @@ namespace SMK.Droid.Support
 
             Stream reqStream = response.GetResponseStream(); ;
 
-            // 
+            //adjust blocksize if needed
             FileStream fileStream = File.Create(dest);
             int blockSize = 2048;
             byte[] buffer = new byte[blockSize];
@@ -43,7 +51,14 @@ namespace SMK.Droid.Support
             }
             fileStream.Close();
         }
-
+        /// <summary>
+        /// Connects with WebRequest to FTPServer. Download the files of a directory and recognised subdirectorys which will be downloaded too
+        /// </summary>
+        /// <param name="src"></param>
+        /// <param name="dest"></param>
+        /// <param name="host"></param>
+        /// <param name="user"></param>
+        /// <param name="password"></param>
         public void DownloadDirectoryAsync(string src, string dest, string host, string user, string password)
         {
             WebRequest request = WebRequest.Create("ftp://" + host + "/" + src + "/");

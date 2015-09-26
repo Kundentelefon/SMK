@@ -28,7 +28,7 @@ namespace SMK
             var button = new Button { Text = "Account erstellen", BackgroundColor = Color.FromHex("E2001A") };
             button.Clicked += async (sender, e) =>
             {
-                bool isDuplicated = await IsDuplicatedAsync(username.Text);
+                bool isDuplicated = await IsDuplicatedUserAsync(username.Text);
                 //Checks if the User is already in the database 
                 if (isDuplicated)
                 {
@@ -80,54 +80,43 @@ namespace SMK
         }
 
         /// <summary>
-        /// Async Connects with the Server with URI (Emulator Standard is http://10.0.2.2) and receives the User Datainformation with a REST Web Request from a .php GET Method Request. Checks if the user if null. Returns true if the user exist and returns null if the user dont exist
+        /// Checks if the User is duplicated with a REST API
         /// </summary>
         /// <param name="strIn"></param>
         /// <returns></returns>
-        public static async Task<bool> IsDuplicatedAsync(string strIn)
+        public async Task<bool> IsDuplicatedUserAsync(string strIn)
         {
             bool duplicated = false;
             try
             {
-                var client = new RestClient("http://10.0.2.2");
-                var request = new RestRequest("getUser.php", Method.GET);
-                request.AddParameter("user_Email", strIn);
-
-                var response = await client.ExecuteGetTaskAsync(request);
-
-                //Because of the isValidEmail Method, a Account with the name "0 results" can never happen
-                return !response.Content.ToString().Equals("0 results");
+                duplicated = await DataAccessHandler.DataAccess.IsDuplicatedUser(strIn);
             }
-
-            catch (InvalidOperationException ex)
+            catch (Exception)
             {
-                System.Diagnostics.Debug.WriteLine(ex);
-                return false;
+                await DisplayAlert("Connection Error", "Unable to connect to Server", "OK");
             }
+            return duplicated;
 
         }
 
         /// <summary>
-        /// Connects with the Server with URI (Emulator Standard is http://10.0.2.2) send with a REST Web Request from a .php POST Method Request. Creates on the Database a new User with a new ID
+        /// Adds the User to the Database with a REST API
         /// </summary>
         /// <param name="username"></param>
         /// <param name="password"></param>
-        public void AddUser(string username, string password)
+        public async void AddUser(string username, string password)
         {
             try
             {
-                var client = new RestClient("http://10.0.2.2");
-                    var req = new RestRequest("createUser.php", Method.POST);
-                    req.AddParameter("user_Email", username);
-                    req.AddParameter("user_Password", DependencyService.Get<IHash>().SHA512StringHash(password));
-                    client.Execute(req);
+                DataAccessHandler.DataAccess.AddUserToDatabase(username, password);
             }
-            catch (InvalidOperationException ex)
+            catch (Exception)
             {
-                System.Diagnostics.Debug.WriteLine(ex);
+                await DisplayAlert("Connection Error", "Unable to connect to Server", "OK");
             }
         }
 
     }
+    
 }
 

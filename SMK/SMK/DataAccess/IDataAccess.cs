@@ -14,6 +14,8 @@ namespace SMK.DataAccess
         void SetProductKeyInvalid(string key);
         void AddProductToUser(int productId, User user);
         Task<User> ValidateUser(User user);
+        void AddUserToDatabase(string username, string password);
+        Task<bool> IsDuplicatedUser(string username);
 
     }
 }

@@ -5,6 +5,9 @@ namespace SMK.DataAccess
 {
     public class DataAccessHandler
     {
+        /// <summary>
+        /// List the available Interfaces for Dataaccess
+        /// </summary>
         public enum InterfaceType
         {
             MySqlPhp
@@ -12,6 +15,10 @@ namespace SMK.DataAccess
 
         public static IDataAccess DataAccess { get; private set; }
 
+        /// <summary>
+        /// Sets the Dataacces. Easy to switch between different implementations of Dataaccess logic
+        /// </summary>
+        /// <param name="interfaceType"></param>
         public static void InitDataAccess(InterfaceType interfaceType)
         {
             switch (interfaceType)
