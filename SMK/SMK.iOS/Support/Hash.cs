@@ -3,12 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
+using SMK.Support;
 using Xamarin.Forms;
 
 [assembly: Dependency(typeof(Hash))]
 namespace SMK.iOS.Support
 {
-    class Hash : SMK.Support.IHash
+    class Hash : IHash
     {
         public string SHA512StringHash(string inputString)
         {
