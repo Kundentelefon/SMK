@@ -32,25 +32,25 @@ namespace SMK
                 //Checks if the User is already in the database 
                 if (isDuplicated)
                 {
-                    DisplayAlert("Account bereits vorhanden!", "Anderen account angeben", "OK");
+                    await DisplayAlert("Account bereits vorhanden!", "Anderen account angeben", "OK");
                 }
                 //Checks if the User is in a Valid Email Format
                 else if (!LoginPage.IsValidEmail(username.Text))
                 {
-                    DisplayAlert("Ungültige E-Mail", "E-Mail ist in einem ungültigen Format angegeben worden", "Neue Eingabe");
+                    await DisplayAlert("Ungültige E-Mail", "E-Mail ist in einem ungültigen Format angegeben worden", "Neue Eingabe");
                 }
                 // Checks if password1 equals password2
                 else if (!(password1.Text.Equals(password2.Text)))
                 {
-                    DisplayAlert("Passwort wiederholen!", "Passwörter sind nicht identisch", "OK");
+                    await DisplayAlert("Passwort wiederholen!", "Passwörter sind nicht identisch", "OK");
                 }
 
                 // Adds the user to the database with hashed password
                 else
                 {
                     AddUser(username.Text, password1.Text);
-                    DisplayAlert("Account erstellt!", "Neuer Account wurde erstellt", "OK");
-                    Navigation.PushModalAsync(new MainMenuPage());
+                    await DisplayAlert("Account erstellt!", "Neuer Account wurde erstellt", "OK");
+                    await Navigation.PushModalAsync(new MainMenuPage());
                 }
             };
             var cancel = new Button { Text = "Zurück", BackgroundColor = Color.FromHex("006AB3") };
