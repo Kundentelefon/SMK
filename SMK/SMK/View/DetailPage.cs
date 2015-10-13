@@ -39,11 +39,11 @@ namespace SMK.View
         List<PContent> contentConvertedPdf;
         Color color;
 
-        public DetailPage(Product ResourceProduct)
+        public DetailPage(Product ResourceProduct, String userPath)
         {
             product = ResourceProduct;
             files = new localFileSystem();
-            pContent = files.loadContentList(product);
+            pContent = files.loadContentList(product, userPath);
             stackLayout = new StackLayout();
             imageStack = new StackLayout();
             WebStack = new StackLayout();

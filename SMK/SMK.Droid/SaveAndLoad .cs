@@ -67,8 +67,9 @@ namespace SMK.Droid
         /// </summary>
         /// <param name="location"></param>
         /// <param name="inputObject"></param>
-        public void savePContentsXml(String location, Object inputObject)
+        public void savePContentsXml(String userPath, String location, Object inputObject)
         {
+            location = Path.Combine(userPath, location);
             try {
                 if (fileExist(location))
                 {
@@ -87,8 +88,9 @@ namespace SMK.Droid
         /// </summary>
         /// <param name="location"></param>
         /// <returns></returns>
-        public PContents loadPcontentsXml(String location)
+        public PContents loadPcontentsXml(String location, String userPath)
         {
+            location = Path.Combine(userPath, location);
             PContents retrunObject = new PContents();
             try {
                 XmlSerializer ser = new XmlSerializer(typeof(PContents));

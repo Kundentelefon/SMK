@@ -4,7 +4,7 @@ namespace SMK
 {
     public interface ILoginManager
     {
-        void ShowMainPage();
+        //void ShowMainPage();
         void Logout();
     }
 }

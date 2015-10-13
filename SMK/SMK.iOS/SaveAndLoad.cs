@@ -14,26 +14,6 @@ namespace SMK.iOS
 {
     public class SaveAndLoad : ISaveAndLoad
     {
-        ///// <summary>
-        ///// saves a Text to the personal folder 
-        ///// </summary>
-        ///// <param name="filename"></param>
-        ///// <param name="text"></param>
-        //public void SaveText(string location, string text)
-        //{
-        //    //var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-        //    //var filePath = Path.Combine(documentsPath, filename);
-        //    System.IO.File.WriteAllText(getpath(location), text);
-        //}
-        //public string LoadText(string location)
-        //{
-        //    var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-        //    var filePath = Path.Combine(documentsPath, filename);
-        //    return System.IO.File.ReadAllText(getpath(location));
-        //}
-
-
-
         /// <summary>
         /// saves a Object to the location ()
         /// </summary>
@@ -81,8 +61,9 @@ namespace SMK.iOS
         /// </summary>
         /// <param name="location"></param>
         /// <param name="inputObject"></param>
-        public void savePContentsXml(String location, Object inputObject)
+        public void savePContentsXml(String userPath, String location, Object inputObject)
         {
+            location = Path.Combine(userPath, location);
             try
             {
                 if (fileExist(location))
@@ -102,8 +83,9 @@ namespace SMK.iOS
         /// </summary>
         /// <param name="location"></param>
         /// <returns></returns>
-        public PContents loadPcontentsXml(String location)
+        public PContents loadPcontentsXml(String location, String userPath)
         {
+            location = Path.Combine(userPath, location);
             PContents retrunObject = new PContents();
             try
             {
@@ -206,6 +188,7 @@ namespace SMK.iOS
 
         public Boolean fileExistExact(String inputString)
         {
+            //var test=Directory.GetCurrentDirectory();
             if (File.Exists(inputString))
             {
                 return (true);
@@ -227,3 +210,6 @@ namespace SMK.iOS
 
 
 }
+
+
+

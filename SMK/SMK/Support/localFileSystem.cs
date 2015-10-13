@@ -24,7 +24,7 @@ namespace SMK.Support
 
         }
 
-        public void initaldummies()
+        public void initaldummies(String userPath)
         {
             string testText = "have some Text i hope you like it fighting and burning from turning from who we really are, flying to close to the sun as we were invincible, around the world we grow weaker as we exterminate, we are the children of the sun bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb";
             
@@ -140,7 +140,7 @@ namespace SMK.Support
             //}
             //else
             //{
-                saveModelsLocal(returnList, returnList2);
+                saveModelsLocal(userPath,returnList, returnList2);
             //}
             
         }
@@ -155,11 +155,11 @@ namespace SMK.Support
             return (returnList);
 
         }
-        public List<PContent> loadContentList() { 
+        public List<PContent> loadContentList(String userPath) { 
             List<PContent> returnList = new List<PContent>();
             if (DependencyService.Get<ISaveAndLoad>().fileExist(productLocation))
             {
-                returnList = DependencyService.Get<ISaveAndLoad>().loadPcontentsXml(pContentLocation).listPContent;
+                returnList = DependencyService.Get<ISaveAndLoad>().loadPcontentsXml(pContentLocation, userPath).listPContent;
             }
             return (returnList);
         }
@@ -170,9 +170,9 @@ namespace SMK.Support
         /// </summary>
         /// <param name="product"></param>
         /// <returns></returns>
-        public List<PContent> loadContentList(Product product)
+        public List<PContent> loadContentList(Product product,String userPath)
         {
-            List<PContent> completeList = loadContentList();
+            List<PContent> completeList = loadContentList(userPath);
             List<PContent> returnList = new List<PContent>();
             foreach (var item in product.PContents)
             {
@@ -202,14 +202,14 @@ namespace SMK.Support
         }
 
         
-        public void saveModelsLocal(List<Product> inputProducts, List<PContent> inputContents)
+        public void saveModelsLocal(String userPath,List<Product> inputProducts, List<PContent> inputContents)
         {
             PContents savePcontents = new PContents();
             savePcontents.listPContent = inputContents;
             Products saveProducts = new Products();
             saveProducts.listProducts = inputProducts;
 
-            DependencyService.Get<ISaveAndLoad>().savePContentsXml(pContentLocation,savePcontents);
+            DependencyService.Get<ISaveAndLoad>().savePContentsXml(userPath,pContentLocation, savePcontents);
             DependencyService.Get<ISaveAndLoad>().saveProductsXml(productLocation, saveProducts);
 
         }
@@ -253,17 +253,26 @@ namespace SMK.Support
             DependencyService.Get<ISaveAndLoad>().saveUserXml(userLocation,inputUser);
         }
 
-        public void createInitalFolders()
+        public void createInitalFolders(String userFile)
         {
-            
-            DependencyService.Get<ISaveAndLoad>().createOrdner(productLocation);
-            DependencyService.Get<ISaveAndLoad>().createOrdner(pContentLocation);
+            if (DependencyService.Get<ISaveAndLoad>().fileExist(productLocation))
+            {
+                DependencyService.Get<ISaveAndLoad>().createOrdner(productLocation);
+            }
+            if(DependencyService.Get<ISaveAndLoad>().fileExist(userFile))
+            {
+                DependencyService.Get<ISaveAndLoad>().createOrdner(userFile);
+            }
+
         }
 
         public void deleteUser()
         {
             DependencyService.Get<ISaveAndLoad>().deleteFile(userLocation);
         }
-
+        public string AdjustPath(string Input)
+        {
+            return System.Text.RegularExpressions.Regex.Replace(Input, @"[\\/:*?""<>|]", string.Empty);
+        }
     }
 }

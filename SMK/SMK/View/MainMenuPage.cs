@@ -17,7 +17,7 @@ namespace SMK.View
         localFileSystem files;
         
         
-        public MainMenuPage()
+        public MainMenuPage(User user)
         {
             ////localFileSystem sys = new localFileSystem();
             ////sys.createInitalFolders();
@@ -26,14 +26,18 @@ namespace SMK.View
             //user.user_Password = "test";
             //DependencyService.Get<ISaveAndLoad>().saveModelXml("User",user);//test
             //Object test= DependencyService.Get<ISaveAndLoad>().loadUserXml("User");//test
-
             
 
             files = new localFileSystem();
+            String userPath = files.AdjustPath(user.user_Email);
+            files.createInitalFolders(userPath);
+            //+userId
             //läd dummies 
             // entfernen bevor go live
-            files.initaldummies();
-            //files.createInitalFolders();//+userId
+            //files.initaldummies();
+
+
+
             //Toolbar
             ToolbarItem toolButton = new ToolbarItem
             {
@@ -51,7 +55,7 @@ namespace SMK.View
             //View
             ProductCollection = new Collection<Product>();
             ProductCollection = files.loadProductList();
-            List<PContent> PcontentCollection = files.loadContentList();
+            List<PContent> PcontentCollection = files.loadContentList(userPath);
 
             ScrollView scrollView = new ScrollView();
             StackLayout stackLayout = new StackLayout();
@@ -63,7 +67,7 @@ namespace SMK.View
                 TapGestureRecognizer gesture = new TapGestureRecognizer();
                 bool owned = files.hasContent(product, PcontentCollection);
                 Color color = Color.FromHex("E2001A");
-                DetailPage detailPage = new DetailPage(product);
+                DetailPage detailPage = new DetailPage(product, userPath);
                     
                 //Boolean test2 = DependencyService.Get<ISaveAndLoad>().fileExist("Products");
                 //Boolean test=DependencyService.Get<ISaveAndLoad>().fileExistExact("sdcard/Android/data/SMK.Droid/files/Products");
@@ -87,8 +91,8 @@ namespace SMK.View
                             new Image
                             {
                                 //"SMK.FischerTechnik.Product.0.png"
-                                Source=ImageSource.FromResource("SMK.zeug.Product."+product.product_ID.ToString()+".png"),
-                                //Source = ImageSource.FromResource(DependencyService.Get<ISaveAndLoad>().getpath()+User.Email+"Product/"+product.product_ID+"."+product.product_Thumbnail),
+                                //Source=ImageSource.FromResource("SMK.zeug.Product."+product.product_ID.ToString()+".png"),
+                                Source = ImageSource.FromResource(DependencyService.Get<ISaveAndLoad>().getpath(userPath)+"thumbnails/"+product.product_ID+"."+product.product_Thumbnail),
                                 VerticalOptions = LayoutOptions.Center,
                                 HorizontalOptions = LayoutOptions.Center
                             },

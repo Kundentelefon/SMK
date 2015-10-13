@@ -9,6 +9,7 @@ using RestSharp;
 using System.Threading.Tasks;
 using SMK.Support;
 using SMK.View;
+using SMK.Model;
 
 namespace SMK
 {
@@ -49,8 +50,9 @@ namespace SMK
                 else
                 {
                     AddUser(username.Text, password1.Text);
+                    User user = new User(username.Text, password1.Text);
                     await DisplayAlert("Account erstellt!", "Neuer Account wurde erstellt", "OK");
-                    await Navigation.PushModalAsync(new MainMenuPage());
+                    await Navigation.PushModalAsync(new MainMenuPage(user));
                 }
             };
             var cancel = new Button { Text = "Zurück", BackgroundColor = Color.FromHex("006AB3") };

@@ -71,7 +71,7 @@ namespace SMK
 
             CurrentUser = DependencyService.Get<ISaveAndLoad>().loadUserXml(UserLoginDataFilePath());
             if (IsLoggedIn)
-                MainPage = new NavigationPage(new MainMenuPage());
+                MainPage = new NavigationPage(new MainMenuPage(CurrentUser));
             else
                 MainPage = new LoginModalPage();
             // Handle when your app starts
@@ -111,9 +111,9 @@ namespace SMK
             return DependencyService.Get<ISaveAndLoad>().getpath("loginData.xml");
         }
 
-        public void ShowMainPage()
-        {
-            MainPage = new NavigationPage(new MainMenuPage());
-        }
+        //public void ShowMainPage()
+        //{
+        //    MainPage = new NavigationPage(new MainMenuPage());
+        //}
     }
 }

@@ -40,13 +40,13 @@ namespace SMK.Support
         /// </summary>
         /// <param name="location"></param>
         /// <param name="inputObject"></param>
-        void savePContentsXml(String location, Object inputObject);
+        void savePContentsXml(String userPath, String location, Object inputObject);
         /// <summary>
         /// load an xml file 
         /// </summary>
         /// <param name="location"></param>
         /// <returns></returns>
-        PContents loadPcontentsXml(String location);
+        PContents loadPcontentsXml(String location, String userPath);
         /// <summary>
         /// saves a Object to the location ()
         /// </summary>
