@@ -102,14 +102,14 @@ namespace SMK
         /// <returns></returns>
         public async Task<User> IsValidLogin(User user)
         {
-            return user;
+            //return user;
             try
             {
                 return await DataAccessHandler.DataAccess.ValidateUser(user);
             }
             catch (Exception)
             {
-                await DisplayAlert("Connection Error", "Unable to connect to Server", "OK");
+                await DisplayAlert("Verbindungsfehler", "Server ist nicht erreichtbar. Internetzugang aktiv?", "OK");
             }
             return null;
         }
