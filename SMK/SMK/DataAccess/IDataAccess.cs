@@ -14,7 +14,7 @@ namespace SMK.DataAccess
         void AddProductToUser(int productId, User user);
         Task<Product> GetProductByKey(string key);
         Task<List<Product>> GetUserProducts(User user);
-        Task<PContent> GetPContent(string id);
+        Task<List<PContent>> GetPContent(string id);
         Task<List<string>> GetPContentFiles(string id);
     }
 }

@@ -99,27 +99,24 @@ namespace SMK
                 //    Debug.WriteLine("invalid user cause null response");
 
 
-                //gets all userprodcuts (dont work)
-                Debug.WriteLine("Test1 getAllUserProducts");
-                List<Product> p3 = new List<Product>();
-                User u2 = new User("testF4@web.de", "sdfsd");
-                Debug.WriteLine("Test1 getAllUserProducts2");
-                p3 = await DataAccessHandler.DataAccess.GetUserProducts(u2);
-                Debug.WriteLine("Test1 getAllUserProducts3");
-                Debug.WriteLine("Product list -> " + p3[0]);
+                //gets all userprodcuts
+                //Debug.WriteLine("Test1 getAllUserProducts");
+                //User u2 = new User("testF4@web.de", "sdfsd");
+                //Debug.WriteLine("Test1 getAllUserProducts2");
+                //List<Product> p3 = await DataAccessHandler.DataAccess.GetUserProducts(u2);
+                //Debug.WriteLine("Test1 getAllUserProducts3");
+                //Debug.WriteLine("Product list -> " + p3[1].product_ID);
 
-                //getPcontent (dont work, wrong json string?)
+                //getPcontent
                 //Debug.WriteLine("Test1 getPcontent");
-                //PContent pc1 = await DataAccessHandler.DataAccess.GetPContent("1");
-                //Debug.WriteLine("PContent inhalt -> " + pc1.content_Title);
+                //List<PContent> pc1 = await DataAccessHandler.DataAccess.GetPContent("1");
+                //Debug.WriteLine("PContent inhalt -> " + pc1[0].content_Title);
 
                 //getPcontent filepath
                 //Debug.WriteLine("Test1 getPath");
                 //List<string> str1 = new List<string>();
                 //str1 = await DataAccessHandler.DataAccess.GetPContentFiles("12");
                 //Debug.WriteLine("Getpathes -> " + str1[0]);
-
-
 
 
                 //checks if key is valid (already activated)
@@ -137,15 +134,25 @@ namespace SMK
 
 
 
-                //Get product of specific key (not working)
+                //Get product of specific key 
                 //Debug.WriteLine("Test1 get product_id");
-                //Debug.WriteLine(DataAccessHandler.DataAccess.GetProductByKey("2222"));
+                //Debug.WriteLine("Test1 id -> " + DataAccessHandler.DataAccess.GetProductByKey("2222"));
                 //Product p0 = new Product();
                 //p0 = await DataAccessHandler.DataAccess.GetProductByKey("2222");
-                //user.user_Password.Equals(model.user_Password) ? model : null;
+                //Debug.WriteLine("Test1 id2 -> " + p0.product_ID);
 
                 //Set used key invalid
                 //DataAccessHandler.DataAccess.SetProductKeyInvalid("2222");
+
+
+
+                //example of downloading file. change host to http://10.0.2.2 for emulator
+                //string filename = "FISCHERTECHNIK_Logo.JPG";
+                //    Debug.WriteLine("Test1 Downloade File start");
+                //    IFtpClient client = DependencyService.Get<IFtpClient>();
+                //    client.DownloadFile(filename, @"C:\Users\Maxwell\Desktop\fdbfdg\" + filename, "localhost", "SMKFTPUser", "");
+                //    Debug.WriteLine("Test1 Downloade File end");
+
 
 
                 //Test For Downloading the whole content of a directory path
@@ -156,9 +163,9 @@ namespace SMK
                 //    "ipfromServer", "UserFTPserver", "PasswordFTPserver");
 
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                Debug.WriteLine("Test1 Connection error");
+                Debug.WriteLine("Test1 Connection error " + e);
             }
 
         }

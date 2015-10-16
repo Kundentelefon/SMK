@@ -166,17 +166,13 @@ namespace SMK.DataAccess
             var request = new RestRequest("GetProductByKey.php", Method.GET);
             request.AddParameter("productkeys_Key", key);
 
-            Debug.WriteLine("hier1");
             IRestResponse response = await client.ExecuteGetTaskAsync(request);
-            Debug.WriteLine("hier2");
-            Debug.WriteLine("hier3 " + request);
+
             if (response.ErrorException != null)
             {
                 throw response.ErrorException;
             }
-            Debug.WriteLine("hier3");
             var model = Newtonsoft.Json.JsonConvert.DeserializeObject<Product>(response.Content);
-            Debug.WriteLine("model1 " + model);
             return model;
         }
 
@@ -185,11 +181,11 @@ namespace SMK.DataAccess
         /// </summary>
         /// <param name="id"></param>
         /// <returns>Task</returns>
-        public async Task<PContent> GetPContent(string id)
+        public async Task<List<PContent>> GetPContent(string id)
         {
             var client = new RestClient(ServerAdress);
             var request = new RestRequest("getPContent.php", Method.GET);
-            request.AddParameter("pcontent_ID", id);
+            request.AddParameter("content_ID", id);
 
             IRestResponse response = await client.ExecuteGetTaskAsync(request);
 
@@ -198,7 +194,7 @@ namespace SMK.DataAccess
                 throw response.ErrorException;
             }
 
-            var model = Newtonsoft.Json.JsonConvert.DeserializeObject<PContent>(response.Content);
+            var model = Newtonsoft.Json.JsonConvert.DeserializeObject<List<PContent>>(response.Content);
 
             return model;
         }
