@@ -95,7 +95,7 @@ namespace SMK
             }
             catch (Exception)
             {
-                await DisplayAlert("Connection Error", "Unable to connect to Server", "OK");
+                await DisplayAlert("Verbindungsfehler", "Server ist nicht erreichtbar. Internetzugang aktiv?", "OK");
             }
             return duplicated;
 
@@ -114,7 +114,7 @@ namespace SMK
             }
             catch (Exception)
             {
-                await DisplayAlert("Connection Error", "Unable to connect to Server", "OK");
+                await DisplayAlert("Verbindungsfehler", "Server ist nicht erreichtbar. Internetzugang aktiv?", "OK");
             }
         }
 
