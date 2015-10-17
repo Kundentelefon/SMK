@@ -181,11 +181,11 @@ namespace SMK.DataAccess
         /// </summary>
         /// <param name="id"></param>
         /// <returns>Task</returns>
-        public async Task<List<PContent>> GetPContent(string id)
+        public async Task<List<PContent>> GetPContent(int id)
         {
             var client = new RestClient(ServerAdress);
             var request = new RestRequest("getPContent.php", Method.GET);
-            request.AddParameter("content_ID", id);
+            request.AddParameter("product_ID", id);
 
             IRestResponse response = await client.ExecuteGetTaskAsync(request);
 
@@ -204,11 +204,11 @@ namespace SMK.DataAccess
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<List<string>> GetPContentFiles(string id)
+        public async Task<List<string>> GetPContentFiles(int id)
         {
             var client = new RestClient(ServerAdress);
             var request = new RestRequest("getFilePaths.php", Method.GET);
-            request.AddParameter("pcontent_ID", id);
+            request.AddParameter("content_ID", id);
 
             IRestResponse response = await client.ExecuteGetTaskAsync(request);
 

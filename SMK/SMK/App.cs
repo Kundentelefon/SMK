@@ -116,7 +116,16 @@ namespace SMK
                 //Debug.WriteLine("Test1 getPath");
                 //List<string> str1 = new List<string>();
                 //str1 = await DataAccessHandler.DataAccess.GetPContentFiles("12");
+
+
+                //Debug.WriteLine("Test1 getPath");
+                //List<string> str1 = new List<string>();
+                //str1 = await DataAccessHandler.DataAccess.GetPContentFiles("12");
                 //Debug.WriteLine("Getpathes -> " + str1[0]);
+                //foreach (string i in str1)
+                //{
+                //    Debug.WriteLine("Getpathes -> " + i);
+                //}
 
 
                 //checks if key is valid (already activated)
@@ -168,6 +177,80 @@ namespace SMK
                 Debug.WriteLine("Test1 Connection error " + e);
             }
 
+        }
+
+        public async void DatabaseTestChain()
+        {
+            try
+            {
+                string tusername = "testT1@web.de";
+                string tpassword = "nohash";
+                string tpath = @"appath hier einfügen\";
+                string activationkey = "2222";
+
+                //Adds user to database
+                DataAccessHandler.DataAccess.AddUserToDatabase(tusername, tpassword);
+                Debug.WriteLine("Test2 User added");
+
+                //download initial content. change host to http://10.0.2.2 for emulator
+                IFtpClient client = DependencyService.Get<IFtpClient>();
+                client.DownloadDirectoryAsync("zeug", tpath + tusername, "localhost",
+                    "SMKFTPUser", "");
+                Debug.WriteLine("created User folder " + tusername);
+
+                //checks if key is valid
+                bool b2 = await DataAccessHandler.DataAccess.IsValidKey(activationkey);
+                Debug.WriteLine("Test2 isvalidkey " + b2);
+
+                //set key invalid
+                Debug.WriteLine("Test2 key set invalid");
+                DataAccessHandler.DataAccess.SetProductKeyInvalid(activationkey);
+
+                //adds Products to user
+                CurrentUser = DependencyService.Get<ISaveAndLoad>().loadUserXml(UserLoginDataFilePath());
+                Product p0 = await DataAccessHandler.DataAccess.GetProductByKey(activationkey);
+                DataAccessHandler.DataAccess.AddProductToUser(p0.product_ID, CurrentUser);
+                Debug.WriteLine("Test2 product to user added with id: " + p0.product_ID);
+
+                //getProduct (add direction)
+                //p0.product_ID;
+                //p0.PContents;
+                //p0.product_Name;
+                //p0.product_Text;
+                client.DownloadDirectoryAsync(p0.product_Thumbnail, tpath + tusername + @"\Product\" + p0.product_ID, "localhost",
+                "SMKFTPUser", "");
+                client.DownloadDirectoryAsync(p0.product_Thumbnail, tpath + tusername + @"\PContent\Thumbnail\" + p0.product_ID, "localhost",
+                "SMKFTPUser", "");
+                Debug.WriteLine("created product");
+
+                
+                List<PContent> pc1 = await DataAccessHandler.DataAccess.GetPContent(p0.product_ID);
+                //getProduct (add direction)
+                //pc1[0].product_ID;
+                //pc1[0].content_ID;
+                //pc1[0].content_Kind;
+                //pc1[0].content_Title;
+                IFtpClient client2 = DependencyService.Get<IFtpClient>();
+
+                //data truncated in database ???
+                foreach (var pcontent in pc1)
+                {
+                    Debug.WriteLine("Test2 getPcontent from id: " + pcontent.content_ID);
+                    List<string> pathfile = await DataAccessHandler.DataAccess.GetPContentFiles(pcontent.content_ID);
+                    Debug.WriteLine("Test2 Download Files -> " + pathfile);
+                    client2.DownloadDirectoryAsync(pathfile.ToString(), tpath + tusername + @"\PContent\" + "p" + pcontent.content_Kind + @"\" + pcontent.content_Title, "localhost",
+                    "SMKFTPUser", "");
+                    Debug.WriteLine("Test2 added file from filepath-> " + pathfile.ToString());
+                }
+                
+
+                
+                
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Fehler bei Testchain " + e);
+            }
         }
 
         protected override void OnSleep()
