@@ -34,7 +34,13 @@ namespace SMK
         public bool IsLoggedIn { get { return CurrentUser != null && CurrentUser.user_Password != null; } }
 
         public App()
-        {}
+        {
+            //wird für IOS benötigt!!!!
+            //IOS basiert darauf das immer eine Seite initalisiert ist
+            //deshalb muss inital auch eine Seite initalisiert werden da sonst die folgende Exception geworfen wird
+            //System.NullReferenceException: Object reference not set to an instance of an object
+            MainPage = new EmptyPage();
+        }
 
         /// <summary>
         /// It will set the user_Password to null and creates then a new loginData.xml
@@ -65,7 +71,8 @@ namespace SMK
 
             DatabaseTest();
 
-            if (IsLoggedIn) {
+            if (IsLoggedIn)
+            {
                 CurrentUser = DependencyService.Get<ISaveAndLoad>().loadUserXml(UserLoginDataFilePath());
                 MainPage = new NavigationPage(new MainMenuPage(CurrentUser));
             }

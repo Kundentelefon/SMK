@@ -40,6 +40,7 @@
     <Compile Include="DataAccess\DataAccessMySqlPhp.cs" />
     <Compile Include="DataAccess\IDataAccess.cs" />
     <Compile Include="View\CreateAccountPage.cs" />
+    <Compile Include="View\EmptyPage.cs" />
     <Compile Include="View\ILoginManager.cs" />
     <Compile Include="View\LoginModalPage.cs" />
     <Compile Include="View\LoginPage.cs" />

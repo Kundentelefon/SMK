@@ -75,7 +75,7 @@ namespace SMK.View
             stackLayout.Children.Add(
             new Image
             {
-                Source = ImageSource.FromResource(image_path)
+                Source = ImageSource.FromFile(image_path)
                 //Source = ImageSource.FromFile(image_path)
             }
             );//Child added: Image
@@ -172,11 +172,11 @@ namespace SMK.View
                             OutlineColor = color,
                             Content = new Image
                             {
-                                Source = ImageSource.FromResource(source)
+                                Source = ImageSource.FromFile(source)
                             }
                         };
                         imageStack.Children.Add(frame);
-                        carousel.Children.Add(new ContentPage { Content = new Image { Source = ImageSource.FromResource(source) } });
+                        carousel.Children.Add(new ContentPage { Content = new Image { Source = ImageSource.FromFile(source) } });
                     //}
 
                 }
@@ -225,7 +225,7 @@ namespace SMK.View
                     OutlineColor = color,
                     Content = new Image
                     {
-                        Source = ImageSource.FromResource(source)
+                        Source = ImageSource.FromFile(source)
                     }
                 };
                     
@@ -316,7 +316,7 @@ namespace SMK.View
                     OutlineColor = color,
                     Content = new Image
                     {
-                        Source = ImageSource.FromResource(source_thumb)
+                        Source = ImageSource.FromFile(source_thumb)
                     }
                 };
 
@@ -326,7 +326,7 @@ namespace SMK.View
                     source_image= (DependencyService.Get<ISaveAndLoad>().pathCombine(
                         (DependencyService.Get<ISaveAndLoad>().pathCombine(
                             DependencyService.Get<ISaveAndLoad>().getpath(userPath), "p" + content.content_ID.ToString())), source));
-                    carousel.Children.Add(new ContentPage { Content = new Image { Source = ImageSource.FromResource(source_image) } });
+                    carousel.Children.Add(new ContentPage { Content = new Image { Source = ImageSource.FromFile(source_image) } });
                 }
 
                 reco.Tapped += async (sender, e) =>

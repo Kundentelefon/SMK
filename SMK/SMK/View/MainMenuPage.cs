@@ -95,7 +95,7 @@ namespace SMK.View
                                 //"SMK.FischerTechnik.Product.0.png"
                                 //Source=ImageSource.FromResource("SMK.zeug.Product."+product.product_ID.ToString()+".png"),
                                 //Source = ImageSource.FromResource(DependencyService.Get<ISaveAndLoad>().getpath(userPath)+"thumbnails/"+product.product_ID+"."+product.product_Thumbnail),
-                                Source= ImageSource.FromResource(DependencyService.Get<ISaveAndLoad>().pathCombine(DependencyService.Get<ISaveAndLoad>().getpath("Produkt"), product.product_ID + product.product_Thumbnail)),
+                                Source= ImageSource.FromFile(DependencyService.Get<ISaveAndLoad>().pathCombine(DependencyService.Get<ISaveAndLoad>().getpath("Produkt"), product.product_ID + product.product_Thumbnail)),
                                 VerticalOptions = LayoutOptions.Center,
                                 HorizontalOptions = LayoutOptions.Center
                             },

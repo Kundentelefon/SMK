@@ -16,10 +16,12 @@ namespace SMK
             this.Children.Add(login);
             this.Children.Add(create);
 
-            MessagingCenter.Subscribe<ContentPage>(this, "Login", (sender) => {
+            MessagingCenter.Subscribe<ContentPage>(this, "Login", (sender) =>
+            {
                 this.SelectedItem = login;
             });
-            MessagingCenter.Subscribe<ContentPage>(this, "Erstellen", (sender) => {
+            MessagingCenter.Subscribe<ContentPage>(this, "Erstellen", (sender) =>
+            {
                 this.SelectedItem = create;
             });
         }
