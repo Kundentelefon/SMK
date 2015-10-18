@@ -70,7 +70,8 @@ namespace SMK.Droid
         public void savePContentsXml(String userPath, String location, Object inputObject)
         {
             location = Path.Combine(userPath, location);
-            try {
+            try
+            {
                 if (fileExist(location))
                 {
                     deleteFile(location);
@@ -204,6 +205,12 @@ namespace SMK.Droid
                 System.IO.File.Delete(getpath(location));
             }
             catch (Exception e) { Console.WriteLine("" + e); }
+        }
+
+        public String pathCombine(String firstPath, String secondPath)
+        {
+            String path=Path.Combine(firstPath,secondPath);
+            return (path);
         }
     }
 

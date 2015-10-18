@@ -63,7 +63,12 @@ namespace SMK.View
             color = Color.FromHex("E2001A");
 
             initContentLists();
-            String image_path = imagePfadProduct + product.product_ID.ToString() + ".png";
+            //String image_path = imagePfadProduct + product.product_ID.ToString() + ".png";
+            String image_path = DependencyService.Get<ISaveAndLoad>().pathCombine(DependencyService.Get<ISaveAndLoad>().getpath("Produkt"), product.product_ID + product.product_Thumbnail);
+            //(DependencyService.Get<ISaveAndLoad>().pathCombine(
+            //(DependencyService.Get<ISaveAndLoad>().pathCombine(
+            //DependencyService.Get<ISaveAndLoad>().getpath(userPath), product.product_ID.ToString()))+".png"));
+
             //String image_path = "/sdcard/data/0.png";
 
 
@@ -95,11 +100,11 @@ namespace SMK.View
                 );//Child Added: Klappentext
 
            
-            initImageStack();
+            initImageStack(userPath);
             //Image scrolllayout hinzugefügt
-            initHTMLStack();
-            initPDFStack();
-            initConvertedStack();
+            initHTMLStack(userPath);
+            //initPDFStack();
+            initConvertedStack(userPath);
 
             Content = stackLayout;
             BackgroundColor = Color.White;
@@ -122,21 +127,21 @@ namespace SMK.View
                         //picture_galarie.Add(imagePfadContent+content.content_ID.ToString()+".png");
 
                     }
-                    if (content.content_Kind == 1)
-                    {
-                        contentPdf.Add(content);
+                    //if (content.content_Kind == 1)
+                    //{
+                    //    contentPdf.Add(content);
 
-                    }
+                    //}
                     if (content.content_Kind == 2)
                     {
                         contentHtml.Add(content);
 
                     }
-                    if (content.content_Kind == 3)
-                    {
-                        contentVideo.Add(content);
+                    //if (content.content_Kind == 3)
+                    //{
+                    //    contentVideo.Add(content);
 
-                    }
+                    //}
                     if(content.content_Kind == 4)
                     {
                         contentConvertedPdf.Add(content);
@@ -145,7 +150,7 @@ namespace SMK.View
                 }
             }
         }
-        public void initImageStack()
+        public void initImageStack(string userPath)
         {
             //Images des Produktes werden initalisiert
             imageScroll.Orientation = ScrollOrientation.Horizontal;
@@ -158,12 +163,11 @@ namespace SMK.View
             {
                 foreach (string image_source in content.files)
                 {
-                    string source = imagePfadContent+"p" + content.content_ID.ToString() + "."+ image_source;
-                    // if file doesn´t exist don`t create a frame
-                    // enable this if kunde is rdy
-                    //if (DependencyService.Get<ISaveAndLoad>().fileExistExact(source))
-                    //{
-                        Frame frame = new Frame
+                    //string source = imagePfadContent+"p" + content.content_ID.ToString() + "."+ image_source;
+                    string source = (DependencyService.Get<ISaveAndLoad>().pathCombine(
+                        (DependencyService.Get<ISaveAndLoad>().pathCombine(
+                            DependencyService.Get<ISaveAndLoad>().getpath(userPath),"p"+ content.content_ID.ToString())), image_source));
+                    Frame frame = new Frame
                         {
                             OutlineColor = color,
                             Content = new Image
@@ -196,7 +200,7 @@ namespace SMK.View
             
         }
 
-        public void initHTMLStack()
+        public void initHTMLStack(string userPath)
         {
             imageScrollWeb.Orientation = ScrollOrientation.Horizontal;
             WebStack.Orientation = StackOrientation.Horizontal;
@@ -204,7 +208,13 @@ namespace SMK.View
             TapGestureRecognizer reco = new TapGestureRecognizer();
             foreach (PContent content in contentHtml)
             {
-                string source = thumbnail + content.content_ID.ToString() + ".png";
+                //string source = thumbnail + content.content_ID.ToString() + ".png";
+
+                string source = (DependencyService.Get<ISaveAndLoad>().pathCombine(
+                        (DependencyService.Get<ISaveAndLoad>().pathCombine(
+                            DependencyService.Get<ISaveAndLoad>().getpath(userPath), "thumbnails" )), 
+                        content.content_ID.ToString())
+                        +".png");
                 //string source = "SMK.zeug.PContent.p0.da.jpg";
                 // if file doesn´t exist don`t create a frame
                 // enable this if kunde is rdy
@@ -225,7 +235,7 @@ namespace SMK.View
                 WebStack.Children.Add(frame);
                 reco.Tapped += async (sender, e) =>
                 {
-                    await Navigation.PushAsync(new LocalUrl(content));
+                    await Navigation.PushAsync(new LocalUrl(content , userPath));
                 };
             }
 
@@ -241,51 +251,51 @@ namespace SMK.View
             stackLayout.Children.Add(imageScrollWeb);
         }
 
-        public void initPDFStack()
-        {
-            imageScrollPDF.Orientation = ScrollOrientation.Horizontal;
-            pdfStack.Orientation = StackOrientation.Horizontal;
+        //public void initPDFStack()
+        //{
+        //    imageScrollPDF.Orientation = ScrollOrientation.Horizontal;
+        //    pdfStack.Orientation = StackOrientation.Horizontal;
 
-            foreach (PContent content in contentPdf)
-            {
-                foreach (string pdf_source in content.files)
-                {
-                    TapGestureRecognizer reco = new TapGestureRecognizer();
-                    string source_pdf = imagePfadContent + "p" + content.content_ID.ToString() + "." + pdf_source;
-                    string source_thumb = thumbnail + content.content_ID.ToString() + ".png";
+        //    foreach (PContent content in contentPdf)
+        //    {
+        //        foreach (string pdf_source in content.files)
+        //        {
+        //            TapGestureRecognizer reco = new TapGestureRecognizer();
+        //            string source_pdf = imagePfadContent + "p" + content.content_ID.ToString() + "." + pdf_source;
+        //            string source_thumb = thumbnail + content.content_ID.ToString() + ".png";
 
-                    Frame frame = new Frame
-                    {
-                        OutlineColor = color,
-                        Content = new Image
-                        {
-                            Source = ImageSource.FromResource(source_thumb)
-                        }
-                    };
+        //            Frame frame = new Frame
+        //            {
+        //                OutlineColor = color,
+        //                Content = new Image
+        //                {
+        //                    Source = ImageSource.FromResource(source_thumb)
+        //                }
+        //            };
 
-                    reco.Tapped += async (sender, e) =>
-                    {
-                        await Navigation.PushAsync(new ContentPage {Content = new WebView { Source = source_pdf } });
-                    };
-                    frame.GestureRecognizers.Add(reco);
-                    pdfStack.Children.Add(frame);
-                }
-            }
-            if (owned == true)
-                stackLayout.Children.Add(new StackLayout
-                {
-                    Orientation = StackOrientation.Horizontal,
-                    Children =
-                    { new Label { Text = "PDF", TextColor = Color.Black, FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)) },
-                        new Label { Text = "(" + pdfStack.Children.Count + ")", FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
-                            TextColor = Color.Black } }
-                });
+        //            reco.Tapped += async (sender, e) =>
+        //            {
+        //                await Navigation.PushAsync(new ContentPage {Content = new WebView { Source = source_pdf } });
+        //            };
+        //            frame.GestureRecognizers.Add(reco);
+        //            pdfStack.Children.Add(frame);
+        //        }
+        //    }
+        //    if (owned == true)
+        //        stackLayout.Children.Add(new StackLayout
+        //        {
+        //            Orientation = StackOrientation.Horizontal,
+        //            Children =
+        //            { new Label { Text = "PDF", TextColor = Color.Black, FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)) },
+        //                new Label { Text = "(" + pdfStack.Children.Count + ")", FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
+        //                    TextColor = Color.Black } }
+        //        });
 
-            imageScrollPDF.Content = pdfStack;
-            stackLayout.Children.Add(imageScrollPDF);
-        }
+        //    imageScrollPDF.Content = pdfStack;
+        //    stackLayout.Children.Add(imageScrollPDF);
+        //}
 
-        public void initConvertedStack()
+        public void initConvertedStack(string userPath)
         {
             imageScrollConverted.Orientation = ScrollOrientation.Horizontal;
             convertedStack.Orientation = StackOrientation.Horizontal;
@@ -295,7 +305,10 @@ namespace SMK.View
             {
                 carousel = new CarouselPage();
                 TapGestureRecognizer reco = new TapGestureRecognizer();
-                string source_thumb = thumbnail + content.content_ID.ToString() + ".png";
+                //string source_thumb = thumbnail + content.content_ID.ToString() + ".png";
+                string source_thumb = ((DependencyService.Get<ISaveAndLoad>().pathCombine(
+                    (DependencyService.Get<ISaveAndLoad>().pathCombine(
+                            DependencyService.Get<ISaveAndLoad>().getpath(userPath), "thumbnails" )), content.content_ID.ToString())+ ".png"));
                 string source_image;
 
                 Frame frame = new Frame
@@ -309,7 +322,10 @@ namespace SMK.View
 
                 foreach(string source in content.files)
                 {
-                    source_image = imagePfadContent + "p" + content.content_ID.ToString()+ "." + source;
+                    //source_image = imagePfadContent + "p" + content.content_ID.ToString()+ "." + source;
+                    source_image= (DependencyService.Get<ISaveAndLoad>().pathCombine(
+                        (DependencyService.Get<ISaveAndLoad>().pathCombine(
+                            DependencyService.Get<ISaveAndLoad>().getpath(userPath), "p" + content.content_ID.ToString())), source));
                     carousel.Children.Add(new ContentPage { Content = new Image { Source = ImageSource.FromResource(source_image) } });
                 }
 

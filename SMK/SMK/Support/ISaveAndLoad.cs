@@ -67,5 +67,7 @@ namespace SMK.Support
         void createOrdner(String path);
 
         void deleteFile(String path);
+
+        String pathCombine(String firstPath, String secondPath);
     }
 }

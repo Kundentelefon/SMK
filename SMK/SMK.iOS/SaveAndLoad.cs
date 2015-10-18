@@ -205,6 +205,11 @@ namespace SMK.iOS
             }
             catch (Exception e) { Console.WriteLine("" + e); }
         }
+        public String pathCombine(String firstPath, String secondPath)
+        {
+            String path = pathCombine(firstPath, secondPath);
+            return (path);
+        }
     }
 
 
