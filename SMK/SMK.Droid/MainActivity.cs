@@ -23,7 +23,7 @@ namespace SMK.Droid
             base.OnCreate(bundle);
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
-            LoadApplication(App.Current);
+            LoadApplication(new App());
         }
     }
 

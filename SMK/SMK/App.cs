@@ -33,7 +33,7 @@ namespace SMK
         /// </summary>
         public bool IsLoggedIn { get { return CurrentUser != null && CurrentUser.user_Password != null; } }
 
-        private App()
+        public App()
         {}
 
         /// <summary>
