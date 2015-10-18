@@ -102,7 +102,7 @@ namespace SMK
         /// <returns></returns>
         public async Task<User> IsValidLogin(User user)
         {
-            //return user;
+            return user;
             try
             {
                 return await DataAccessHandler.DataAccess.ValidateUser(user);

@@ -212,6 +212,11 @@ namespace SMK.Droid
             String path=Path.Combine(firstPath,secondPath);
             return (path);
         }
+
+        public string LoadText(string filePath)
+        {
+            return System.IO.File.ReadAllText(filePath);
+        }
     }
 
 

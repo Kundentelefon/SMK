@@ -235,7 +235,7 @@ namespace SMK.View
                 WebStack.Children.Add(frame);
                 reco.Tapped += async (sender, e) =>
                 {
-                    await Navigation.PushAsync(new LocalUrl(content , userPath));
+                    await Navigation.PushAsync(new LocalHtml(content , userPath));
                 };
             }
 

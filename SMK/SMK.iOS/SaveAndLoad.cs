@@ -210,6 +210,10 @@ namespace SMK.iOS
             String path = pathCombine(firstPath, secondPath);
             return (path);
         }
+        public string LoadText(string filePath)
+        {
+            return System.IO.File.ReadAllText(filePath);
+        }
     }
 
 

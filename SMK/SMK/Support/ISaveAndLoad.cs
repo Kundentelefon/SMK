@@ -69,5 +69,6 @@ namespace SMK.Support
         void deleteFile(String path);
 
         String pathCombine(String firstPath, String secondPath);
+        string LoadText(string filename);
     }
 }

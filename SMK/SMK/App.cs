@@ -65,9 +65,10 @@ namespace SMK
 
             DatabaseTest();
 
-            CurrentUser = DependencyService.Get<ISaveAndLoad>().loadUserXml(UserLoginDataFilePath());
-            if (IsLoggedIn)
+            if (IsLoggedIn) {
+                CurrentUser = DependencyService.Get<ISaveAndLoad>().loadUserXml(UserLoginDataFilePath());
                 MainPage = new NavigationPage(new MainMenuPage(CurrentUser));
+            }
             else
                 MainPage = new LoginModalPage();
             // Handle when your app starts

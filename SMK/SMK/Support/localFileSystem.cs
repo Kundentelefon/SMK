@@ -343,5 +343,10 @@ namespace SMK.Support
         {
             return System.Text.RegularExpressions.Regex.Replace(Input, @"[\\/:*?""<>|]", string.Empty);
         }
+
+        //public String LoadText(String filename)
+        //{
+        //    return (DependencyService.Get<ISaveAndLoad>().LoadText(filename));
+        //}
     }
 }
