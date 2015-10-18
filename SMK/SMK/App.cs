@@ -39,7 +39,7 @@ namespace SMK
             //IOS basiert darauf das immer eine Seite initalisiert ist
             //deshalb muss inital auch eine Seite initalisiert werden da sonst die folgende Exception geworfen wird
             //System.NullReferenceException: Object reference not set to an instance of an object
-            MainPage = new EmptyPage();
+            MainPage = new Navigation_Page();
         }
 
         /// <summary>
@@ -71,9 +71,10 @@ namespace SMK
 
             DatabaseTest();
 
+            CurrentUser = DependencyService.Get<ISaveAndLoad>().loadUserXml(UserLoginDataFilePath());
             if (IsLoggedIn)
             {
-                CurrentUser = DependencyService.Get<ISaveAndLoad>().loadUserXml(UserLoginDataFilePath());
+                
                 MainPage = new NavigationPage(new MainMenuPage(CurrentUser));
             }
             else

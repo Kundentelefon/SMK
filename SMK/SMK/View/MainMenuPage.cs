@@ -44,7 +44,7 @@ namespace SMK.View
                 Name = "Hinzufügen",
                 Order = ToolbarItemOrder.Primary,
                 Icon = null,
-                Command = new Command(() => Navigation.PushAsync(new AddProduktPage()))
+                Command = new Command(() => Navigation.PushModalAsync(new AddProduktPage()))
             };
             this.ToolbarItems.Add(toolButton);
 

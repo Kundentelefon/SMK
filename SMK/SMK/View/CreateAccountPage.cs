@@ -52,7 +52,7 @@ namespace SMK
                     AddUser(username.Text, password1.Text);
                     User user = new User(username.Text, password1.Text);
                     await DisplayAlert("Account erstellt!", "Neuer Account wurde erstellt", "OK");
-                    await Navigation.PushModalAsync(new MainMenuPage(user));
+                    await Navigation.PushAsync(new MainMenuPage(user));
                 }
             };
             var cancel = new Button { Text = "Zurück", BackgroundColor = Color.FromHex("006AB3") };

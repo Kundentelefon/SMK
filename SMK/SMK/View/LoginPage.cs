@@ -54,7 +54,7 @@ namespace SMK
                 else
                 {
                     App.Current.Login(validUser);
-                    Navigation.PushAsync(new MainMenuPage(validUser));
+                    Navigation.PushModalAsync(new NavigationPage(new MainMenuPage(validUser)));
                 }
             };
             var create = new Button { Text = "Account erstellen", BackgroundColor = Color.FromHex("E2001A") };

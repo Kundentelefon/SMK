@@ -29,7 +29,10 @@ namespace SMK.Support
             // < meta http - equiv = "refresh" content = "0; url=http://example.com/" />
             //htmlSource.Html = @"<html> < a href=""" + source + @""">";
             //htmlSource.Html = @"<meta http-equiv=""refresh"" content=""0; url ="+source+@""" />";
-            htmlSource.Html = DependencyService.Get<ISaveAndLoad>().LoadText(source);
+            if (DependencyService.Get<ISaveAndLoad>().fileExistExact(source))
+            {
+                htmlSource.Html = DependencyService.Get<ISaveAndLoad>().LoadText(source);
+            }
 
 
 
