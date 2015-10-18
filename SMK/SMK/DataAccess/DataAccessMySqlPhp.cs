@@ -27,6 +27,12 @@ namespace SMK.DataAccess
 
             IRestResponse response = await client.ExecuteGetTaskAsync(request);
 
+            //only throws the exception. Let target choose what to do
+            if (response.ErrorException != null)
+            {
+                throw response.ErrorException;
+            }
+
             return response.Content != "0 results";
         }
 
@@ -38,9 +44,14 @@ namespace SMK.DataAccess
         {
             var client = new RestClient(ServerAdress);
             var request = new RestRequest("setProductKeyInvalid.php", Method.POST);
-            request.AddParameter("product_Key", key);
+            request.AddParameter("productkeys_Key", key);
 
-            IRestResponse response = await client.ExecuteGetTaskAsync(request);
+            IRestResponse response = await client.ExecutePostTaskAsync(request);
+
+            if (response.ErrorException != null)
+            {
+                throw response.ErrorException;
+            }
         }
         /// <summary>
         ///  REST API: Async Addproduct 
@@ -50,12 +61,18 @@ namespace SMK.DataAccess
         public async void AddProductToUser(int productId, User user)
         {
 
-                var client = new RestClient(ServerAdress);
-                var request = new RestRequest("AddProductToUser.php", Method.POST);
-                request.AddParameter("user_Email", user.user_Email);
-                request.AddParameter("product_ID", productId);
+            var client = new RestClient(ServerAdress);
+            var request = new RestRequest("AddProductToUser.php", Method.POST);
+            request.AddParameter("user_Email", user.user_Email);
+            request.AddParameter("product_ID", productId);
 
-                IRestResponse response = await client.ExecuteGetTaskAsync(request);
+            IRestResponse response = await client.ExecutePostTaskAsync(request);
+
+            if (response.ErrorException != null)
+            {
+                throw response.ErrorException;
+            }
+
         }
         /// <summary>
         ///  REST API: Checks if the user already exists in the Database
@@ -70,7 +87,6 @@ namespace SMK.DataAccess
 
             // Async Executes the .php Request
             IRestResponse response = await client.ExecuteGetTaskAsync(request);
-                
             if (response.ErrorException != null)
             {
                 throw response.ErrorException;
@@ -91,20 +107,20 @@ namespace SMK.DataAccess
         /// </summary>
         /// <param name="username"></param>
         /// <param name="password"></param>
-        public void AddUserToDatabase(string username, string password)
+        public async void AddUserToDatabase(string username, string password)
         {
-            try
-            {
                 var client = new RestClient(ServerAdress);
-                var req = new RestRequest("createUser.php", Method.POST);
-                req.AddParameter("user_Email", username);
-                req.AddParameter("user_Password", DependencyService.Get<IHash>().SHA512StringHash(password));
-                client.Execute(req);
-            }
-            catch (InvalidOperationException ex)
+                var request = new RestRequest("createUser.php", Method.POST);
+                request.AddParameter("user_Email", username);
+                request.AddParameter("user_Password", DependencyService.Get<IHash>().SHA512StringHash(password));
+
+            IRestResponse response = await client.ExecutePostTaskAsync(request);
+
+            if (response.ErrorException != null)
             {
-                System.Diagnostics.Debug.WriteLine(ex);
+                throw response.ErrorException;
             }
+            client.Execute(request);
         }
 
         /// <summary>
@@ -147,13 +163,16 @@ namespace SMK.DataAccess
         public async Task<Product> GetProductByKey(string key)
         {
             var client = new RestClient(ServerAdress);
-            var request = new RestRequest("getProductKey.php", Method.GET);
-            request.AddParameter("product_Key", key);
+            var request = new RestRequest("GetProductByKey.php", Method.GET);
+            request.AddParameter("productkeys_Key", key);
 
             IRestResponse response = await client.ExecuteGetTaskAsync(request);
 
+            if (response.ErrorException != null)
+            {
+                throw response.ErrorException;
+            }
             var model = Newtonsoft.Json.JsonConvert.DeserializeObject<Product>(response.Content);
-
             return model;
         }
 
@@ -162,15 +181,20 @@ namespace SMK.DataAccess
         /// </summary>
         /// <param name="id"></param>
         /// <returns>Task</returns>
-        public async Task<PContent> GetPContent(string id)
+        public async Task<List<PContent>> GetPContent(int id)
         {
             var client = new RestClient(ServerAdress);
             var request = new RestRequest("getPContent.php", Method.GET);
-            request.AddParameter("pcontent_ID", id);
+            request.AddParameter("product_ID", id);
 
             IRestResponse response = await client.ExecuteGetTaskAsync(request);
 
-            var model = Newtonsoft.Json.JsonConvert.DeserializeObject<PContent>(response.Content);
+            if (response.ErrorException != null)
+            {
+                throw response.ErrorException;
+            }
+
+            var model = Newtonsoft.Json.JsonConvert.DeserializeObject<List<PContent>>(response.Content);
 
             return model;
         }
@@ -180,13 +204,18 @@ namespace SMK.DataAccess
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<List<string>> GetPContentFiles(string id)
+        public async Task<List<string>> GetPContentFiles(int id)
         {
             var client = new RestClient(ServerAdress);
             var request = new RestRequest("getFilePaths.php", Method.GET);
-            request.AddParameter("pcontent_ID", id);
+            request.AddParameter("content_ID", id);
 
             IRestResponse response = await client.ExecuteGetTaskAsync(request);
+
+            if (response.ErrorException != null)
+            {
+                throw response.ErrorException;
+            }
 
             var model = Newtonsoft.Json.JsonConvert.DeserializeObject<List<string>>(response.Content);
 
@@ -205,6 +234,11 @@ namespace SMK.DataAccess
             request.AddParameter("user_Email", user.user_Email);
 
             IRestResponse response = await client.ExecuteGetTaskAsync(request);
+
+            if (response.ErrorException != null)
+            {
+                throw response.ErrorException;
+            }
 
             var model = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Product>>(response.Content);
 

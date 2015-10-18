@@ -6,16 +6,15 @@ namespace SMK.DataAccess
 {
     public interface IDataAccess
     {
-        Task<PContent> GetPContent(string id);
-        Task<List<string>> GetPContentFiles(string id);
-        Task<Product> GetProductByKey(string key);
-        Task<List<Product>> GetUserProducts(User user);
+        Task<User> ValidateUser(User user);
+        Task<bool> IsDuplicatedUser(string username);
         Task<bool> IsValidKey(string key);
         void SetProductKeyInvalid(string key);
-        void AddProductToUser(int productId, User user);
-        Task<User> ValidateUser(User user);
         void AddUserToDatabase(string username, string password);
-        Task<bool> IsDuplicatedUser(string username);
-
+        void AddProductToUser(int productId, User user);
+        Task<Product> GetProductByKey(string key);
+        Task<List<Product>> GetUserProducts(User user);
+        Task<List<PContent>> GetPContent(int id);
+        Task<List<string>> GetPContentFiles(int id);
     }
 }
