@@ -207,7 +207,7 @@ namespace SMK.iOS
         }
         public String pathCombine(String firstPath, String secondPath)
         {
-            String path = pathCombine(firstPath, secondPath);
+            String path = Path.Combine(firstPath, secondPath);
             return (path);
         }
         public string LoadText(string filePath)

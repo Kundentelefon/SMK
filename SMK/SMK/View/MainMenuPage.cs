@@ -44,7 +44,7 @@ namespace SMK.View
                 Name = "Hinzufügen",
                 Order = ToolbarItemOrder.Primary,
                 Icon = null,
-                Command = new Command(() => Navigation.PushModalAsync(new AddProduktPage()))
+                Command = new Command(() => Navigation.PushAsync(new AddProduktPage()))
             };
             this.ToolbarItems.Add(toolButton);
 
@@ -135,7 +135,7 @@ namespace SMK.View
         {
             Command logoutCommand = new Command(() =>
             {
-                App.Current.Logout();
+                //App.Current.Logout();
                 Navigation.PushAsync(new LoginPage());
             });
             ToolbarItem logoutButton = new ToolbarItem
