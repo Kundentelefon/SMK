@@ -35,12 +35,14 @@ namespace SMK
                 //Checks if the Entry for username or password is empty
                 if (String.IsNullOrEmpty(username.Text) || String.IsNullOrEmpty(password.Text))
                 {
+                    password.Text = "";
                     await DisplayAlert("Abfragefehler", "E-Mail und Passwort bitte angeben", "Neue Eingabe");
                     return;
                 }
                 //Checks if the Email Entry is receiving a valid Email String
                 if (!IsValidEmail(username.Text))
                 {
+                    password.Text = "";
                     await DisplayAlert("Ungültige E-Mail", "E-Mail ist in einem ungültigen Format angegeben worden", "Neue Eingabe");
                     return;
                 }
@@ -52,7 +54,8 @@ namespace SMK
                 // Checks with null parameter if user is valid
                 if (null == validUser)
                 {
-                    if(exception)
+                    password.Text = "";
+                    if (exception)
                         await DisplayAlert("Verbindungsfehler", "Server ist nicht erreichtbar. Internetzugang aktiv?", "OK");
                     else
                         await DisplayAlert("Ungültiger Login", "E-Mail oder Passwort falsch angegeben", "Neue Eingabe");

@@ -96,8 +96,8 @@ namespace SMK
                 Debug.WriteLine("Start Test Database");
 
                 //Adds user to database
-                //DataAccessHandler.DataAccess.AddUserToDatabase("testF4@web.de", "nohash");
-                //Debug.WriteLine("Test User added");
+                DataAccessHandler.DataAccess.AddUserToDatabase("testF6@web.de", "nohash");
+                Debug.WriteLine("Test User added");
 
                 //checks if user is duplicated
                 //bool b1;
@@ -114,12 +114,31 @@ namespace SMK
 
 
                 //gets all userprodcuts
-                //Debug.WriteLine("Test1 getAllUserProducts");
-                //User u2 = new User("testF4@web.de", "sdfsd");
-                //Debug.WriteLine("Test1 getAllUserProducts2");
-                //List<Product> p3 = await DataAccessHandler.DataAccess.GetUserProducts(u2);
-                //Debug.WriteLine("Test1 getAllUserProducts3");
-                //Debug.WriteLine("Product list -> " + p3[1].product_ID);
+                Debug.WriteLine("Test1 getAllUserProducts");
+                User u2 = new User("testF4@web.de", "sdfsd");
+                Debug.WriteLine("Test1 getAllUserProducts2");
+                List<Product> p3 = await DataAccessHandler.DataAccess.GetUserProducts(u2);
+                Debug.WriteLine("Test1 getAllUserProducts3");
+                Debug.WriteLine("Product list -> " + p3[1].product_ID);
+
+                Debug.WriteLine(DependencyService.Get<ISaveAndLoad>().pathCombine(DependencyService.Get<ISaveAndLoad>().getpath("Produkt"), p3[1].product_ID + p3[1].product_Thumbnail));
+                
+                Debug.WriteLine("Path1 -> " + DependencyService.Get<ISaveAndLoad>().getpath("") + @"\Produkt\e435345.jpg");
+                DependencyService.Get<ISaveAndLoad>().createOrdner("testF6@web.de");
+
+
+                // Download single file
+                //string filename = "FISCHERTECHNIK_Logo.JPG";
+                //Debug.WriteLine("Test1 Downloade File start");
+                //IFtpClient client = DependencyService.Get<IFtpClient>();
+                //client.DownloadFile(filename, DependencyService.Get<ISaveAndLoad>().getpath("testF6@web.de"), "10.0.2.2", "SMKFTPUser", "");
+                //Debug.WriteLine("Test1 Downloade File end");
+
+                ////Test For Downloading the whole content of a directory path
+                Debug.WriteLine("Test1 Downloade File start");
+                IFtpClient client = DependencyService.Get<IFtpClient>();
+                client.DownloadDirectoryAsync("zeug", DependencyService.Get<ISaveAndLoad>().getpath("testF6@web.de"), "10.0.2.2", "SMKFTPUser", "");
+                Debug.WriteLine("Test1 Downloade File end");
 
                 //getPcontent
                 //Debug.WriteLine("Test1 getPcontent");

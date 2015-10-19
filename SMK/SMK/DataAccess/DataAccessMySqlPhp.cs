@@ -130,7 +130,6 @@ namespace SMK.DataAccess
             {
                 throw response.ErrorException;
             }
-            client.Execute(request);
         }
 
         /// <summary>
