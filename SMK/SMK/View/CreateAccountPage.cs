@@ -60,7 +60,7 @@ namespace SMK
                     {
                         User user = new User(username.Text, password1.Text);
                         await DisplayAlert("Account erstellt!", "Neuer Account wurde erstellt", "OK");
-                        await Navigation.PushAsync(new MainMenuPage(user));
+                        Navigation.PushModalAsync(new NavigationPage(new MainMenuPage(user)));
                     }
                 }
             };
@@ -118,6 +118,7 @@ namespace SMK
             try
             {
                 DataAccessHandler.DataAccess.AddUserToDatabase(username, password);
+                await Task.Delay(3000);
             }
             catch (Exception)
             {

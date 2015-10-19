@@ -12,7 +12,8 @@ namespace SMK.DataAccess
     internal class DataAccessMySqlPhp : IDataAccess
     {
         //Emulator Address
-        private const string ServerAdress = "http://10.0.2.2";
+        //private const string ServerAdress = "http://10.0.2.2";
+        private const string ServerAdress = "http://169.254.80.80";
 
         /// <summary>
         /// REST API: Async Checks if Database has the product key
@@ -87,6 +88,7 @@ namespace SMK.DataAccess
         /// <returns></returns>
         public async Task<User> ValidateUser(User user)
         {
+            try { 
             var client = new RestClient(ServerAdress);
             var request = new RestRequest("getUser.php", Method.GET);
             request.AddParameter("user_Email", user.user_Email);
@@ -109,6 +111,12 @@ namespace SMK.DataAccess
             //Checks if the JSON String has a user and if so, then checks for valid password 
             return user.user_Password.Equals(model.user_Password) ? model : null;
         }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Catched Timout");
+                throw new Exception();
+    }
+}
 
         /// <summary>
         /// REST API: Connects with the Server with URI (Emulator Standard is http://10.0.2.2) send with a REST Web Request from a .php POST Method Request. Creates on the Database a new User with a new ID
@@ -117,6 +125,7 @@ namespace SMK.DataAccess
         /// <param name="password"></param>
         public async void AddUserToDatabase(string username, string password)
         {
+            try { 
             var client = new RestClient(ServerAdress);
             var request = new RestRequest("createUser.php", Method.POST);
             request.AddParameter("user_Email", username);
@@ -125,10 +134,18 @@ namespace SMK.DataAccess
             request.Timeout = 5000;
 
             IRestResponse response = await client.ExecutePostTaskAsync(request);
+                await Task.Delay(3000);
 
-            if (response.ErrorException != null)
+
+                if (response.ErrorException != null)
             {
                 throw response.ErrorException;
+            }
+            }
+            catch (Exception e)
+            {
+                //Extra Exceptionhandling for void async
+                new Exception("AddUser Exception " + e);
             }
         }
 

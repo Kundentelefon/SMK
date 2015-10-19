@@ -48,7 +48,8 @@ namespace SMK
         public void Logout()
         {
             // It will set true on the Main Page
-            CurrentUser = DependencyService.Get<ISaveAndLoad>().loadUserXml(UserLoginDataFilePath());
+            localFileSystem file = new localFileSystem();
+            CurrentUser = file.getUser();
             CurrentUser.user_Password = null;
             rememberLogin(CurrentUser);
         }
@@ -72,7 +73,8 @@ namespace SMK
 
             DatabaseTest();
 
-            CurrentUser = DependencyService.Get<ISaveAndLoad>().loadUserXml(UserLoginDataFilePath());
+            localFileSystem file = new localFileSystem();
+            CurrentUser = file.getUser();
 
             if (IsLoggedIn)
             {
@@ -96,13 +98,13 @@ namespace SMK
                 Debug.WriteLine("Start Test Database");
 
                 //Adds user to database
-                DataAccessHandler.DataAccess.AddUserToDatabase("testF6@web.de", "nohash");
-                Debug.WriteLine("Test User added");
+                //DataAccessHandler.DataAccess.AddUserToDatabase("testF6@web.de", "nohash");
+                //Debug.WriteLine("Test User added");
 
                 //checks if user is duplicated
-                //bool b1;
-                //b = await DataAccessHandler.DataAccess.IsDuplicatedUser("testF4@web.de");
-                //Debug.WriteLine("Test1 duplicated user " + b1);
+                bool b1;
+                b1 = await DataAccessHandler.DataAccess.IsDuplicatedUser("testf4@web.de");
+                Debug.WriteLine("test1 duplicated user " + b1);
 
                 //checks if password and username is correct
                 //User u1;
@@ -114,31 +116,41 @@ namespace SMK
 
 
                 //gets all userprodcuts
-                Debug.WriteLine("Test1 getAllUserProducts");
-                User u2 = new User("testF4@web.de", "sdfsd");
-                Debug.WriteLine("Test1 getAllUserProducts2");
-                List<Product> p3 = await DataAccessHandler.DataAccess.GetUserProducts(u2);
-                Debug.WriteLine("Test1 getAllUserProducts3");
-                Debug.WriteLine("Product list -> " + p3[1].product_ID);
+                //Debug.WriteLine("Test1 getAllUserProducts");
+                //User u2 = new User("testF4@web.de", "sdfsd");
+                //Debug.WriteLine("Test1 getAllUserProducts2");
+                //List<Product> p3 = await DataAccessHandler.DataAccess.GetUserProducts(u2);
+                //Debug.WriteLine("Test1 getAllUserProducts3");
+                //Debug.WriteLine("Product list -> " + p3[1].product_ID);
 
-                Debug.WriteLine(DependencyService.Get<ISaveAndLoad>().pathCombine(DependencyService.Get<ISaveAndLoad>().getpath("Produkt"), p3[1].product_ID + p3[1].product_Thumbnail));
-                
-                Debug.WriteLine("Path1 -> " + DependencyService.Get<ISaveAndLoad>().getpath("") + @"\Produkt\e435345.jpg");
-                DependencyService.Get<ISaveAndLoad>().createOrdner("testF6@web.de");
+                //Debug.WriteLine(DependencyService.Get<ISaveAndLoad>().pathCombine(DependencyService.Get<ISaveAndLoad>().getpath("Produkt"), p3[1].product_ID + p3[1].product_Thumbnail));
+
+                //Debug.WriteLine("Path1 -> " + DependencyService.Get<ISaveAndLoad>().getpath("") + @"\Produkt\e435345.jpg");
+
+                //files = new localFileSystem();
+                //String userPath = files.AdjustPath(user.user_Email);
+                //files.createInitalFolders(userPath);
+
+                //DependencyService.Get<ISaveAndLoad>().createOrdner(DependencyService.Get<ISaveAndLoad>().getpath("testF4@web.de"));
+
+                Debug.WriteLine("Folder exist: " + DependencyService.Get<ISaveAndLoad>().fileExist("testF4@web.de"));
 
 
+                string ServerAdress = "169.254.80.80";
                 // Download single file
                 //string filename = "FISCHERTECHNIK_Logo.JPG";
-                //Debug.WriteLine("Test1 Downloade File start");
-                //IFtpClient client = DependencyService.Get<IFtpClient>();
-                //client.DownloadFile(filename, DependencyService.Get<ISaveAndLoad>().getpath("testF6@web.de"), "10.0.2.2", "SMKFTPUser", "");
-                //Debug.WriteLine("Test1 Downloade File end");
+                //        Debug.WriteLine("Test1 Downloade File start");
+                //        IFtpClient client = DependencyService.Get<IFtpClient>();
+                //        client.DownloadFile(filename, DependencyService.Get<ISaveAndLoad>().getpath("") + "testfolder", ServerAdress, "SMKFTPUser", "");
+                //        Debug.WriteLine("Folder exist: " + DependencyService.Get<ISaveAndLoad>().fileExist("testfolder"));
+
+                //        Debug.WriteLine("Test1 Downloade File end");
 
                 ////Test For Downloading the whole content of a directory path
-                Debug.WriteLine("Test1 Downloade File start");
-                IFtpClient client = DependencyService.Get<IFtpClient>();
-                client.DownloadDirectoryAsync("zeug", DependencyService.Get<ISaveAndLoad>().getpath("testF6@web.de"), "10.0.2.2", "SMKFTPUser", "");
-                Debug.WriteLine("Test1 Downloade File end");
+                //Debug.WriteLine("Test1 Downloade File start");
+                //IFtpClient client = DependencyService.Get<IFtpClient>();
+                //client.DownloadDirectoryAsync("zeug", DependencyService.Get<ISaveAndLoad>().getpath("") + "testF4@web.de", ServerAdress, "SMKFTPUser", "");
+                //Debug.WriteLine("Test1 Downloade File end");
 
                 //getPcontent
                 //Debug.WriteLine("Test1 getPcontent");
@@ -240,7 +252,8 @@ namespace SMK
                 DataAccessHandler.DataAccess.SetProductKeyInvalid(activationkey);
 
                 //adds Products to user
-                CurrentUser = DependencyService.Get<ISaveAndLoad>().loadUserXml(UserLoginDataFilePath());
+                localFileSystem file = new localFileSystem();
+                CurrentUser = file.getUser();
                 Product p0 = await DataAccessHandler.DataAccess.GetProductByKey(activationkey);
                 DataAccessHandler.DataAccess.AddProductToUser(p0.product_ID, CurrentUser);
                 Debug.WriteLine("Test2 product to user added with id: " + p0.product_ID);
@@ -300,11 +313,13 @@ namespace SMK
         public async void rememberLogin(User user)
         {
             await Task.Run(() => {
-                string userLoginDataFilePath = UserLoginDataFilePath();
-                ISaveAndLoad saveAndLoad = DependencyService.Get<ISaveAndLoad>();
-                if(saveAndLoad.fileExist(userLoginDataFilePath))
-                    saveAndLoad.deleteFile(userLoginDataFilePath);
-                saveAndLoad.saveUserXml(userLoginDataFilePath, user);
+                localFileSystem file = new localFileSystem();
+                file.saveUser(user);
+                //string userLoginDataFilePath = UserLoginDataFilePath();
+                //ISaveAndLoad saveAndLoad = DependencyService.Get<ISaveAndLoad>();
+                //if(saveAndLoad.fileExist(userLoginDataFilePath))
+                //    saveAndLoad.deleteFile(userLoginDataFilePath);
+                //saveAndLoad.saveUserXml(userLoginDataFilePath, user);
             });
         }
 
@@ -312,10 +327,11 @@ namespace SMK
         ///  Returns the location of the loginData.xml
         /// </summary>
         /// <returns></returns>
-        private string UserLoginDataFilePath()
-        {
-            return DependencyService.Get<ISaveAndLoad>().getpath("loginData.xml");
-        }
+        //private string UserLoginDataFilePath(User user)
+        //{
+        //    localFileSystem file = new localFileSystem();
+        //    return file.saveUser(user);
+        //}
 
         //public void ShowMainPage()
         //{
