@@ -234,7 +234,7 @@ namespace SMK.Support
             List<PContent> returnList = new List<PContent>();
             if (DependencyService.Get<ISaveAndLoad>().fileExist(productLocation))
             {
-                returnList = DependencyService.Get<ISaveAndLoad>().loadPcontentsXml(pContentLocation + @"/PContents.xml", userPath).listPContent;
+                returnList = DependencyService.Get<ISaveAndLoad>().loadPcontentsXml(pContentLocation, userPath).listPContent;
             }
             return (returnList);
         }
@@ -278,7 +278,7 @@ namespace SMK.Support
             Products saveProducts = new Products();
             saveProducts.listProducts = inputProducts;
 
-            DependencyService.Get<ISaveAndLoad>().savePContentsXml(userPath,pContentLocation + @"/PContents.xml", savePcontents);
+            DependencyService.Get<ISaveAndLoad>().savePContentsXml(userPath,pContentLocation, savePcontents);
             DependencyService.Get<ISaveAndLoad>().saveProductsXml(productLocation, saveProducts);
 
         }

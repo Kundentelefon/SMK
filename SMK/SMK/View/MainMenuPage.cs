@@ -36,9 +36,10 @@ namespace SMK.View
             Debug.WriteLine("Folder exist1 " + DependencyService.Get<ISaveAndLoad>().fileExist(user.user_Email + @"/FISCHERTECHNIK_Logo.JPG"));
             //Debug.WriteLine("Folder exist2 " + DependencyService.Get<ISaveAndLoad>().fileExistExact(user.user_Email + @"/FISCHERTECHNIK_Logo.JPG"));
             //Debug.WriteLine("File getpath " + DependencyService.Get<ISaveAndLoad>().getpath(user.user_Email));
-            //IFtpClient client = DependencyService.Get<IFtpClient>();
-            //client.DownloadDirectoryAsync("zeug", DependencyService.Get<ISaveAndLoad>().getpath(user.user_Email), ServerAdress, "SMKFTPUser", "");
-            //Debug.WriteLine("Test1 Downloade File end");
+
+            IFtpClient client = DependencyService.Get<IFtpClient>();
+            client.DownloadDirectoryAsync("zeug/PContent", DependencyService.Get<ISaveAndLoad>().getpath(user.user_Email), ServerAdress, "SMKFTPUser", "");
+            Debug.WriteLine("Test1 Downloade File end");
             //+userId
             //läd dummies 
             // entfernen bevor go live
