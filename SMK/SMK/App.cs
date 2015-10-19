@@ -48,6 +48,7 @@ namespace SMK
         public void Logout()
         {
             // It will set true on the Main Page
+            CurrentUser = DependencyService.Get<ISaveAndLoad>().loadUserXml(UserLoginDataFilePath());
             CurrentUser.user_Password = null;
             rememberLogin(CurrentUser);
         }
@@ -72,13 +73,17 @@ namespace SMK
             DatabaseTest();
 
             CurrentUser = DependencyService.Get<ISaveAndLoad>().loadUserXml(UserLoginDataFilePath());
+
             if (IsLoggedIn)
             {
-                
+
                 MainPage = new NavigationPage(new MainMenuPage(CurrentUser));
             }
             else
+            {
                 MainPage = new LoginModalPage();
+            }
+                
             // Handle when your app starts
         }
 
@@ -251,9 +256,6 @@ namespace SMK
                     "SMKFTPUser", "");
                     Debug.WriteLine("Test2 added file from filepath-> " + pathfile.ToString());
                 }
-                
-
-                
                 
             }
             catch (Exception e)
