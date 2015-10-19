@@ -12,8 +12,8 @@ namespace SMK.DataAccess
     internal class DataAccessMySqlPhp : IDataAccess
     {
         //Emulator Address
-        //private const string ServerAdress = "http://10.0.2.2";
-        private const string ServerAdress = "http://169.254.80.80";
+        //private const string ServerAdress = "http://10.31.44.59";
+        private const string ServerAdress = "http://10.31.44.59";
 
         /// <summary>
         /// REST API: Async Checks if Database has the product key
