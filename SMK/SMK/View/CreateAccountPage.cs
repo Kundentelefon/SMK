@@ -16,6 +16,8 @@ namespace SMK
     public class CreateAccountPage : ContentPage
     {
         Entry username, password1, password2;
+        // TODO: find better way to avoid giving null back to validUser
+        private bool exception;
 
         /// <summary>
         /// Checks: if Account is already in the database, if inserted String is a valid Email format, if entry password1 is equal entry password2. Adds then the User to the Database with hashed Password and continous to the MainPage().
@@ -29,11 +31,13 @@ namespace SMK
             var button = new Button { Text = "Account erstellen", BackgroundColor = Color.FromHex("E2001A") };
             button.Clicked += async (sender, e) =>
             {
-                bool isDuplicated = await IsDuplicatedUserAsync(username.Text);
                 //Checks if the User is already in the database 
-                if (isDuplicated)
+                if (await IsDuplicatedUserAsync(username.Text))
                 {
-                    await DisplayAlert("Account bereits vorhanden!", "Anderen account angeben", "OK");
+                    if (exception)
+                        await DisplayAlert("Verbindungsfehler", "Server ist nicht erreichtbar. Internetzugang aktiv?", "OK");
+                    else
+                        await DisplayAlert("Account bereits vorhanden!", "Anderen account angeben", "OK");
                 }
                 //Checks if the User is in a Valid Email Format
                 else if (!LoginPage.IsValidEmail(username.Text))
@@ -50,9 +54,14 @@ namespace SMK
                 else
                 {
                     AddUser(username.Text, password1.Text);
-                    User user = new User(username.Text, password1.Text);
-                    await DisplayAlert("Account erstellt!", "Neuer Account wurde erstellt", "OK");
-                    await Navigation.PushAsync(new MainMenuPage(user));
+                    if (exception)
+                        await DisplayAlert("Verbindungsfehler", "Server ist nicht erreichtbar. Internetzugang aktiv?", "OK");
+                    else
+                    {
+                        User user = new User(username.Text, password1.Text);
+                        await DisplayAlert("Account erstellt!", "Neuer Account wurde erstellt", "OK");
+                        await Navigation.PushAsync(new MainMenuPage(user));
+                    }
                 }
             };
             var cancel = new Button { Text = "Zurück", BackgroundColor = Color.FromHex("006AB3") };
@@ -88,17 +97,15 @@ namespace SMK
         /// <returns></returns>
         public async Task<bool> IsDuplicatedUserAsync(string strIn)
         {
-            bool duplicated = false;
             try
             {
-                duplicated = await DataAccessHandler.DataAccess.IsDuplicatedUser(strIn);
+                return await DataAccessHandler.DataAccess.IsDuplicatedUser(strIn);
             }
             catch (Exception)
             {
-                await DisplayAlert("Verbindungsfehler", "Server ist nicht erreichtbar. Internetzugang aktiv?", "OK");
+                exception = true;
             }
-            return duplicated;
-
+            return false;
         }
 
         /// <summary>
@@ -114,7 +121,7 @@ namespace SMK
             }
             catch (Exception)
             {
-                await DisplayAlert("Verbindungsfehler", "Server ist nicht erreichtbar. Internetzugang aktiv?", "OK");
+                exception = true;
             }
         }
 

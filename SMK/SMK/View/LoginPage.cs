@@ -5,6 +5,7 @@ using SMK.Support;
 using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using Xamarin.Forms;
@@ -17,6 +18,8 @@ namespace SMK
     public class LoginPage : ContentPage
     {
         Entry username, password;
+        // TODO: find better way to avoid giving null back to validUser
+        private bool exception;
 
         /// <summary>
         /// Checks: if Empty Email or password, if valid Email, if valid Login. Password Entry is set as isPassword and the shown Passworddigits only contains zeros. Password will be stored as SHA512StringHash
@@ -49,7 +52,10 @@ namespace SMK
                 // Checks with null parameter if user is valid
                 if (null == validUser)
                 {
-                    await DisplayAlert("Ungültiger Login", "E-Mail oder Passwort falsch angegeben", "Neue Eingabe");
+                    if(exception)
+                        await DisplayAlert("Verbindungsfehler", "Server ist nicht erreichtbar. Internetzugang aktiv?", "OK");
+                    else
+                        await DisplayAlert("Ungültiger Login", "E-Mail oder Passwort falsch angegeben", "Neue Eingabe");
                 }
                 else
                 {
@@ -102,16 +108,18 @@ namespace SMK
         /// <returns></returns>
         public async Task<User> IsValidLogin(User user)
         {
-            return user;
+            //decommend to avoid login input
+            //return user;
             try
             {
                 return await DataAccessHandler.DataAccess.ValidateUser(user);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                await DisplayAlert("Verbindungsfehler", "Server ist nicht erreichtbar. Internetzugang aktiv?", "OK");
+                Debug.WriteLine("Exception e: " + e);
+                exception = true;
+                return null;
             }
-            return null;
         }
 
     }

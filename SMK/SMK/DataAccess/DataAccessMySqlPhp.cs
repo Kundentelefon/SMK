@@ -25,6 +25,8 @@ namespace SMK.DataAccess
             var request = new RestRequest("getProductKey.php", Method.GET);
             request.AddParameter("product_Key", key);
 
+            request.Timeout = 5000;
+
             IRestResponse response = await client.ExecuteGetTaskAsync(request);
 
             //only throws the exception. Let target choose what to do
@@ -46,6 +48,8 @@ namespace SMK.DataAccess
             var request = new RestRequest("setProductKeyInvalid.php", Method.POST);
             request.AddParameter("productkeys_Key", key);
 
+            request.Timeout = 5000;
+
             IRestResponse response = await client.ExecutePostTaskAsync(request);
 
             if (response.ErrorException != null)
@@ -66,6 +70,8 @@ namespace SMK.DataAccess
             request.AddParameter("user_Email", user.user_Email);
             request.AddParameter("product_ID", productId);
 
+            request.Timeout = 5000;
+
             IRestResponse response = await client.ExecutePostTaskAsync(request);
 
             if (response.ErrorException != null)
@@ -84,6 +90,8 @@ namespace SMK.DataAccess
             var client = new RestClient(ServerAdress);
             var request = new RestRequest("getUser.php", Method.GET);
             request.AddParameter("user_Email", user.user_Email);
+
+            request.Timeout = 5000;
 
             // Async Executes the .php Request
             IRestResponse response = await client.ExecuteGetTaskAsync(request);
@@ -109,10 +117,12 @@ namespace SMK.DataAccess
         /// <param name="password"></param>
         public async void AddUserToDatabase(string username, string password)
         {
-                var client = new RestClient(ServerAdress);
-                var request = new RestRequest("createUser.php", Method.POST);
-                request.AddParameter("user_Email", username);
-                request.AddParameter("user_Password", DependencyService.Get<IHash>().SHA512StringHash(password));
+            var client = new RestClient(ServerAdress);
+            var request = new RestRequest("createUser.php", Method.POST);
+            request.AddParameter("user_Email", username);
+            request.AddParameter("user_Password", DependencyService.Get<IHash>().SHA512StringHash(password));
+
+            request.Timeout = 5000;
 
             IRestResponse response = await client.ExecutePostTaskAsync(request);
 
@@ -130,13 +140,13 @@ namespace SMK.DataAccess
         /// <returns></returns>
         public async Task<bool> IsDuplicatedUser(string strIn)
         {
-            try
-            {
                 var client = new RestClient(ServerAdress);
                 var request = new RestRequest("getUser.php", Method.GET);
                 request.AddParameter("user_Email", strIn);
 
-                var response = await client.ExecuteGetTaskAsync(request);
+                request.Timeout = 5000;
+
+                IRestResponse response = await client.ExecuteGetTaskAsync(request);
 
                 if (response.ErrorException != null)
                 {
@@ -145,14 +155,7 @@ namespace SMK.DataAccess
 
                 //Because of the isValidEmail Method, a Account with the name "0 results" can never happen
                 return !response.Content.ToString().Equals("0 results");
-            }
-
-            catch (InvalidOperationException ex)
-            {
-                System.Diagnostics.Debug.WriteLine(ex);
-                return false;
-            }
-
+            
         }
 
         /// <summary>
@@ -165,6 +168,8 @@ namespace SMK.DataAccess
             var client = new RestClient(ServerAdress);
             var request = new RestRequest("GetProductByKey.php", Method.GET);
             request.AddParameter("productkeys_Key", key);
+
+            request.Timeout = 5000;
 
             IRestResponse response = await client.ExecuteGetTaskAsync(request);
 
@@ -186,6 +191,8 @@ namespace SMK.DataAccess
             var client = new RestClient(ServerAdress);
             var request = new RestRequest("getPContent.php", Method.GET);
             request.AddParameter("product_ID", id);
+
+            request.Timeout = 5000;
 
             IRestResponse response = await client.ExecuteGetTaskAsync(request);
 
@@ -210,6 +217,8 @@ namespace SMK.DataAccess
             var request = new RestRequest("getFilePaths.php", Method.GET);
             request.AddParameter("content_ID", id);
 
+            request.Timeout = 5000;
+
             IRestResponse response = await client.ExecuteGetTaskAsync(request);
 
             if (response.ErrorException != null)
@@ -232,6 +241,8 @@ namespace SMK.DataAccess
             var client = new RestClient(ServerAdress);
             var request = new RestRequest("getUserProducts.php", Method.GET);
             request.AddParameter("user_Email", user.user_Email);
+
+            request.Timeout = 5000;
 
             IRestResponse response = await client.ExecuteGetTaskAsync(request);
 
