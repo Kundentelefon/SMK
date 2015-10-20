@@ -14,5 +14,7 @@ namespace SMK.Model
         public int product_ID { get; set; }
 
         public List<string> files;
+
+        public string content_path { get; set; }
     }
 }

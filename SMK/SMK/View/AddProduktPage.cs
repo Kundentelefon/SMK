@@ -6,6 +6,7 @@ using System.Text;
 using SMK.DataAccess;
 using SMK.Model;
 using Xamarin.Forms;
+using SMK.Support;
 
 namespace SMK.View
 {
@@ -40,16 +41,50 @@ namespace SMK.View
 
         public async void AddProduct(string productCode)
         {
-            // TODO: unable to connect to server exception
-            if (!await DataAccessHandler.DataAccess.IsValidKey(productCode))
+            try
             {
-                //TODO: Alert
+                if (!await DataAccessHandler.DataAccess.IsValidKey(productCode))
+                {
+                    await DisplayAlert("Produktcode ungültiger", "Es wurde ein ungültiger Produktcode eingegeben. Bitte anderen code eingeben.", "Neue Eingabe");
+                    return;
+                }
+                localFileSystem files = new localFileSystem();
+                String userPath = files.AdjustPath(App.Current.CurrentUser.user_Email);
+                DataAccessHandler accessHandler = new DataAccessHandler();
+                string serverAdress = accessHandler.ServerAdress;
+
+                Product product = await DataAccessHandler.DataAccess.GetProductByKey(productCode);
+                DataAccessHandler.DataAccess.AddProductToUser(product.product_ID, App.Current.CurrentUser);
+                List<Product> newUserProducts = files.loadProductList();
+                //inserts the new Product in Productlist
                 
-                return;
+                List<PContent> listPContents = await DataAccessHandler.DataAccess.GetPContent(product.product_ID);
+                List<PContent> newlistPContents = files.loadContentList(userPath);
+
+                IFtpClient client = DependencyService.Get<IFtpClient>();
+
+                string thumbnailpath = await DataAccessHandler.DataAccess.getThumbnailPath(product.product_ID);
+
+                //Download thumbnail
+                client.DownloadFile(thumbnailpath,
+                DependencyService.Get<ISaveAndLoad>().getpath(App.Current.CurrentUser.user_Email + @"\Thumbnail"), serverAdress, accessHandler.FtpName,
+                accessHandler.FtpPassword);
+                foreach (var pcontent in listPContents)
+                {
+                    client.DownloadFile(pcontent.content_path,
+                        DependencyService.Get<ISaveAndLoad>().getpath(App.Current.CurrentUser.user_Email) + @"\p" + pcontent.content_Kind, serverAdress, accessHandler.FtpName,
+                        accessHandler.FtpPassword);
+                    newlistPContents.Add(pcontent);
+                }
+                newUserProducts.Add(product);
+                files.saveModelsLocal(userPath, newUserProducts, newlistPContents);
+                DataAccessHandler.DataAccess.SetProductKeyInvalid(productCode);
+                await DisplayAlert("Produkt aktiviert!", "Das Produkt wurde erfolgreiche aktiviert!", "OK");
             }
-            Product product = await DataAccessHandler.DataAccess.GetProductByKey(productCode);
-            DataAccessHandler.DataAccess.AddProductToUser(product.product_ID, App.Current.CurrentUser);
-            DataAccessHandler.DataAccess.SetProductKeyInvalid(productCode);
+            catch (Exception e)
+            {
+                await DisplayAlert("Fehler beim Downloaden", "Es gab einen Fehler beim Downloaden, bitte erneut versuchen", "OK");
+            }
         }
     }
 }

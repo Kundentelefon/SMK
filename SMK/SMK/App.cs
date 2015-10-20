@@ -102,9 +102,9 @@ namespace SMK
                 //Debug.WriteLine("Test User added");
 
                 //checks if user is duplicated
-                bool b1;
-                b1 = await DataAccessHandler.DataAccess.IsDuplicatedUser("testf4@web.de");
-                Debug.WriteLine("test1 duplicated user " + b1);
+                //bool b1;
+                //b1 = await DataAccessHandler.DataAccess.IsDuplicatedUser("testf4@web.de");
+                //Debug.WriteLine("test1 duplicated user " + b1);
 
                 //checks if password and username is correct
                 //User u1;
@@ -209,6 +209,7 @@ namespace SMK
 
 
 
+                //Test For Downloading the whole content of a directory path
                 //Test For Downloading the whole content of a directory path
                 //IFtpClient client = DependencyService.Get<IFtpClient>();
                 //client.DownloadDirectoryAsync(

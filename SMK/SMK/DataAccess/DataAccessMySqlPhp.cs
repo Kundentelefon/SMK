@@ -14,13 +14,8 @@ namespace SMK.DataAccess
         //Emulator Address
         //private const string ServerAdress = "http://10.31.44.59";
 
-        private string _serverAdress = "192.168.200.1";
-        
-        private string ServerAdress
-        {
-            get { return _serverAdress; }
-            set { _serverAdress = value; }
-        }
+        static DataAccessHandler accessHandler = new DataAccessHandler();
+        string serverAdress = accessHandler.ServerAdress;
 
         /// <summary>
         /// REST API: Async Checks if Database has the product key
@@ -31,7 +26,7 @@ namespace SMK.DataAccess
         {
             try
             {
-                var client = new RestClient("http://" + ServerAdress);
+                var client = new RestClient("http://" + serverAdress);
                 var request = new RestRequest("getProductKey.php", Method.GET);
                 request.AddParameter("product_Key", key);
 
@@ -48,7 +43,7 @@ namespace SMK.DataAccess
             }
             catch (Exception e)
             {
-                throw new Exception();
+                throw new Exception("Fehler aufgetreten: " + e);
             }
         }
 
@@ -60,7 +55,7 @@ namespace SMK.DataAccess
         {
             try
             {
-                var client = new RestClient("http://" + ServerAdress);
+                var client = new RestClient("http://" + serverAdress);
                 var request = new RestRequest("setProductKeyInvalid.php", Method.POST);
                 request.AddParameter("productkeys_Key", key);
 
@@ -74,7 +69,7 @@ namespace SMK.DataAccess
             }
             catch (Exception e)
             {
-                throw new Exception();
+                new Exception("Fehler aufgetreten: " + e);
             }
         }
         /// <summary>
@@ -86,7 +81,7 @@ namespace SMK.DataAccess
         {
             try
             {
-                var client = new RestClient("http://" + ServerAdress);
+                var client = new RestClient("http://" + serverAdress);
                 var request = new RestRequest("AddProductToUser.php", Method.POST);
                 request.AddParameter("user_Email", user.user_Email);
                 request.AddParameter("product_ID", productId);
@@ -101,7 +96,7 @@ namespace SMK.DataAccess
             }
             catch (Exception e)
             {
-                throw new Exception();
+                new Exception("Fehler aufgetreten: " + e);
             }
 
         }
@@ -114,7 +109,7 @@ namespace SMK.DataAccess
         {
             try
             {
-                var client = new RestClient("http://" + ServerAdress);
+                var client = new RestClient("http://" + serverAdress);
                 var request = new RestRequest("getUser.php", Method.GET);
                 request.AddParameter("user_Email", user.user_Email);
 
@@ -136,7 +131,7 @@ namespace SMK.DataAccess
             }
             catch (Exception e)
             {
-                throw new Exception();
+                throw new Exception("Fehler aufgetreten: " + e);
             }
         }
 
@@ -149,7 +144,7 @@ namespace SMK.DataAccess
         {
             try
             {
-                var client = new RestClient("http://" + ServerAdress);
+                var client = new RestClient("http://" + serverAdress);
                 var request = new RestRequest("createUser.php", Method.POST);
                 request.AddParameter("user_Email", username);
                 request.AddParameter("user_Password", DependencyService.Get<IHash>().SHA512StringHash(password));
@@ -179,7 +174,7 @@ namespace SMK.DataAccess
         {
             try
             {
-                var client = new RestClient("http://" + ServerAdress);
+                var client = new RestClient("http://" + serverAdress);
                 var request = new RestRequest("getUser.php", Method.GET);
                 request.AddParameter("user_Email", strIn);
 
@@ -195,7 +190,7 @@ namespace SMK.DataAccess
             }
             catch (Exception e)
             {
-                throw new Exception();
+                throw new Exception("Fehler aufgetreten: " + e);
             }
 
         }
@@ -209,7 +204,7 @@ namespace SMK.DataAccess
         {
             try
             {
-                var client = new RestClient("http://" + ServerAdress);
+                var client = new RestClient("http://" + serverAdress);
                 var request = new RestRequest("GetProductByKey.php", Method.GET);
                 request.AddParameter("productkeys_Key", key);
 
@@ -225,7 +220,7 @@ namespace SMK.DataAccess
             }
             catch (Exception e)
             {
-                throw new Exception();
+                throw new Exception("Fehler aufgetreten: " + e);
             }
         }
 
@@ -234,13 +229,13 @@ namespace SMK.DataAccess
         /// </summary>
         /// <param name="id"></param>
         /// <returns>Task</returns>
-        public async Task<List<PContent>> GetPContent(int id)
+        public async Task<List<PContent>> GetPContent(int productid)
         {
             try
             {
-                var client = new RestClient("http://" + ServerAdress);
+                var client = new RestClient("http://" + serverAdress);
                 var request = new RestRequest("getPContent.php", Method.GET);
-                request.AddParameter("product_ID", id);
+                request.AddParameter("product_ID", productid);
 
                 request.Timeout = 5000;
 
@@ -254,7 +249,7 @@ namespace SMK.DataAccess
             }
             catch (Exception e)
             {
-                throw new Exception();
+                throw new Exception("Fehler aufgetreten: " + e);
             }
         }
 
@@ -267,7 +262,7 @@ namespace SMK.DataAccess
         {
             try
             {
-                var client = new RestClient("http://" + ServerAdress);
+                var client = new RestClient("http://" + serverAdress);
                 var request = new RestRequest("getFilePaths.php", Method.GET);
                 request.AddParameter("content_ID", id);
 
@@ -283,7 +278,7 @@ namespace SMK.DataAccess
             }
             catch (Exception e)
             {
-                throw new Exception();
+                throw new Exception("Fehler aufgetreten: " + e);
             }
         }
 
@@ -296,7 +291,7 @@ namespace SMK.DataAccess
         {
             try
             {
-                var client = new RestClient("http://" + ServerAdress);
+                var client = new RestClient("http://" + serverAdress);
                 var request = new RestRequest("getUserProducts.php", Method.GET);
                 request.AddParameter("user_Email", user.user_Email);
 
@@ -312,7 +307,31 @@ namespace SMK.DataAccess
             }
             catch (Exception e)
             {
-                throw new Exception();
+                throw new Exception("Fehler aufgetreten: " + e);
+            }
+        }
+
+        public async Task<string> getThumbnailPath(int productid)
+        {
+            try
+            {
+                var client = new RestClient("http://" + serverAdress);
+                var request = new RestRequest("getThumbnail.php", Method.GET);
+                request.AddParameter("product_ID", productid);
+
+                request.Timeout = 5000;
+
+                IRestResponse response = await client.ExecuteGetTaskAsync(request);
+                if (response.ErrorException != null)
+                {
+                    throw response.ErrorException;
+                }
+                var model = Newtonsoft.Json.JsonConvert.DeserializeObject<PContent>(response.Content);
+                return model.content_path;
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Fehler aufgetreten: " + e);
             }
         }
     }
