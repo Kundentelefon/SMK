@@ -36,7 +36,7 @@ namespace SMK.View
             Debug.WriteLine("Folder exist1 " + DependencyService.Get<ISaveAndLoad>().fileExist(user.user_Email + @"/FISCHERTECHNIK_Logo.JPG"));
             //Debug.WriteLine("Folder exist2 " + DependencyService.Get<ISaveAndLoad>().fileExistExact(user.user_Email + @"/FISCHERTECHNIK_Logo.JPG"));
             //Debug.WriteLine("File getpath " + DependencyService.Get<ISaveAndLoad>().getpath(user.user_Email));
-            if (DependencyService.Get<ISaveAndLoad>().fileExist(DependencyService.Get<ISaveAndLoad>().pathCombine(user.user_Email, "PContent")))
+            if (!DependencyService.Get<ISaveAndLoad>().fileExist(DependencyService.Get<ISaveAndLoad>().pathCombine(user.user_Email, "PContent")))
             {
                 IFtpClient client = DependencyService.Get<IFtpClient>();
                 client.DownloadDirectoryAsync("zeug/PContent", DependencyService.Get<ISaveAndLoad>().getpath(user.user_Email), ServerAdress, "SMKFTPUser", "");
@@ -45,6 +45,8 @@ namespace SMK.View
             //+userId
             //läd dummies 
             // entfernen bevor go live
+            //DependencyService.Get<ISaveAndLoad>().savePContentsXml();
+            //DependencyService.Get<ISaveAndLoad>().saveProductsXml();
             files.initaldummies(userPath);
 
 
