@@ -302,6 +302,10 @@ namespace SMK.DataAccess
                 {
                     throw response.ErrorException;
                 }
+                if (response.Content.Equals("0 results"))
+                {
+                    return new List<Product>();
+                }
                 var model = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Product>>(response.Content);
                 return model;
             }

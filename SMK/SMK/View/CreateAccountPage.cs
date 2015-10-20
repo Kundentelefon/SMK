@@ -61,8 +61,8 @@ namespace SMK
                     {
                         User user = new User(username.Text, password1.Text);
                         await DisplayAlert("Account erstellt!", "Neuer Account wurde erstellt", "OK");
-                        //DownloadInitialContent(user);
-                        Navigation.PushModalAsync(new NavigationPage(new MainMenuPage(user)));
+                        DownloadInitialContent(user);
+                        await Navigation.PushModalAsync(new NavigationPage(new MainMenuPage(user)));
                     }
                 }
             };
@@ -140,6 +140,7 @@ namespace SMK
                 String userPath = files.AdjustPath(user.user_Email);
                 //A newly created User cant have a folder with the same name in the folder so no check must be implemented
                 files.createInitalFolders(userPath);
+                Debug.WriteLine("Folder exist1 " + DependencyService.Get<ISaveAndLoad>().fileExist(DependencyService.Get<ISaveAndLoad>().pathCombine(user.user_Email, "PContent")));
 
                 List<PContent> newlistPContents = new List<PContent>();
 
@@ -168,9 +169,14 @@ namespace SMK
                 }
                 Debug.WriteLine("CreateUser Downloade File end");
                 files.saveModelsLocal(userPath, listUserProducts, newlistPContents);
+
+                //Load initial testcontent
+                //client.DownloadDirectoryAsync("zeug/PContent", DependencyService.Get<ISaveAndLoad>().getpath(user.user_Email), serverAdress, "SMKFTPUser", "");
+                Debug.WriteLine("Test1 Downloade File end");
             }
             catch (Exception e)
             {
+                Debug.WriteLine("catched DL Exception: " + e);
                 await DisplayAlert("Fehler beim Downloaden", "Es gab einen Fehler beim Downloaden, bitte erneut versuchen", "OK");
             }
         }
