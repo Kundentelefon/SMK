@@ -49,16 +49,16 @@ namespace SMK.Droid
         /// <returns></returns>
         public User loadUserXml(String location)
         {
-            User returnObject = null;
+            User returnUser = null;
             try {
                 XmlSerializer ser = new XmlSerializer(typeof(User));
                 FileStream fs = new FileStream(getpath(location), FileMode.Open);
                 XmlReader reader = XmlReader.Create(fs);
-                returnObject = (User)ser.Deserialize(reader);
+                returnUser = (User)ser.Deserialize(reader);
                 fs.Close();                
             }
             catch (Exception e) { Console.WriteLine("" + e); }
-            return (returnObject);
+            return (returnUser);
         }
 
 
@@ -156,8 +156,8 @@ namespace SMK.Droid
         /// <returns></returns>
         public String getpath(String inputPath)
         {
-            String contentlPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), inputPath);
-            return (contentlPath);
+            String contentPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), inputPath);
+            return (contentPath);
         }
         /// <summary>
         /// erstellt einen ordner an den standardpfad

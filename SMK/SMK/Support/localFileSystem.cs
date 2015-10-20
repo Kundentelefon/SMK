@@ -194,14 +194,10 @@ namespace SMK.Support
         /// <returns></returns>
          public User getUser()
         {
-            User returnUser;
+            User returnUser=null;
             if (userExist())
             {
                 returnUser=DependencyService.Get<ISaveAndLoad>().loadUserXml(userLocation);
-            }
-            else
-            {
-                returnUser = null;
             }
             return (returnUser);
         }
@@ -218,15 +214,8 @@ namespace SMK.Support
 
         public void createInitalFolders(String userFile)
         {
-            //if (!DependencyService.Get<ISaveAndLoad>().fileExist(productLocation))
-            //{
                 DependencyService.Get<ISaveAndLoad>().createOrdner(productFolderLocation);
-            //}
-            //if(!DependencyService.Get<ISaveAndLoad>().fileExist(userFile))
-            //{
                 DependencyService.Get<ISaveAndLoad>().createOrdner(userFile);
-            //}
-
         }
 
         public void deleteUser()
@@ -237,10 +226,5 @@ namespace SMK.Support
         {
             return System.Text.RegularExpressions.Regex.Replace(Input, @"[\\/:*?""<>|]", string.Empty);
         }
-
-        //public String LoadText(String filename)
-        //{
-        //    return (DependencyService.Get<ISaveAndLoad>().LoadText(filename));
-        //}
     }
 }

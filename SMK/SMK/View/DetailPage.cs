@@ -115,38 +115,41 @@ namespace SMK.View
 
         public void initContentLists()
         {
-            if (pContent[0] != null)
+            if (pContent != null)
             {
-                owned = true;
-                foreach (PContent content in pContent)
+                if (pContent[0] != null)
                 {
-                    if (content.content_Kind == 0)
+                    owned = true;
+                    foreach (PContent content in pContent)
                     {
-                        contentPictureGalarie.Add(content);
-                        //SMK.FischerTechnik.Files.1.png
-                        //picture_galarie.Add(imagePfadContent+content.content_ID.ToString()+".png");
+                        if (content.content_Kind == 0)
+                        {
+                            contentPictureGalarie.Add(content);
+                            //SMK.FischerTechnik.Files.1.png
+                            //picture_galarie.Add(imagePfadContent+content.content_ID.ToString()+".png");
+
+                        }
+                        //if (content.content_Kind == 1)
+                        //{
+                        //    contentPdf.Add(content);
+
+                        //}
+                        if (content.content_Kind == 2)
+                        {
+                            contentHtml.Add(content);
+
+                        }
+                        //if (content.content_Kind == 3)
+                        //{
+                        //    contentVideo.Add(content);
+
+                        //}
+                        if (content.content_Kind == 4)
+                        {
+                            contentConvertedPdf.Add(content);
+                        }
 
                     }
-                    //if (content.content_Kind == 1)
-                    //{
-                    //    contentPdf.Add(content);
-
-                    //}
-                    if (content.content_Kind == 2)
-                    {
-                        contentHtml.Add(content);
-
-                    }
-                    //if (content.content_Kind == 3)
-                    //{
-                    //    contentVideo.Add(content);
-
-                    //}
-                    if(content.content_Kind == 4)
-                    {
-                        contentConvertedPdf.Add(content);
-                    }
-
                 }
             }
         }
@@ -161,12 +164,12 @@ namespace SMK.View
 
             foreach (PContent content in contentPictureGalarie)
             {
-                foreach (string image_source in content.files)
+                foreach (string imageSource in content.files)
                 {
                     //string source = imagePfadContent+"p" + content.content_ID.ToString() + "."+ image_source;
                     string source = (DependencyService.Get<ISaveAndLoad>().pathCombine(
                         (DependencyService.Get<ISaveAndLoad>().pathCombine(
-                            DependencyService.Get<ISaveAndLoad>().getpath(userPath),"p"+ content.content_ID.ToString())), image_source));
+                            DependencyService.Get<ISaveAndLoad>().getpath(userPath),"p"+ content.content_ID.ToString())), imageSource));
                     Frame frame = new Frame
                         {
                             OutlineColor = color,
