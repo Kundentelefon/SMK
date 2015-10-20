@@ -244,6 +244,18 @@ namespace SMK.DataAccess
                 {
                     throw response.ErrorException;
                 }
+                if (response.Content.Equals("0 results"))
+                {
+                    PContent pcontent = new PContent();
+                    pcontent.content_ID = -1;
+                    pcontent.content_Kind = 0;
+                    pcontent.content_Title = null;
+                    pcontent.content_path = null;
+                    pcontent.files = null;
+                    List<PContent> pContentList = new List<PContent>();
+                    pContentList.Add(pcontent);
+                    return pContentList;
+                }
                 var model = Newtonsoft.Json.JsonConvert.DeserializeObject<List<PContent>>(response.Content);
                 return model;
             }
@@ -304,7 +316,15 @@ namespace SMK.DataAccess
                 }
                 if (response.Content.Equals("0 results"))
                 {
-                    return new List<Product>();
+                    Product product = new Product();
+                    product.product_Thumbnail = null;
+                    product.product_ID = -1;
+                    product.PContents = null;
+                    product.product_Name = null;
+                    product.product_Text = null;
+                    List<Product> productList = new List<Product>();
+                    productList.Add(product);
+                    return productList;
                 }
                 var model = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Product>>(response.Content);
                 return model;
@@ -330,6 +350,7 @@ namespace SMK.DataAccess
                 {
                     throw response.ErrorException;
                 }
+
                 var model = Newtonsoft.Json.JsonConvert.DeserializeObject<PContent>(response.Content);
                 return model.content_path;
             }

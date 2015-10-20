@@ -26,7 +26,7 @@ namespace SMK
         /// </summary>
         public LoginPage()
         {
-            
+
             BackgroundColor = new Color(255, 255, 255, 1);
 
             var button = new Button { Text = "Login", BackgroundColor = Color.FromHex("006AB3") };
@@ -63,7 +63,14 @@ namespace SMK
                 else
                 {
                     App.Current.Login(validUser);
-                    Navigation.PushModalAsync(new NavigationPage(new MainMenuPage(validUser)));
+                    if (!DependencyService.Get<ISaveAndLoad>().fileExist(DependencyService.Get<ISaveAndLoad>().pathCombine(validUser.user_Email, "PContent")))
+                    {
+                        Debug.WriteLine("getphath2 " + DependencyService.Get<ISaveAndLoad>().getpath(""));
+                        await DisplayAlert("Neue Anmeldung", "Sie haben sich an einem neuen Gerät angemeldet. Daten werden runtergeladen", "OK");
+                        CreateAccountPage cap = new CreateAccountPage();
+                        cap.DownloadInitialContent(validUser);
+                    }
+                    await Navigation.PushModalAsync(new NavigationPage(new MainMenuPage(validUser)));
                 }
             };
             var create = new Button { Text = "Account erstellen", BackgroundColor = Color.FromHex("E2001A") };

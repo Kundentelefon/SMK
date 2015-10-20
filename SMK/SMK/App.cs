@@ -52,6 +52,7 @@ namespace SMK
             CurrentUser = file.getUser();
             CurrentUser.user_Password = null;
             rememberLogin(CurrentUser);
+            file.deleteUser();
         }
 
         /// <summary>
@@ -60,7 +61,8 @@ namespace SMK
         /// <param name="user"></param>
         public void Login(User user)
         {
-            CurrentUser = user;
+            localFileSystem file = new localFileSystem();
+            file.saveUser(user);
             rememberLogin(user);
         }
 
