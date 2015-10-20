@@ -95,7 +95,6 @@
     <Compile Include="AppDelegate.cs" />
     <Compile Include="Support\FtpClient.cs" />
     <Compile Include="Support\Hash.cs" />
-    <Compile Include="test.cs" />
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />

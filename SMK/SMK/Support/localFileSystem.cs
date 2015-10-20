@@ -107,7 +107,7 @@ namespace SMK.Support
             
         }
         /// <summary>
-        /// lädt die Produkt list aus der Produkt Xml
+        /// liest den Produkt ein von dem als xml gespeicherten Produkt 
         /// </summary>
         /// <returns></returns>
         public List<Product> loadProductList()
@@ -120,7 +120,7 @@ namespace SMK.Support
             return (returnList);
         }
         /// <summary>
-        /// liest den PContent ein von der Pcontent Xml 
+        /// liest den PContent ein von dem als xml gespeicherten PContent 
         /// </summary>
         /// <param name="userPath">der Spezifische User Ordner</param>
         /// <returns></returns>
@@ -134,8 +134,8 @@ namespace SMK.Support
         }
 
         /// <summary>
-        /// Übergebe ein Product und bekomme eine Liste mit Allen Content für dieses Produkt
-        /// Content kann Null sein falls User Product nicht besitzt
+        /// Übergebe ein Product und bekomme eine Liste mit allen Content für dieses Produkt
+        /// der zurückgegebene Content kann leer sein falls der User das Product nicht besitzt
         /// </summary>
         /// <param name="product"></param>
         /// <returns></returns>
@@ -151,7 +151,9 @@ namespace SMK.Support
         }
 
         /// <summary>
-        /// falls Content nicht null gibt true zurück
+        /// überprüft ob in Pcontent entwas enthalten ist und 
+        /// falls ja ob das Produkt auch Content besitzt und 
+        /// ob in Pcontent, Content von dem Produkt enthält.
         /// </summary>
         /// <param name="product"></param>
         /// <returns></returns>
@@ -164,7 +166,13 @@ namespace SMK.Support
             return false;
         }
 
-        
+        /// <summary>
+        /// speichert alle Übergeben Produkte in der Datei "Products" vogegebenen Pfad ab 
+        /// speichert alle Pcontents in Contents im spezifischen User Verzeichnis übergeben in userPath ab
+        /// </summary>
+        /// <param name="userPath"></param>
+        /// <param name="inputProducts"></param>
+        /// <param name="inputContents"></param>
         public void saveModelsLocal(String userPath,List<Product> inputProducts, List<PContent> inputContents)
         {
             PContents savePcontents = new PContents();
@@ -177,7 +185,7 @@ namespace SMK.Support
 
         }
         /// <summary>
-        /// checks if user exists
+        /// überprüft ob ein user existiert
         /// </summary>
         /// <returns></returns>
         private Boolean userExist()
@@ -189,25 +197,21 @@ namespace SMK.Support
             return (false);
         }
         /// <summary>
-        /// returns the User
+        /// lädt den User aus dem File User und gibt diesen zurück
         /// </summary>
         /// <returns></returns>
          public User getUser()
         {
-            User returnUser;
+            User returnUser=null;
             if (userExist())
             {
                 returnUser=DependencyService.Get<ISaveAndLoad>().loadUserXml(userLocation);
-            }
-            else
-            {
-                returnUser = null;
             }
             return (returnUser);
         }
 
         /// <summary>
-        /// saves the User to a local xml file and returns true or false
+        /// speichert den User in der User File als xml ab
         /// </summary>
         /// <param name="inputUser"></param>
         /// <returns></returns>
@@ -215,32 +219,31 @@ namespace SMK.Support
         {
             DependencyService.Get<ISaveAndLoad>().saveUserXml(userLocation,inputUser);
         }
-
+        /// <summary>
+        /// erstellt den Produkt Ordner und den Userspezifischen Ordner,
+        /// fals die Ordner noch nicht vorhanden sind.
+        /// </summary>
+        /// <param name="userFile"></param>
         public void createInitalFolders(String userFile)
         {
-            //if (!DependencyService.Get<ISaveAndLoad>().fileExist(productLocation))
-            //{
                 DependencyService.Get<ISaveAndLoad>().createOrdner(productFolderLocation);
-            //}
-            //if(!DependencyService.Get<ISaveAndLoad>().fileExist(userFile))
-            //{
                 DependencyService.Get<ISaveAndLoad>().createOrdner(userFile);
-            //}
-
         }
-
+        /// <summary>
+        /// entfärnt die User Xml Datei
+        /// </summary>
         public void deleteUser()
         {
             DependencyService.Get<ISaveAndLoad>().deleteFile(userLocation);
         }
+        /// <summary>
+        /// entfärnt \\/:*?""<>| aus dem übergebenen String
+        /// </summary>
+        /// <param name="Input"></param>
+        /// <returns></returns>
         public string AdjustPath(string Input)
         {
             return System.Text.RegularExpressions.Regex.Replace(Input, @"[\\/:*?""<>|]", string.Empty);
         }
-
-        //public String LoadText(String filename)
-        //{
-        //    return (DependencyService.Get<ISaveAndLoad>().LoadText(filename));
-        //}
     }
 }
