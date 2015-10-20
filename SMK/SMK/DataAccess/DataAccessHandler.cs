@@ -15,6 +15,11 @@ namespace SMK.DataAccess
 
         public static IDataAccess DataAccess { get; private set; }
 
+        public string ServerAdress { get; private set; } = "192.168.171.1";
+        public string FtpName { get; private set; } = "SMKFTPUser";
+        public string FtpPassword { get; private set; } = "";
+
+
         /// <summary>
         /// Sets the Dataacces. Easy to switch between different implementations of Dataaccess logic
         /// </summary>

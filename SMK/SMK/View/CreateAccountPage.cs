@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using SMK.Support;
 using SMK.View;
 using SMK.Model;
+using System.Diagnostics;
 
 namespace SMK
 {
@@ -60,7 +61,8 @@ namespace SMK
                     {
                         User user = new User(username.Text, password1.Text);
                         await DisplayAlert("Account erstellt!", "Neuer Account wurde erstellt", "OK");
-                        Navigation.PushModalAsync(new NavigationPage(new MainMenuPage(user)));
+                        DownloadInitialContent(user);
+                        await Navigation.PushModalAsync(new NavigationPage(new MainMenuPage(user)));
                     }
                 }
             };
@@ -123,6 +125,59 @@ namespace SMK
             catch (Exception)
             {
                 exception = true;
+            }
+        }
+
+        public async void DownloadInitialContent(User user)
+        {
+            try
+            {
+                DataAccessHandler accessHandler = new DataAccessHandler();
+                string serverAdress = accessHandler.ServerAdress;
+                List<Product> listUserProducts = await DataAccessHandler.DataAccess.GetUserProducts(user);
+
+                localFileSystem files = new localFileSystem();
+                String userPath = files.AdjustPath(user.user_Email);
+                //A newly created User cant have a folder with the same name in the folder so no check must be implemented
+                files.createInitalFolders(userPath);
+                Debug.WriteLine("Folder exist1 " + DependencyService.Get<ISaveAndLoad>().fileExist(DependencyService.Get<ISaveAndLoad>().pathCombine(user.user_Email, "PContent")));
+
+                List<PContent> newlistPContents = new List<PContent>();
+
+                Debug.WriteLine("CreateUser Downloade File start");
+                IFtpClient client = DependencyService.Get<IFtpClient>();
+                //Download all Products this user posses with all its Pcontent
+                foreach (var product in listUserProducts)
+                {
+                    List<PContent> listUserPContents =
+                        await DataAccessHandler.DataAccess.GetPContent(product.product_ID);
+
+                    string thumbnailpath = await DataAccessHandler.DataAccess.getThumbnailPath(product.product_ID);
+                    client.DownloadFile(thumbnailpath,
+                    DependencyService.Get<ISaveAndLoad>().getpath(App.Current.CurrentUser.user_Email + @"\Thumbnail"), serverAdress, accessHandler.FtpName,
+                    accessHandler.FtpPassword);
+
+                    foreach (var pcontent in listUserPContents)
+                    {
+                        client.DownloadFile(pcontent.content_path,
+                            DependencyService.Get<ISaveAndLoad>().getpath(App.Current.CurrentUser.user_Email) + @"\p" + pcontent.content_Kind, serverAdress, accessHandler.FtpName,
+                            accessHandler.FtpPassword);
+                        //inserts the new PContent to PContent list
+                        newlistPContents.Add(pcontent);
+                    }
+
+                }
+                Debug.WriteLine("CreateUser Downloade File end");
+                files.saveModelsLocal(userPath, listUserProducts, newlistPContents);
+
+                //Load initial testcontent
+                //client.DownloadDirectoryAsync("zeug/PContent", DependencyService.Get<ISaveAndLoad>().getpath(user.user_Email), serverAdress, "SMKFTPUser", "");
+                Debug.WriteLine("Test1 Downloade File end");
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("catched DL Exception: " + e);
+                await DisplayAlert("Fehler beim Downloaden", "Es gab einen Fehler beim Downloaden, bitte erneut versuchen", "OK");
             }
         }
 
