@@ -18,25 +18,20 @@ namespace SMK
     public class CreateAccountPage : ContentPage
     {
         Entry username, password1, password2;
-        // TODO: find better way to avoid giving null back to validUser
-        private bool exception;
+        private bool _exception;
 
         /// <summary>
         /// Checks: if Account is already in the database, if inserted String is a valid Email format, if entry password1 is equal entry password2. Adds then the User to the Database with hashed Password and continous to the MainPage().
         /// </summary>
-        /// <param name="ilm"></param>
-        /// <param name="task"></param>
         public CreateAccountPage()
         {
-            //bool isDuplicated = true;
-
             var button = new Button { Text = "Account erstellen", BackgroundColor = Color.FromHex("E2001A") };
             button.Clicked += async (sender, e) =>
             {
                 //Checks if the User is already in the database 
                 if (await IsDuplicatedUserAsync(username.Text))
                 {
-                    if (exception)
+                    if (_exception)
                         await DisplayAlert("Verbindungsfehler", "Server ist nicht erreichtbar. Internetzugang aktiv?", "OK");
                     else
                         await DisplayAlert("Account bereits vorhanden!", "Anderen account angeben", "OK");
@@ -51,12 +46,11 @@ namespace SMK
                 {
                     await DisplayAlert("Passwort wiederholen!", "Passwörter sind nicht identisch", "OK");
                 }
-
                 // Adds the user to the database with hashed password
                 else
                 {
                     AddUser(username.Text, password1.Text);
-                    if (exception)
+                    if (_exception)
                         await DisplayAlert("Verbindungsfehler", "Server ist nicht erreichtbar. Internetzugang aktiv?", "OK");
                     else
                     {
@@ -73,7 +67,7 @@ namespace SMK
                 MessagingCenter.Send<ContentPage>(this, "Login");
             };
 
-            username = new Entry { Text = ""};
+            username = new Entry { Text = "" };
             password1 = new Entry { Text = "", IsPassword = true };
             password2 = new Entry { Text = "", IsPassword = true };
 
@@ -106,7 +100,7 @@ namespace SMK
             }
             catch (Exception)
             {
-                exception = true;
+                _exception = true;
             }
             return false;
         }
@@ -114,18 +108,18 @@ namespace SMK
         /// <summary>
         /// Adds the User to the Database with a REST API
         /// </summary>
-        /// <param name="username"></param>
+        /// <param name="newusername"></param>
         /// <param name="password"></param>
-        public async void AddUser(string username, string password)
+        public async void AddUser(string newusername, string password)
         {
             try
             {
-                DataAccessHandler.DataAccess.AddUserToDatabase(username, password);
+                DataAccessHandler.DataAccess.AddUserToDatabase(newusername, password);
                 await Task.Delay(3000);
             }
             catch (Exception)
             {
-                exception = true;
+                _exception = true;
             }
         }
 
@@ -133,75 +127,59 @@ namespace SMK
         {
             try
             {
-                DataAccessHandler accessHandler = new DataAccessHandler();
-                string serverAdress = accessHandler.ServerAdress;
-                List<Product> listUserProducts = await DataAccessHandler.DataAccess.GetUserProducts(user);
-
                 localFileSystem files = new localFileSystem();
                 String userPath = files.AdjustPath(user.user_Email);
                 //A newly created User cant have a folder with the same name in the folder so no check must be implemented
-                files.createInitalFolders(userPath);
-                Debug.WriteLine("Folder exist1 before " + DependencyService.Get<ISaveAndLoad>().fileExist(DependencyService.Get<ISaveAndLoad>().pathCombine(user.user_Email, "User")));
+                files.CreateInitalFolders(userPath);
 
-                List<PContent> newlistPContents = new List<PContent>();
+                DataAccessHandler accessHandler = new DataAccessHandler();
+                string serverAdress = accessHandler.ServerAdress;
 
-                Debug.WriteLine("CreateUser Downloade File start");
                 IFtpClient client = DependencyService.Get<IFtpClient>();
                 //Download empty folder PContent
-                client.DownloadDirectoryAsync(@"emptyFolderStructure", DependencyService.Get<ISaveAndLoad>().getpath(user.user_Email), serverAdress, accessHandler.FtpName, accessHandler.FtpPassword);
-                    //Download all Products this user posses with all its Pcontent
+                client.DownloadDirectoryAsync(@"emptyFolderStructure", DependencyService.Get<ISaveAndLoad>().Getpath(user.user_Email), serverAdress, accessHandler.FtpName, accessHandler.FtpPassword);
+                //Download all Products this user posses with all its Pcontent
 
-                    foreach (var product in listUserProducts)
-                    {
-                        
-                    Debug.WriteLine("hier1");
+                List<Product> listUserProducts = await DataAccessHandler.DataAccess.GetUserProducts(user);
+                List<PContent> newlistPContents = new List<PContent>();
+                foreach (var product in listUserProducts)
+                {
+                    //loads the PContent from the server
                     List<PContent> listUserPContents =
                         await DataAccessHandler.DataAccess.GetPContent(product.product_ID);
-                    Debug.WriteLine("hier2");
+
                     if (product.product_ID == 0) break;
-                    Debug.WriteLine("gib thumbnail: " + DependencyService.Get<ISaveAndLoad>().getpath(@"Produkte/") + product.product_Thumbnail);
                     //Download Thumbnail in Produkte Folder
                     client.DownloadFile(@"Thumbnail/" + product.product_Thumbnail,
-                    DependencyService.Get<ISaveAndLoad>().getpath(@"Produkte/") + product.product_Thumbnail, serverAdress, accessHandler.FtpName,
+                    DependencyService.Get<ISaveAndLoad>().Getpath(@"Produkte/") + product.product_Thumbnail, serverAdress, accessHandler.FtpName,
                     accessHandler.FtpPassword);
                     //Download Thumbnail in userName / thumbnail Folder
                     client.DownloadFile(@"Thumbnail/" + product.product_Thumbnail,
-                    DependencyService.Get<ISaveAndLoad>().getpath(files.getUser().user_Email + @"/Thumbnail/") + product.product_Thumbnail, serverAdress, accessHandler.FtpName,
+                    DependencyService.Get<ISaveAndLoad>().Getpath(files.GetUser().user_Email + @"/Thumbnail/") + product.product_Thumbnail, serverAdress, accessHandler.FtpName,
                     accessHandler.FtpPassword);
-
 
                     foreach (var pcontent in listUserPContents)
                     {
                         if (pcontent.content_ID == 0) break;
-
-                        //creates a new p folder if not exists
-                        DependencyService.Get<ISaveAndLoad>().pathCombine(
-                            DependencyService.Get<ISaveAndLoad>().getpath(userPath), "p" + pcontent.content_ID);
+                        //creates a new p folder if not exists for content_Kind
+                        DependencyService.Get<ISaveAndLoad>().PathCombine(
+                            DependencyService.Get<ISaveAndLoad>().Getpath(userPath), "p" + pcontent.content_ID);
 
                         List<string> contentPath = await DataAccessHandler.DataAccess.GetFileServerPath(pcontent.content_ID);
                         foreach (var path in contentPath)
                         {
+                            //loads every content from PContent 
                             client.DownloadFile(path,
-                            DependencyService.Get<ISaveAndLoad>().getpath(files.getUser().user_Email) + @"/p" + pcontent.content_ID + @"/" + Path.GetFileName(path), serverAdress, accessHandler.FtpName,
+                            DependencyService.Get<ISaveAndLoad>().Getpath(files.GetUser().user_Email) + @"/p" + pcontent.content_ID + @"/" + Path.GetFileName(path), serverAdress, accessHandler.FtpName,
                             accessHandler.FtpPassword);
                         }
-                        
-                        Debug.WriteLine("hier4");
-
                         //inserts the new PContent to PContent list
                         newlistPContents.Add(pcontent);
                     }
-
                 }
-                Debug.WriteLine("CreateUser Downloade File end");
-                files.saveUser(user);
-                files.saveModelsLocal(userPath, listUserProducts, newlistPContents);
-
-                Debug.WriteLine("Folder exist1 after " + DependencyService.Get<ISaveAndLoad>().fileExist("User"));
-                Debug.WriteLine("getpath1: " + DependencyService.Get<ISaveAndLoad>().pathCombine(user.user_Email, "User"));
-                //Load initial testcontent
-                //client.DownloadDirectoryAsync("zeug/PContent", DependencyService.Get<ISaveAndLoad>().getpath(user.user_Email), serverAdress, "SMKFTPUser", "");
-                Debug.WriteLine("Test1 Downloade File end");
+                //Saves User, Products and PContent XML
+                files.SaveUser(user);
+                files.SaveModelsLocal(userPath, listUserProducts, newlistPContents);
             }
             catch (Exception e)
             {
@@ -211,6 +189,6 @@ namespace SMK
         }
 
     }
-    
+
 }
 

@@ -9,6 +9,5 @@ namespace SMK.Model
     public class Products
     {
         public List<Product> listProducts = new List<Product>();
-
     }
 }

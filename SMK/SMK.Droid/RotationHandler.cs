@@ -20,7 +20,7 @@ namespace SMK.Droid
 {
     public class RotationHandler : IRotation
     {
-        public void disableRotation()
+        public void DisableRotation()
         {
                
            //[ Activity(Label = "CodeLayoutActivity",

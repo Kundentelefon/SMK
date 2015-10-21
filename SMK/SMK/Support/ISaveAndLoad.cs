@@ -10,83 +10,85 @@ namespace SMK.Support
     public interface ISaveAndLoad
     {
         /// <summary>
-        /// speichert den "User" an die übergebene "location" im AppOrdner
+        /// saves the "User" at "location" in AppFolder
         /// </summary>
         /// <param name="location"></param>
         /// <param name="inputObject"></param>
-        void saveUserXml(String location, Object inputObject);
+        void SaveUserXml(String location, Object inputObject);
         /// <summary>
-        /// läd das User-xml File von der "location" ein und gibt es zurück 
+        /// load the User-XML File from "location" and gives it back
         /// </summary>
         /// <param name="location"></param>
         /// <returns>Returns the remembered user and null if no user is saved.</returns>
-        User loadUserXml(String location);
-
+        User LoadUserXml(String location);
 
         /// <summary>
-        /// speichert den "Pcontents" an dem übergebene Pfad der aus "userPath" und "location" besteht, im AppOrdner ab
+        /// saves "PContents" at the combined location "userPath" and "location" in AppFolder
         /// </summary>
+        /// <param name="userPath"></param>
         /// <param name="location"></param>
         /// <param name="inputObject"></param>
-        void savePContentsXml(String userPath, String location, Object inputObject);
+        void SavePContentsXml(String userPath, String location, Object inputObject);
+
         /// <summary>
-        /// lädt den "Pcontents" aus dem Pcontent File welches im UserOrdner unter dem Pfad aus "location" und "userPath" abgespeichert wurde
-        /// und gibt diesen "Pcontents" zurück
+        /// loads the "PContent" from the PContent-File in (which is located in the combined Path "userpath" and "location") and saves it back in "PContents"
         /// </summary>
         /// <param name="location"></param>
+        /// <param name="userPath"></param>
         /// <returns></returns>
-        PContents loadPcontentsXml(String location, String userPath);
+        PContents LoadPcontentsXml(String location, String userPath);
         /// <summary>
-        /// speichert den "Product" an dem übergebene Pfad "location"  im AppOrdner ab
+        /// saves "Product" at the given "location" in AppFolder
         /// </summary>
         /// <param name="location"></param>
         /// <param name="inputObject"></param>
-        void saveProductsXml(String location, Object inputObject);
+        void SaveProductsXml(String location, Object inputObject);
         /// <summary>
-        /// lädt den "Products" aus dem Product File welches im UserOrdner unter dem Pfad "location"  abgespeichert wurde
+        /// loads the "Product" File from "location" (which is located in UserFolder) and gives this "Products" back
+        /// lädt den "Products" aus dem Product File welches im UserFolder unter dem Pfad "location"  abgespeichert wurde
         /// und gibt diesen "Products" zurück
         /// </summary>
         /// <param name="location"></param>
         /// <returns></returns>
-        Products loadProductsXml(String location);
+        Products LoadProductsXml(String location);
         /// <summary>
-        /// überprüft ob am dem übergeben Pfad im AppOrdner ein File liegt
+        /// Checks if the file exists at "location"
         /// </summary>
         /// <param name="inputString"></param>
         /// <returns></returns>
-        Boolean fileExist(String inputString);
+        Boolean FileExist(String inputString);
         /// <summary>
-        /// überprüft ob am dem übergeben Pfad im AppOrdner ein File liegt
+        /// Checks if the File exists at "inputString" in AppFolder
         /// </summary>
         /// <param name="inputString"></param>
         /// <returns></returns>
-        Boolean fileExistExact(String inputString);
+        Boolean FileExistExact(String inputString);
         /// <summary>
-        /// gibt den AppOrdner Pfad als String zurück mit der "location" hinten angefügt
+        /// Returns the AppFolder-Path as string which is located in "location"
         /// </summary>
         /// <param name="location"></param>
         /// <returns></returns>
-        String getpath(String location);
+        String Getpath(String location);
         /// <summary>
-        /// erstellt einen Ordner an dem Übergeben Path in dem AppOrdner
-        /// falls der Ordner schon existiert führt diese funktion nichts aus
+        /// creates a Folder at the given "path" in AppFolder
+        /// if the Folder already exists, it does nothing
         /// </summary>
         /// <param name="path"></param>
-        void createOrdner(String path);
+        void CreateFolder(String path);
         /// <summary>
-        /// löscht eine Datei am übergebenen Pfad im AppOrdner Pfad
+        /// deletes a File at the given Path in the AppFolder-Path
         /// </summary>
         /// <param name="path"></param>
-        void deleteFile(String path);
+        void DeleteFile(String path);
         /// <summary>
-        /// Fügt an übergebenen "firstPath" den auch übergenen "secondPath" an und gibt diese zurück
+        /// Combines "firstPath" and "secondPath" to one Path
         /// </summary>
         /// <param name="firstPath"></param>
         /// <param name="secondPath"></param>
         /// <returns></returns>
-        String pathCombine(String firstPath, String secondPath);
+        String PathCombine(String firstPath, String secondPath);
         /// <summary>
-        /// lädt einen Text aus der Datei mit dem Pfad "filename" im AppOrdner Verzeichniss
+        /// loads the Text from a File in AppFolder from the path "filename"
         /// </summary>
         /// <param name="filename"></param>
         /// <returns></returns>

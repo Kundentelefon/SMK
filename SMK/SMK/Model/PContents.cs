@@ -9,6 +9,5 @@ namespace SMK.Model
     public class PContents
     {
         public List<PContent> listPContent = new List<PContent>();
-
     }
 }

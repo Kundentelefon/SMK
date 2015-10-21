@@ -18,7 +18,7 @@ namespace SMK.Droid.Support
 {
     class Hash : SMK.Support.IHash
     {
-        public string SHA512StringHash(string inputString)
+        public string Sha512StringHash(string inputString)
         {
             SHA512 shaM = new SHA512Managed();
             // Convert the inputString string to a byte array and compute the hash.

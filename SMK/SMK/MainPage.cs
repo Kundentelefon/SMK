@@ -7,9 +7,9 @@ using Xamarin.Forms;
 
 namespace SMK
 {
-    public class Navigation_Page : Page
+    public class MainPage : Page
     {
-        public Navigation_Page()
+        public MainPage()
         {
         }
 
