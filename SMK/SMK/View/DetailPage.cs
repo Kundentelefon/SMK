@@ -15,6 +15,8 @@ namespace SMK.View
         //müssen noch geändert werden sobald der server steht
         //String imagePfadContent = DependencyService.Get<ISaveAndLoad>().getpath("PContent/p");
         //String imagePfadProduct = DependencyService.Get<ISaveAndLoad>().getpath("Product/"); 
+        String productFolderLocation = "Produkte";
+        String thumbnailFolderLocation = "thumbnails";
         String imagePfadContent = "SMK.zeug.PContent.";
         String imagePfadProduct = "SMK.zeug.Product.";
         String thumbnail = "SMK.zeug.PContent.Thumbnail.";
@@ -64,7 +66,7 @@ namespace SMK.View
 
             initContentLists();
             //String image_path = imagePfadProduct + product.product_ID.ToString() + ".png";
-            String image_path = DependencyService.Get<ISaveAndLoad>().pathCombine(DependencyService.Get<ISaveAndLoad>().getpath("Produkt"), product.product_ID + product.product_Thumbnail);
+            String image_path = DependencyService.Get<ISaveAndLoad>().pathCombine(DependencyService.Get<ISaveAndLoad>().getpath(productFolderLocation), product.product_ID + product.product_Thumbnail);
             //(DependencyService.Get<ISaveAndLoad>().pathCombine(
             //(DependencyService.Get<ISaveAndLoad>().pathCombine(
             //DependencyService.Get<ISaveAndLoad>().getpath(userPath), product.product_ID.ToString()))+".png"));
@@ -198,7 +200,7 @@ namespace SMK.View
 
                 string source = (DependencyService.Get<ISaveAndLoad>().pathCombine(
                         (DependencyService.Get<ISaveAndLoad>().pathCombine(
-                            DependencyService.Get<ISaveAndLoad>().getpath(userPath), "thumbnails" )), 
+                            DependencyService.Get<ISaveAndLoad>().getpath(userPath), thumbnailFolderLocation )), 
                         content.content_ID.ToString())
                         +".png");
                 // if file doesn´t exist don`t create a frame
@@ -246,7 +248,7 @@ namespace SMK.View
                 TapGestureRecognizer reco = new TapGestureRecognizer();
                 string source_thumb = ((DependencyService.Get<ISaveAndLoad>().pathCombine(
                     (DependencyService.Get<ISaveAndLoad>().pathCombine(
-                            DependencyService.Get<ISaveAndLoad>().getpath(userPath), "thumbnails" )), content.content_ID.ToString())+ ".png"));
+                            DependencyService.Get<ISaveAndLoad>().getpath(userPath), thumbnailFolderLocation )), content.content_ID.ToString())+ ".png"));
                 string source_image;
 
                 Frame frame = new Frame
