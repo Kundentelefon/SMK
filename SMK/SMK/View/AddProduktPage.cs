@@ -44,11 +44,12 @@ namespace SMK.View
         {
             try
             {
-                if (!await DataAccessHandler.DataAccess.IsValidKey(productCode))
-                {
-                    await DisplayAlert("Produktcode ungültiger", "Es wurde ein ungültiger Produktcode eingegeben. Bitte anderen code eingeben.", "Neue Eingabe");
-                    return;
-                }
+                //für testzwecke auskommentiert
+                //if (!await DataAccessHandler.DataAccess.IsValidKey(productCode))
+                //{
+                //    await DisplayAlert("Produktcode ungültiger", "Es wurde ein ungültiger Produktcode eingegeben. Bitte anderen code eingeben.", "Neue Eingabe");
+                //    return;
+                //}
                 localFileSystem file = new localFileSystem();
                 Debug.WriteLine("getpath produkte: " + DependencyService.Get<ISaveAndLoad>().fileExist(@"User"));
                 String userPath = file.AdjustPath(file.getUser().user_Email);
@@ -65,29 +66,35 @@ namespace SMK.View
 
                 IFtpClient client = DependencyService.Get<IFtpClient>();
 
-                Debug.WriteLine("getpath produkte: " + DependencyService.Get<ISaveAndLoad>().getpath(@"Produkte"));
+
 
                 //Download Thumbnail in Produkte Folder
-                client.DownloadFile(@"Thumbnail/" + product.product_ID + product.product_Thumbnail,
-                DependencyService.Get<ISaveAndLoad>().getpath(@"Produkte/") +product.product_ID + product.product_Thumbnail, serverAdress, accessHandler.FtpName,
+                client.DownloadFile(@"Thumbnail/" + product.product_Thumbnail,
+                DependencyService.Get<ISaveAndLoad>().getpath(@"Produkte/") +product.product_Thumbnail, serverAdress, accessHandler.FtpName,
                 accessHandler.FtpPassword);
                 //Download Thumbnail in userName / thumbnail Folder
-                client.DownloadFile(@"Thumbnail/" + product.product_ID + product.product_Thumbnail,
-                DependencyService.Get<ISaveAndLoad>().getpath(file.getUser().user_Email + @"/Thumbnail/") + product.product_ID + product.product_Thumbnail, serverAdress, accessHandler.FtpName,
+                client.DownloadFile(@"Thumbnail/" + product.product_Thumbnail,
+                DependencyService.Get<ISaveAndLoad>().getpath(file.getUser().user_Email + @"/Thumbnail/") + product.product_Thumbnail, serverAdress, accessHandler.FtpName,
                 accessHandler.FtpPassword);
 
                 foreach (var pcontent in listPContents)
                 {
                     if (pcontent.content_ID == 0) break;
                     List<string> contentPath =
-                        await DataAccessHandler.DataAccess.GetFileServerPath(pcontent.content_Kind);
+                        await DataAccessHandler.DataAccess.GetFileServerPath(pcontent.content_ID);
                     newlistPContents.Add(pcontent);
+
+                    //creates a new p folder if not exists
+                    DependencyService.Get<ISaveAndLoad>().createOrdner(DependencyService.Get<ISaveAndLoad>().pathCombine(
+                    DependencyService.Get<ISaveAndLoad>().getpath(userPath), "p" + pcontent.content_ID));
+
                     foreach (var path in contentPath)
                     {
                         if (pcontent.content_ID == 0) break;
+                        DependencyService.Get<ISaveAndLoad>().createOrdner(userPath + @"/p" + pcontent.content_ID);
                         client.DownloadFile(path,
                             DependencyService.Get<ISaveAndLoad>().getpath(file.getUser().user_Email) + @"/p" +
-                            pcontent.content_Kind + @"/" + pcontent.content_Title, serverAdress, accessHandler.FtpName,
+                            pcontent.content_ID + @"/" + pcontent.content_Title, serverAdress, accessHandler.FtpName,
                             accessHandler.FtpPassword);
                     }
                 }
@@ -97,6 +104,7 @@ namespace SMK.View
                 DataAccessHandler.DataAccess.AddProductToUser(product.product_ID, file.getUser());
                 DataAccessHandler.DataAccess.SetProductKeyInvalid(productCode);
                 await DisplayAlert("Produkt aktiviert!", "Das Produkt wurde erfolgreiche aktiviert!", "OK");
+                await Navigation.PushModalAsync(new NavigationPage(new MainMenuPage(file.getUser())));
             }
             catch (Exception e)
             {

@@ -65,7 +65,7 @@ namespace SMK.View
 
             initContentLists();
             //String image_path = imagePfadProduct + product.product_ID.ToString() + ".png";
-            String image_path = DependencyService.Get<ISaveAndLoad>().pathCombine(DependencyService.Get<ISaveAndLoad>().getpath(localFileSystem.productFolderLocation), product.product_ID + product.product_Thumbnail);
+            String image_path = DependencyService.Get<ISaveAndLoad>().pathCombine(DependencyService.Get<ISaveAndLoad>().getpath(localFileSystem.productFolderLocation), product.product_Thumbnail);
             //(DependencyService.Get<ISaveAndLoad>().pathCombine(
             //(DependencyService.Get<ISaveAndLoad>().pathCombine(
             //DependencyService.Get<ISaveAndLoad>().getpath(userPath), product.product_ID.ToString()))+".png"));
@@ -154,7 +154,7 @@ namespace SMK.View
                 {
                     string source = DependencyService.Get<ISaveAndLoad>().pathCombine(
                         (DependencyService.Get<ISaveAndLoad>().pathCombine(
-                            DependencyService.Get<ISaveAndLoad>().getpath(userPath),"p"+ content.content_ID.ToString())), imageSource);
+                            DependencyService.Get<ISaveAndLoad>().getpath(userPath),"p"+ content.content_ID)), imageSource);
                     Frame frame = new Frame
                         {
                             OutlineColor = color,
@@ -263,7 +263,7 @@ namespace SMK.View
                     //source_image = imagePfadContent + "p" + content.content_ID.ToString()+ "." + source;
                     source_image= (DependencyService.Get<ISaveAndLoad>().pathCombine(
                         (DependencyService.Get<ISaveAndLoad>().pathCombine(
-                            DependencyService.Get<ISaveAndLoad>().getpath(userPath), "p" + content.content_ID.ToString())), source));
+                            DependencyService.Get<ISaveAndLoad>().getpath(userPath), "p" + content.content_ID)), source));
                     carousel.Children.Add(new ContentPage { Content = new Image { Source = ImageSource.FromFile(source_image) } });
                 }
 

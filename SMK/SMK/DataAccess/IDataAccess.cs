@@ -15,7 +15,7 @@ namespace SMK.DataAccess
         Task<Product> GetProductByKey(string key);
         Task<List<Product>> GetUserProducts(User user);
         Task<List<PContent>> GetPContent(int productid);
-        Task<List<string>> GetFileServerPath(int kind);
+        Task<List<string>> GetFileServerPath(int cid);
 
     }
 }

@@ -285,9 +285,9 @@ namespace SMK
                 foreach (var pcontent in pc1)
                 {
                     Debug.WriteLine("Test2 getPcontent from id: " + pcontent.content_ID);
-                    List<string> pathfile = await DataAccessHandler.DataAccess.GetFileServerPath(pcontent.content_Kind);
+                    List<string> pathfile = await DataAccessHandler.DataAccess.GetFileServerPath(pcontent.content_ID);
                     Debug.WriteLine("Test2 Download Files -> " + pathfile);
-                    client2.DownloadDirectoryAsync(pathfile.ToString(), tpath + tusername + @"\PContent\" + "p" + pcontent.content_Kind + @"\" + pcontent.content_Title, "localhost",
+                    client2.DownloadDirectoryAsync(pathfile.ToString(), tpath + tusername + @"\PContent\" + "p" + pcontent.content_ID + @"\" + pcontent.content_Title, "localhost",
                     "SMKFTPUser", "");
                     Debug.WriteLine("Test2 added file from filepath-> " + pathfile.ToString());
                 }

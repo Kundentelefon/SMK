@@ -22,25 +22,26 @@ namespace SMK.DataAccess
         /// REST API: Async Checks if Database has the product key
         /// </summary>
         /// <param name="key"></param>
-        /// <returns>Task</returns>
+        /// <returns>Task</returns
         public async Task<bool> IsValidKey(string key)
         {
             try
             {
                 var client = new RestClient("http://" + serverAdress);
-                var request = new RestRequest("getProductKey.php", Method.GET);
-                request.AddParameter("product_Key", key);
+                var request = new RestRequest("getProductKeyValid.php", Method.GET);
+                request.AddParameter("productkeys_Key", key);
 
                 request.Timeout = 5000;
 
                 IRestResponse response = await client.ExecuteGetTaskAsync(request);
-
                 //only throws the exception. Let target choose what to do
-                if (response.ErrorException != null)
-                {
+                if (response.ErrorException != null) { 
                     throw response.ErrorException;
                 }
-                return response.Content != "0 results";
+                var model = Newtonsoft.Json.JsonConvert.DeserializeObject<string>(response.Content);
+                if (model.Equals("1"))
+                    return true;
+                return false;
             }
             catch (Exception e)
             {
@@ -279,7 +280,7 @@ namespace SMK.DataAccess
                 foreach (var pcontent in model)
                 {
                     var request2 = new RestRequest("getFileNames.php", Method.GET);
-                    request2.AddParameter("content_Kind", pcontent.content_Kind);
+                    request2.AddParameter("content_ID", pcontent.content_ID);
 
                     request.Timeout = 1000;
 
@@ -312,13 +313,13 @@ namespace SMK.DataAccess
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<List<string>> GetFileServerPath(int kind)
+        public async Task<List<string>> GetFileServerPath(int cid)
         {
             try
             {
                 var client = new RestClient("http://" + serverAdress);
                 var request = new RestRequest("getFilePaths.php", Method.GET);
-                request.AddParameter("content_Kind", kind);
+                request.AddParameter("content_ID", cid);
 
                 request.Timeout = 5000;
 
