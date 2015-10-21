@@ -45,67 +45,68 @@ namespace SMK.View
         {
             try
             {
-                //für testzwecke auskommentiert
-                //if (!await DataAccessHandler.DataAccess.IsValidKey(productCode))
-                //{
-                //    await DisplayAlert("Produktcode ungültiger", "Es wurde ein ungültiger Produktcode eingegeben. Bitte anderen code eingeben.", "Neue Eingabe");
-                //    return;
-                //}
+                if (!await DataAccessHandler.DataAccess.IsValidKey(productCode))
+                {
+                    await DisplayAlert("Produktcode ungültiger", "Es wurde ein ungültiger Produktcode eingegeben. Bitte anderen code eingeben.", "Neue Eingabe");
+                    return;
+                }
                 localFileSystem file = new localFileSystem();
-                Debug.WriteLine("getpath produkte: " + DependencyService.Get<ISaveAndLoad>().fileExist(@"User"));
-                String userPath = file.AdjustPath(file.getUser().user_Email);
+                String userPath = file.AdjustPath(file.GetUser().user_Email);
+
+
+                //Gets the Serveradress 
                 DataAccessHandler accessHandler = new DataAccessHandler();
                 string serverAdress = accessHandler.ServerAdress;
 
-                Product product = await DataAccessHandler.DataAccess.GetProductByKey(productCode);
-                DataAccessHandler.DataAccess.AddProductToUser(product.product_ID, App.Current.CurrentUser);
-                List<Product> newUserProducts = file.loadProductList();
-                //inserts the new Product in Productlist
-                
-                List<PContent> listPContents = await DataAccessHandler.DataAccess.GetPContent(product.product_ID);
-                List<PContent> newlistPContents = file.loadContentList(userPath);
-
                 IFtpClient client = DependencyService.Get<IFtpClient>();
-
-
-
+                Product product = await DataAccessHandler.DataAccess.GetProductByKey(productCode);
                 //Download Thumbnail in Produkte Folder
                 client.DownloadFile(@"Thumbnail/" + product.product_Thumbnail,
-                DependencyService.Get<ISaveAndLoad>().getpath(@"Produkte/") +product.product_Thumbnail, serverAdress, accessHandler.FtpName,
+                DependencyService.Get<ISaveAndLoad>().Getpath(@"Produkte/") + product.product_Thumbnail, serverAdress, accessHandler.FtpName,
                 accessHandler.FtpPassword);
                 //Download Thumbnail in userName / thumbnail Folder
                 client.DownloadFile(@"Thumbnail/" + product.product_Thumbnail,
-                DependencyService.Get<ISaveAndLoad>().getpath(file.getUser().user_Email + @"/Thumbnail/") + product.product_Thumbnail, serverAdress, accessHandler.FtpName,
+                DependencyService.Get<ISaveAndLoad>().Getpath(file.GetUser().user_Email + @"/Thumbnail/") + product.product_Thumbnail, serverAdress, accessHandler.FtpName,
                 accessHandler.FtpPassword);
+
+                //Loads the List<PContent> of the Product from the server
+                List<PContent> listPContents = await DataAccessHandler.DataAccess.GetPContent(product.product_ID);
+                //Loads the List<PContent> of the Product from the the User-Folder
+                List<PContent> newlistPContents = file.loadContentList(userPath);
 
                 foreach (var pcontent in listPContents)
                 {
+                    //stops if the pcontent is empty
                     if (pcontent.content_ID == 0) break;
                     List<string> contentPath =
                         await DataAccessHandler.DataAccess.GetFileServerPath(pcontent.content_ID);
+                    //Adds to the server List<PContent> to the PContent from the User
                     newlistPContents.Add(pcontent);
 
-                    //creates a new p folder if not exists
-                    DependencyService.Get<ISaveAndLoad>().createOrdner(DependencyService.Get<ISaveAndLoad>().pathCombine(
-                    DependencyService.Get<ISaveAndLoad>().getpath(userPath), "p" + pcontent.content_ID));
+                    //creates a new p folder for the content_Kind if not exists
+                    DependencyService.Get<ISaveAndLoad>().CreateFolder(DependencyService.Get<ISaveAndLoad>().PathCombine(
+                    DependencyService.Get<ISaveAndLoad>().Getpath(userPath), "p" + pcontent.content_ID));
 
                     foreach (var path in contentPath)
                     {
                         if (pcontent.content_ID == 0) break;
-                        DependencyService.Get<ISaveAndLoad>().createOrdner(userPath + @"/p" + pcontent.content_ID);
+                        //Download for each PContent its Files
+                        DependencyService.Get<ISaveAndLoad>().CreateFolder(userPath + @"/p" + pcontent.content_ID);
                         client.DownloadFile(path,
-                            DependencyService.Get<ISaveAndLoad>().getpath(file.getUser().user_Email) + @"/p" +
+                            DependencyService.Get<ISaveAndLoad>().Getpath(file.GetUser().user_Email) + @"/p" +
                             pcontent.content_ID + @"/" + Path.GetFileName(path), serverAdress, accessHandler.FtpName,
                             accessHandler.FtpPassword);
                     }
                 }
-
+                //Adds the Product to the Product-File from the User
+                List<Product> newUserProducts = file.LoadProductList();
                 newUserProducts.Add(product);
-                file.saveModelsLocal(userPath, newUserProducts, newlistPContents);
-                DataAccessHandler.DataAccess.AddProductToUser(product.product_ID, file.getUser());
+                file.SaveModelsLocal(userPath, newUserProducts, newlistPContents);
+                //Adds the Product to the User in the Database
+                DataAccessHandler.DataAccess.AddProductToUser(product.product_ID, file.GetUser());
                 DataAccessHandler.DataAccess.SetProductKeyInvalid(productCode);
                 await DisplayAlert("Produkt aktiviert!", "Das Produkt wurde erfolgreiche aktiviert!", "OK");
-                await Navigation.PushModalAsync(new NavigationPage(new MainMenuPage(file.getUser())));
+                await Navigation.PushModalAsync(new NavigationPage(new MainMenuPage(file.GetUser())));
             }
             catch (Exception e)
             {

@@ -6,7 +6,7 @@ namespace SMK.DataAccess
     public class DataAccessHandler
     {
         /// <summary>
-        /// List the available Interfaces for Dataaccess
+        /// List of the available Interfaces for Dataaccess
         /// </summary>
         public enum InterfaceType
         {
@@ -21,7 +21,7 @@ namespace SMK.DataAccess
 
 
         /// <summary>
-        /// Sets the Dataacces. Easy to switch between different implementations of Dataaccess logic
+        /// Sets the DataAcces. Easy to switch between different implementations of the DataAccess logic
         /// </summary>
         /// <param name="interfaceType"></param>
         public static void InitDataAccess(InterfaceType interfaceType)

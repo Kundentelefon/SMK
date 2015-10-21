@@ -17,8 +17,8 @@ namespace SMK.View
     {
         ICollection<Product> ProductCollection;
         localFileSystem files;
-        
-        
+
+
         public MainMenuPage(User user)
         {
             ////localFileSystem sys = new localFileSystem();
@@ -34,30 +34,12 @@ namespace SMK.View
             string serverAdress = accessHandler.ServerAdress;
             files = new localFileSystem();
             String userPath = files.AdjustPath(user.user_Email);
-            files.createInitalFolders(userPath);
-            //Debug.WriteLine("Test1 Downloade File start");
-            Debug.WriteLine("Folder exist1 " + DependencyService.Get<ISaveAndLoad>().fileExist("User"));
-            //Debug.WriteLine("Folder exist2 " + DependencyService.Get<ISaveAndLoad>().fileExistExact(user.user_Email + @"/FISCHERTECHNIK_Logo.JPG"));
-            //Debug.WriteLine("File getpath " + DependencyService.Get<ISaveAndLoad>().getpath(user.user_Email));
-
-            //DependencyService.Get<ISaveAndLoad>()
-            //    .createOrdner(DependencyService.Get<ISaveAndLoad>().getpath("testa1@web.de"));
-            //string folderpath = DependencyService.Get<ISaveAndLoad>().getpath("testa1@web.de");
-            //IFtpClient client = DependencyService.Get<IFtpClient>();
-            //client.DownloadFile("FISCHERTECHNIK_Logo.JPG", folderpath + @"/FISCHERTECHNIK_Logo.JPG", serverAdress, accessHandler.FtpName, accessHandler.FtpPassword);
-
-            Debug.WriteLine("fileexist2: " + DependencyService.Get<ISaveAndLoad>().fileExist("testa1@web.de" + @"/User"));
-
-            //IFtpClient client = DependencyService.Get<IFtpClient>();
-            //client.DownloadDirectoryAsync("zeug/PContent", DependencyService.Get<ISaveAndLoad>().getpath(user.user_Email), serverAdress, "SMKFTPUser", "");
-            //Debug.WriteLine("Test1 Downloade File end");
+            files.CreateInitalFolders(userPath);
 
             //+userId
             //läd dummies 
             // entfernen bevor go live
-                        //files.initaldummies(userPath);
-
-
+            //files.initaldummies(userPath);
 
             //Toolbar
             ToolbarItem toolButton = new ToolbarItem
@@ -69,36 +51,34 @@ namespace SMK.View
             };
             this.ToolbarItems.Add(toolButton);
 
-            initLogout();
-            
+            InitLogout();
+
             //Ende Toolbar
 
             //View
             ProductCollection = new Collection<Product>();
-            ProductCollection = files.loadProductList();
+            ProductCollection = files.LoadProductList();
             List<PContent> PcontentCollection = files.loadContentList(userPath);
 
             ScrollView scrollView = new ScrollView();
             StackLayout stackLayout = new StackLayout();
-            
-
 
             foreach (Product product in ProductCollection)
             {
                 TapGestureRecognizer gesture = new TapGestureRecognizer();
-                bool owned = files.hasContent(product, PcontentCollection);
+                bool owned = files.HasContent(product, PcontentCollection);
                 Color color = Color.FromHex("E2001A");
-                DetailPage detailPage = new DetailPage(product, userPath);//nicht schön , einmal pcontent lesen und zwischenspeichern
+                DetailPage detailPage = new DetailPage(product, userPath);
 
-                var test= (DependencyService.Get<ISaveAndLoad>().pathCombine(DependencyService.Get<ISaveAndLoad>().getpath(localFileSystem.productFolderLocation), product.product_ID + product.product_Thumbnail));
+                var test = (DependencyService.Get<ISaveAndLoad>().PathCombine(DependencyService.Get<ISaveAndLoad>().Getpath(localFileSystem.productFolderLocation), product.product_ID + product.product_Thumbnail));
 
                 if (owned == true)
-                   color = Color.FromHex("006AB3");
+                    color = Color.FromHex("006AB3");
                 Frame frame = new Frame
-                {                    
+                {
                     BackgroundColor = color,
                     VerticalOptions = LayoutOptions.FillAndExpand,
-                    HorizontalOptions = LayoutOptions.FillAndExpand,       
+                    HorizontalOptions = LayoutOptions.FillAndExpand,
                     Content = new StackLayout
                     {
                         Orientation = StackOrientation.Horizontal,
@@ -108,7 +88,7 @@ namespace SMK.View
                         {
                             new Image
                             {
-                                Source = ImageSource.FromFile(DependencyService.Get<ISaveAndLoad>().pathCombine(DependencyService.Get<ISaveAndLoad>().getpath(localFileSystem.productFolderLocation), product.product_Thumbnail)),
+                                Source = ImageSource.FromFile(DependencyService.Get<ISaveAndLoad>().PathCombine(DependencyService.Get<ISaveAndLoad>().Getpath(localFileSystem.productFolderLocation), product.product_Thumbnail)),
                                 VerticalOptions = LayoutOptions.Center,
                                 HorizontalOptions = LayoutOptions.Center
                             },
@@ -132,16 +112,15 @@ namespace SMK.View
                 };
                 frame.GestureRecognizers.Add(gesture);
             }
-                        
+
             scrollView.Content = stackLayout;
             Content = scrollView;
             BackgroundColor = Color.White;
             Padding = new Thickness(5, Device.OnPlatform(0, 15, 0), 5, 5);
             //View Ende
-
         }
 
-        public void initLogout()
+        public void InitLogout()
         {
             Command logoutCommand = new Command(() =>
             {
