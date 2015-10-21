@@ -47,14 +47,14 @@ namespace SMK.View
 
             Debug.WriteLine("fileexist2: " + DependencyService.Get<ISaveAndLoad>().fileExist("testa1@web.de" + @"/User"));
 
-                //IFtpClient client = DependencyService.Get<IFtpClient>();
-                //client.DownloadDirectoryAsync("zeug/PContent", DependencyService.Get<ISaveAndLoad>().getpath(user.user_Email), serverAdress, "SMKFTPUser", "");
-                //Debug.WriteLine("Test1 Downloade File end");
-            
+            //IFtpClient client = DependencyService.Get<IFtpClient>();
+            //client.DownloadDirectoryAsync("zeug/PContent", DependencyService.Get<ISaveAndLoad>().getpath(user.user_Email), serverAdress, "SMKFTPUser", "");
+            //Debug.WriteLine("Test1 Downloade File end");
+
             //+userId
             //läd dummies 
             // entfernen bevor go live
-            //files.initaldummies(userPath);
+                        //files.initaldummies(userPath);
 
 
 
@@ -143,7 +143,7 @@ namespace SMK.View
             Command logoutCommand = new Command(() =>
             {
                 App.Current.Logout();
-                Navigation.PushAsync(new LoginPage());
+                Navigation.PushAsync(new LoginModalPage());
             });
             ToolbarItem logoutButton = new ToolbarItem
             {

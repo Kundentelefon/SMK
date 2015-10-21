@@ -11,10 +11,7 @@ namespace SMK.Model
         public int content_ID { get; set; }
         public int content_Kind { get; set; }
         public String content_Title { get; set; }
-        public int product_ID { get; set; }
 
         public List<string> files;
-
-        public string content_path { get; set; }
     }
 }

@@ -68,22 +68,30 @@ namespace SMK.View
                 Debug.WriteLine("getpath produkte: " + DependencyService.Get<ISaveAndLoad>().getpath(@"Produkte"));
 
                 //Download Thumbnail in Produkte Folder
-                client.DownloadFile(@"Thumbnail/" + product.product_Thumbnail,
-                DependencyService.Get<ISaveAndLoad>().getpath(@"Produkte/") + product.product_Thumbnail, serverAdress, accessHandler.FtpName,
+                client.DownloadFile(@"Thumbnail/" + product.product_ID + product.product_Thumbnail,
+                DependencyService.Get<ISaveAndLoad>().getpath(@"Produkte/") +product.product_ID + product.product_Thumbnail, serverAdress, accessHandler.FtpName,
                 accessHandler.FtpPassword);
                 //Download Thumbnail in userName / thumbnail Folder
-                client.DownloadFile(@"Thumbnail/" + product.product_Thumbnail,
-                DependencyService.Get<ISaveAndLoad>().getpath(file.getUser().user_Email + @"/Thumbnail/") + product.product_Thumbnail, serverAdress, accessHandler.FtpName,
+                client.DownloadFile(@"Thumbnail/" + product.product_ID + product.product_Thumbnail,
+                DependencyService.Get<ISaveAndLoad>().getpath(file.getUser().user_Email + @"/Thumbnail/") + product.product_ID + product.product_Thumbnail, serverAdress, accessHandler.FtpName,
                 accessHandler.FtpPassword);
 
                 foreach (var pcontent in listPContents)
                 {
-                    client.DownloadFile(pcontent.content_path,
-                        DependencyService.Get<ISaveAndLoad>().getpath(file.getUser().user_Email + @"/p" + pcontent.content_Kind + @"/" + pcontent.content_Title), serverAdress, accessHandler.FtpName,
-                        accessHandler.FtpPassword);
-                    Debug.WriteLine("fileexist1: " + DependencyService.Get<ISaveAndLoad>().fileExist(file.getUser().user_Email + @"/p" + pcontent.content_Kind + @"/" + pcontent.content_Title));
+                    if (pcontent.content_ID == 0) break;
+                    List<string> contentPath =
+                        await DataAccessHandler.DataAccess.GetFileServerPath(pcontent.content_Kind);
                     newlistPContents.Add(pcontent);
+                    foreach (var path in contentPath)
+                    {
+                        if (pcontent.content_ID == 0) break;
+                        client.DownloadFile(path,
+                            DependencyService.Get<ISaveAndLoad>().getpath(file.getUser().user_Email) + @"/p" +
+                            pcontent.content_Kind + @"/" + pcontent.content_Title, serverAdress, accessHandler.FtpName,
+                            accessHandler.FtpPassword);
+                    }
                 }
+
                 newUserProducts.Add(product);
                 file.saveModelsLocal(userPath, newUserProducts, newlistPContents);
                 DataAccessHandler.DataAccess.AddProductToUser(product.product_ID, file.getUser());
@@ -92,7 +100,7 @@ namespace SMK.View
             }
             catch (Exception e)
             {
-                Debug.WriteLine("Fehler beim hinzufügen von Produtk: " + e);
+                Debug.WriteLine("Fehler beim hinzufügen von Produkt: " + e);
                 await DisplayAlert("Fehler beim Downloaden", "Es gab einen Fehler beim Downloaden, bitte erneut versuchen", "OK");
             }
         }

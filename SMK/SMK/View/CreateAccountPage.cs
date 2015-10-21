@@ -149,30 +149,40 @@ namespace SMK
                 //Download empty folder PContent
                 client.DownloadDirectoryAsync(@"emptyFolderStructure", DependencyService.Get<ISaveAndLoad>().getpath(user.user_Email), serverAdress, accessHandler.FtpName, accessHandler.FtpPassword);
                     //Download all Products this user posses with all its Pcontent
+
+                //DataAccessHandler.DataAccess.AddProductToUser(41862, user);
                     foreach (var product in listUserProducts)
                     {
-                        if (product.product_ID == -1) break;
+                        
                     Debug.WriteLine("hier1");
                     List<PContent> listUserPContents =
                         await DataAccessHandler.DataAccess.GetPContent(product.product_ID);
                     Debug.WriteLine("hier2");
+                    if (product.product_ID == 0) break;
                     Debug.WriteLine("gib thumbnail: " + DependencyService.Get<ISaveAndLoad>().getpath(@"Produkte/") + product.product_Thumbnail);
                     //Download Thumbnail in Produkte Folder
-                    client.DownloadFile(@"Thumbnail/" + product.product_Thumbnail,
-                    DependencyService.Get<ISaveAndLoad>().getpath(@"Produkte/") + product.product_Thumbnail, serverAdress, accessHandler.FtpName,
+                    client.DownloadFile(@"Thumbnail/" + product.product_ID + product.product_Thumbnail,
+                    DependencyService.Get<ISaveAndLoad>().getpath(@"Produkte/") + product.product_ID + product.product_Thumbnail, serverAdress, accessHandler.FtpName,
                     accessHandler.FtpPassword);
                     //Download Thumbnail in userName / thumbnail Folder
-                    client.DownloadFile(@"Thumbnail/" + product.product_Thumbnail,
-                    DependencyService.Get<ISaveAndLoad>().getpath(files.getUser().user_Email + @"/Thumbnail/") + product.product_Thumbnail, serverAdress, accessHandler.FtpName,
+                    client.DownloadFile(@"Thumbnail/" + product.product_ID + product.product_Thumbnail,
+                    DependencyService.Get<ISaveAndLoad>().getpath(files.getUser().user_Email + @"/Thumbnail/") + product.product_ID + product.product_Thumbnail, serverAdress, accessHandler.FtpName,
                     accessHandler.FtpPassword);
+
 
                     foreach (var pcontent in listUserPContents)
                     {
-                        if (pcontent.content_ID == -1) break;
-                        Debug.WriteLine("hier4");
-                        client.DownloadFile(pcontent.content_path,
+                        if (pcontent.content_ID == 0) break;
+                        List<string> contentPath = await DataAccessHandler.DataAccess.GetFileServerPath(pcontent.content_Kind);
+                        foreach (var path in contentPath)
+                        {
+                            client.DownloadFile(path,
                             DependencyService.Get<ISaveAndLoad>().getpath(files.getUser().user_Email) + @"/p" + pcontent.content_Kind + @"/" + pcontent.content_Title, serverAdress, accessHandler.FtpName,
                             accessHandler.FtpPassword);
+                        }
+                        
+                        Debug.WriteLine("hier4");
+
                         //inserts the new PContent to PContent list
                         newlistPContents.Add(pcontent);
                     }

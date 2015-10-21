@@ -1,6 +1,7 @@
 ﻿using SMK.Model;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection.Emit;
 using System.Text;
@@ -115,9 +116,9 @@ namespace SMK.View
 
         public void initContentLists()
         {
-            if (pContent != null)
+            if ((pContent.Any()))
             {
-                if (pContent[0] != null)
+                if ((pContent != null) && (pContent[0] != null))
                 {
                     owned = true;
                     foreach (PContent content in pContent)
@@ -134,7 +135,6 @@ namespace SMK.View
                         {
                             contentConvertedPdf.Add(content);
                         }
-
                     }
                 }
             }

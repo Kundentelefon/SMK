@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using RestSharp;
 using SMK.Model;
@@ -215,8 +216,29 @@ namespace SMK.DataAccess
                 {
                     throw response.ErrorException;
                 }
+                if (response.Content.Equals("0 results"))
+                {
+                    return new Product();
+                }
                 var model = Newtonsoft.Json.JsonConvert.DeserializeObject<Product>(response.Content);
+
+                    var request2 = new RestRequest("getProductContentKind.php", Method.GET);
+                    request2.AddParameter("product_ID", model.product_ID);
+
+                    request.Timeout = 1000;
+
+                    IRestResponse response2 = await client.ExecuteGetTaskAsync(request2);
+                    if (response.ErrorException != null)
+                    {
+                        throw response.ErrorException;
+                    }
+
+                    List<int> productList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<int>>(response2.Content).Distinct().ToList(); //Distinct entfernt duplicate
+                    model.PContents = productList;
+            
+
                 return model;
+
             }
             catch (Exception e)
             {
@@ -247,17 +269,37 @@ namespace SMK.DataAccess
                 if (response.Content.Equals("0 results"))
                 {
                     PContent pcontent = new PContent();
-                    pcontent.content_ID = -1;
-                    pcontent.content_Kind = 0;
-                    pcontent.content_Title = null;
-                    pcontent.content_path = null;
-                    pcontent.files = null;
                     List<PContent> pContentList = new List<PContent>();
                     pContentList.Add(pcontent);
                     return pContentList;
                 }
                 var model = Newtonsoft.Json.JsonConvert.DeserializeObject<List<PContent>>(response.Content);
-                return model;
+
+                var model2 = new List<PContent>();
+                foreach (var pcontent in model)
+                {
+                    var request2 = new RestRequest("getFileNames.php", Method.GET);
+                    request2.AddParameter("content_Kind", pcontent.content_Kind);
+
+                    request.Timeout = 1000;
+
+                    IRestResponse response2 = await client.ExecuteGetTaskAsync(request2);
+                    if (response.ErrorException != null)
+                    {
+                        throw response.ErrorException;
+                    }
+                    if (response2.Content.Equals("0 results"))
+                    {
+                        return new List<PContent>();
+                    }
+                    List<string> nameList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<string>>(response2.Content);
+                    PContent pContent2 = pcontent;
+                    pContent2.files = nameList;
+                    model2.Add(pContent2);
+                    
+                }
+
+                return model2;
             }
             catch (Exception e)
             {
@@ -270,13 +312,13 @@ namespace SMK.DataAccess
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<List<string>> GetPContentFiles(int id)
+        public async Task<List<string>> GetFileServerPath(int kind)
         {
             try
             {
                 var client = new RestClient("http://" + serverAdress);
                 var request = new RestRequest("getFilePaths.php", Method.GET);
-                request.AddParameter("content_ID", id);
+                request.AddParameter("content_Kind", kind);
 
                 request.Timeout = 5000;
 
@@ -285,6 +327,12 @@ namespace SMK.DataAccess
                 {
                     throw response.ErrorException;
                 }
+
+                if (response.Content.Equals("0 results"))
+                {
+                    throw new Exception("keine Serverpaths");
+                }
+
                 var model = Newtonsoft.Json.JsonConvert.DeserializeObject<List<string>>(response.Content);
                 return model;
             }
@@ -316,43 +364,33 @@ namespace SMK.DataAccess
                 }
                 if (response.Content.Equals("0 results"))
                 {
-                    Product product = new Product();
-                    product.product_Thumbnail = null;
-                    product.product_ID = -1;
-                    product.PContents = null;
-                    product.product_Name = null;
-                    product.product_Text = null;
-                    List<Product> productList = new List<Product>();
-                    productList.Add(product);
-                    return productList;
+                    return new List<Product>();
                 }
+
                 var model = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Product>>(response.Content);
-                return model;
-            }
-            catch (Exception e)
-            {
-                throw new Exception("Fehler aufgetreten: " + e);
-            }
-        }
 
-        public async Task<string> getThumbnailPath(int productid)
-        {
-            try
-            {
-                var client = new RestClient("http://" + serverAdress);
-                var request = new RestRequest("getThumbnail.php", Method.GET);
-                request.AddParameter("product_ID", productid);
-
-                request.Timeout = 5000;
-
-                IRestResponse response = await client.ExecuteGetTaskAsync(request);
-                if (response.ErrorException != null)
+                var model2 = new List<Product>();
+                foreach (var product in model)
                 {
-                    throw response.ErrorException;
-                }
+                    var request2 = new RestRequest("getProductContentKind.php", Method.GET);
+                    request2.AddParameter("product_ID", product.product_ID);
 
-                var model = Newtonsoft.Json.JsonConvert.DeserializeObject<PContent>(response.Content);
-                return model.content_path;
+                    request.Timeout = 1000;
+
+                    IRestResponse response2 = await client.ExecuteGetTaskAsync(request2);
+                    if (response.ErrorException != null)
+                    {
+                        throw response.ErrorException;
+                    }
+
+                    List<int> productList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<int>>(response2.Content).Distinct().ToList(); //Distinct entfernt duplicate
+                    Product product2 = new Product();
+                    product2 = product;
+                    product2.PContents = productList;
+                    model2.Add(product2);
+                }
+                
+                return model2;
             }
             catch (Exception e)
             {
