@@ -52,6 +52,7 @@ namespace SMK
             CurrentUser = file.getUser();
             CurrentUser.user_Password = null;
             rememberLogin(CurrentUser);
+            file.deleteUser();
         }
 
         /// <summary>
@@ -60,7 +61,8 @@ namespace SMK
         /// <param name="user"></param>
         public void Login(User user)
         {
-            CurrentUser = user;
+            localFileSystem file = new localFileSystem();
+            file.saveUser(user);
             rememberLogin(user);
         }
 
@@ -283,7 +285,7 @@ namespace SMK
                 foreach (var pcontent in pc1)
                 {
                     Debug.WriteLine("Test2 getPcontent from id: " + pcontent.content_ID);
-                    List<string> pathfile = await DataAccessHandler.DataAccess.GetPContentFiles(pcontent.content_ID);
+                    List<string> pathfile = await DataAccessHandler.DataAccess.GetFileServerPath(pcontent.content_Kind);
                     Debug.WriteLine("Test2 Download Files -> " + pathfile);
                     client2.DownloadDirectoryAsync(pathfile.ToString(), tpath + tusername + @"\PContent\" + "p" + pcontent.content_Kind + @"\" + pcontent.content_Title, "localhost",
                     "SMKFTPUser", "");

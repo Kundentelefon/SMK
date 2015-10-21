@@ -140,36 +140,60 @@ namespace SMK
                 String userPath = files.AdjustPath(user.user_Email);
                 //A newly created User cant have a folder with the same name in the folder so no check must be implemented
                 files.createInitalFolders(userPath);
-                Debug.WriteLine("Folder exist1 " + DependencyService.Get<ISaveAndLoad>().fileExist(DependencyService.Get<ISaveAndLoad>().pathCombine(user.user_Email, "PContent")));
+                Debug.WriteLine("Folder exist1 before " + DependencyService.Get<ISaveAndLoad>().fileExist(DependencyService.Get<ISaveAndLoad>().pathCombine(user.user_Email, "User")));
 
                 List<PContent> newlistPContents = new List<PContent>();
 
                 Debug.WriteLine("CreateUser Downloade File start");
                 IFtpClient client = DependencyService.Get<IFtpClient>();
-                //Download all Products this user posses with all its Pcontent
-                foreach (var product in listUserProducts)
-                {
+                //Download empty folder PContent
+                client.DownloadDirectoryAsync(@"emptyFolderStructure", DependencyService.Get<ISaveAndLoad>().getpath(user.user_Email), serverAdress, accessHandler.FtpName, accessHandler.FtpPassword);
+                    //Download all Products this user posses with all its Pcontent
+
+                //DataAccessHandler.DataAccess.AddProductToUser(41862, user);
+                    foreach (var product in listUserProducts)
+                    {
+                        
+                    Debug.WriteLine("hier1");
                     List<PContent> listUserPContents =
                         await DataAccessHandler.DataAccess.GetPContent(product.product_ID);
-
-                    string thumbnailpath = await DataAccessHandler.DataAccess.getThumbnailPath(product.product_ID);
-                    client.DownloadFile(thumbnailpath,
-                    DependencyService.Get<ISaveAndLoad>().getpath(App.Current.CurrentUser.user_Email + @"\Thumbnail"), serverAdress, accessHandler.FtpName,
+                    Debug.WriteLine("hier2");
+                    if (product.product_ID == 0) break;
+                    Debug.WriteLine("gib thumbnail: " + DependencyService.Get<ISaveAndLoad>().getpath(@"Produkte/") + product.product_Thumbnail);
+                    //Download Thumbnail in Produkte Folder
+                    client.DownloadFile(@"Thumbnail/" + product.product_ID + product.product_Thumbnail,
+                    DependencyService.Get<ISaveAndLoad>().getpath(@"Produkte/") + product.product_ID + product.product_Thumbnail, serverAdress, accessHandler.FtpName,
                     accessHandler.FtpPassword);
+                    //Download Thumbnail in userName / thumbnail Folder
+                    client.DownloadFile(@"Thumbnail/" + product.product_ID + product.product_Thumbnail,
+                    DependencyService.Get<ISaveAndLoad>().getpath(files.getUser().user_Email + @"/Thumbnail/") + product.product_ID + product.product_Thumbnail, serverAdress, accessHandler.FtpName,
+                    accessHandler.FtpPassword);
+
 
                     foreach (var pcontent in listUserPContents)
                     {
-                        client.DownloadFile(pcontent.content_path,
-                            DependencyService.Get<ISaveAndLoad>().getpath(App.Current.CurrentUser.user_Email) + @"\p" + pcontent.content_Kind, serverAdress, accessHandler.FtpName,
+                        if (pcontent.content_ID == 0) break;
+                        List<string> contentPath = await DataAccessHandler.DataAccess.GetFileServerPath(pcontent.content_Kind);
+                        foreach (var path in contentPath)
+                        {
+                            client.DownloadFile(path,
+                            DependencyService.Get<ISaveAndLoad>().getpath(files.getUser().user_Email) + @"/p" + pcontent.content_Kind + @"/" + pcontent.content_Title, serverAdress, accessHandler.FtpName,
                             accessHandler.FtpPassword);
+                        }
+                        
+                        Debug.WriteLine("hier4");
+
                         //inserts the new PContent to PContent list
                         newlistPContents.Add(pcontent);
                     }
 
                 }
                 Debug.WriteLine("CreateUser Downloade File end");
+                files.saveUser(user);
                 files.saveModelsLocal(userPath, listUserProducts, newlistPContents);
 
+                Debug.WriteLine("Folder exist1 after " + DependencyService.Get<ISaveAndLoad>().fileExist("User"));
+                Debug.WriteLine("getpath1: " + DependencyService.Get<ISaveAndLoad>().pathCombine(user.user_Email, "User"));
                 //Load initial testcontent
                 //client.DownloadDirectoryAsync("zeug/PContent", DependencyService.Get<ISaveAndLoad>().getpath(user.user_Email), serverAdress, "SMKFTPUser", "");
                 Debug.WriteLine("Test1 Downloade File end");
