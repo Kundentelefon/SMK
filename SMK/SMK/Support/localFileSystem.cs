@@ -138,12 +138,13 @@ namespace SMK.Support
         /// der zurückgegebene Content kann leer sein falls der User das Product nicht besitzt
         /// </summary>
         /// <param name="product"></param>
+        /// <param name="userPath"></param>
         /// <returns></returns>
-        public List<PContent> loadContentList(Product product,String userPath)
+        public List<PContent> loadContentList(Product product, string userPath)
         {
             List<PContent> completeList = loadContentList(userPath);
             List<PContent> returnList = new List<PContent>();
-            foreach (int item in product.PContents)
+            foreach (var item in product.PContents)
             {
                 returnList.Add(completeList[item]);
             }

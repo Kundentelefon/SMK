@@ -29,6 +29,7 @@ namespace SMK.View
             //DependencyService.Get<ISaveAndLoad>().saveModelXml("User",user);//test
             //Object test= DependencyService.Get<ISaveAndLoad>().loadUserXml("User");//test
 
+            //String productFolderLocation = "Produkte";
             DataAccessHandler accessHandler = new DataAccessHandler();
             string serverAdress = accessHandler.ServerAdress;
             files = new localFileSystem();
@@ -88,6 +89,8 @@ namespace SMK.View
                 bool owned = files.hasContent(product, PcontentCollection);
                 Color color = Color.FromHex("E2001A");
                 DetailPage detailPage = new DetailPage(product, userPath);//nicht schön , einmal pcontent lesen und zwischenspeichern
+
+                var test= (DependencyService.Get<ISaveAndLoad>().pathCombine(DependencyService.Get<ISaveAndLoad>().getpath(localFileSystem.productFolderLocation), product.product_ID + product.product_Thumbnail));
 
                 if (owned == true)
                    color = Color.FromHex("006AB3");
