@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Reflection.Emit;
 using System.Text;
@@ -94,7 +95,7 @@ namespace SMK.View
                         DependencyService.Get<ISaveAndLoad>().createOrdner(userPath + @"/p" + pcontent.content_ID);
                         client.DownloadFile(path,
                             DependencyService.Get<ISaveAndLoad>().getpath(file.getUser().user_Email) + @"/p" +
-                            pcontent.content_ID + @"/" + pcontent.content_Title, serverAdress, accessHandler.FtpName,
+                            pcontent.content_ID + @"/" + Path.GetFileName(path), serverAdress, accessHandler.FtpName,
                             accessHandler.FtpPassword);
                     }
                 }

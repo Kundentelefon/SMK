@@ -11,6 +11,7 @@ using SMK.Support;
 using SMK.View;
 using SMK.Model;
 using System.Diagnostics;
+using System.IO;
 
 namespace SMK
 {
@@ -181,7 +182,7 @@ namespace SMK
                         foreach (var path in contentPath)
                         {
                             client.DownloadFile(path,
-                            DependencyService.Get<ISaveAndLoad>().getpath(files.getUser().user_Email) + @"/p" + pcontent.content_ID + @"/" + pcontent.content_Title, serverAdress, accessHandler.FtpName,
+                            DependencyService.Get<ISaveAndLoad>().getpath(files.getUser().user_Email) + @"/p" + pcontent.content_ID + @"/" + Path.GetFileName(path), serverAdress, accessHandler.FtpName,
                             accessHandler.FtpPassword);
                         }
                         
