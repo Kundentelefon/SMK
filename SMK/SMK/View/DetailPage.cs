@@ -65,7 +65,7 @@ namespace SMK.View
 
             initContentLists();
             //String image_path = imagePfadProduct + product.product_ID.ToString() + ".png";
-            String image_path = DependencyService.Get<ISaveAndLoad>().pathCombine(DependencyService.Get<ISaveAndLoad>().getpath("Produkt"), product.product_ID + product.product_Thumbnail);
+            String image_path = DependencyService.Get<ISaveAndLoad>().pathCombine(DependencyService.Get<ISaveAndLoad>().getpath(localFileSystem.productFolderLocation), product.product_ID + product.product_Thumbnail);
             //(DependencyService.Get<ISaveAndLoad>().pathCombine(
             //(DependencyService.Get<ISaveAndLoad>().pathCombine(
             //DependencyService.Get<ISaveAndLoad>().getpath(userPath), product.product_ID.ToString()))+".png"));
@@ -152,9 +152,9 @@ namespace SMK.View
             {
                 foreach (string imageSource in content.files)
                 {
-                    string source = (DependencyService.Get<ISaveAndLoad>().pathCombine(
+                    string source = DependencyService.Get<ISaveAndLoad>().pathCombine(
                         (DependencyService.Get<ISaveAndLoad>().pathCombine(
-                            DependencyService.Get<ISaveAndLoad>().getpath(userPath),"p"+ content.content_ID.ToString())), imageSource));
+                            DependencyService.Get<ISaveAndLoad>().getpath(userPath),"p"+ content.content_ID.ToString())), imageSource);
                     Frame frame = new Frame
                         {
                             OutlineColor = color,

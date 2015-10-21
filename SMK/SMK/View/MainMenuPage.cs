@@ -105,7 +105,7 @@ namespace SMK.View
                         {
                             new Image
                             {
-                                Source = ImageSource.FromFile(DependencyService.Get<ISaveAndLoad>().pathCombine(DependencyService.Get<ISaveAndLoad>().getpath("Produkt"), product.product_ID + product.product_Thumbnail)),
+                                Source = ImageSource.FromFile(DependencyService.Get<ISaveAndLoad>().pathCombine(DependencyService.Get<ISaveAndLoad>().getpath(localFileSystem.productFolderLocation), product.product_ID + product.product_Thumbnail)),
                                 VerticalOptions = LayoutOptions.Center,
                                 HorizontalOptions = LayoutOptions.Center
                             },

@@ -11,10 +11,10 @@ namespace SMK.Support
     class localFileSystem
     {
         //Ordner Namen 
-        String productLocation = "Produkt";
-        String productFolderLocation = "Produkte";
-        String pContentLocation = "PContent";
-        String userLocation = "User";
+        public static readonly String productLocation = "Produkt";
+        public static readonly String productFolderLocation = "Produkte";
+        public static readonly String pContentLocation = "PContent";
+        public static readonly String userLocation = "User";
 
         public localFileSystem()
         {}
@@ -143,9 +143,9 @@ namespace SMK.Support
         {
             List<PContent> completeList = loadContentList(userPath);
             List<PContent> returnList = new List<PContent>();
-            foreach (var item in product.PContents)
+            foreach (int item in product.PContents)
             {
-                returnList.Add(completeList[item]);
+                returnList.Add(completeList.Find(content => content.content_Kind == item));
             }
             return returnList;
         }
