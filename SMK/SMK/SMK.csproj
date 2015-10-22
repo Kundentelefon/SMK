@@ -42,6 +42,7 @@
     <Compile Include="View\CreateAccountPage.cs" />
     <Compile Include="View\EmptyPage.cs" />
     <Compile Include="View\ILoginManager.cs" />
+    <Compile Include="View\LocalHtml2.cs" />
     <Compile Include="View\LoginModalPage.cs" />
     <Compile Include="View\LoginPage.cs" />
     <Compile Include="MainPage.cs" />
