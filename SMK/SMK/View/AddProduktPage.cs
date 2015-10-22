@@ -62,15 +62,16 @@ namespace SMK.View
 
                 IFtpClient client = DependencyService.Get<IFtpClient>();
                 Product product = await DataAccessHandler.DataAccess.GetProductByKey(productCode);
-                //Download Thumbnail in Produkte Folder
-                //client.DownloadFile(@"Produkte/" + product.product_Thumbnail,
-                //DependencyService.Get<ISaveAndLoad>().Getpath(@"Produkte/") + product.product_Thumbnail, serverAdress, accessHandler.FtpName,
-                //accessHandler.FtpPassword);
-                //Download Thumbnail in userName / thumbnail Folder
-                //client.DownloadFile(@"Thumbnail/" + product.product_Thumbnail,
-                //DependencyService.Get<ISaveAndLoad>().Getpath(file.GetUser().user_Email + @"/Thumbnail/") + product.product_Thumbnail, serverAdress, accessHandler.FtpName,
-                //accessHandler.FtpPassword);
 
+                List<Product> listUserProducts = await DataAccessHandler.DataAccess.GetUserProducts(file.GetUser());
+                foreach (var userProducts in listUserProducts)
+                {
+                    if (userProducts.product_ID == product.product_ID)
+                    {
+                        await DisplayAlert("Produkt bereits vorhanden!", "Sie besitzen dieses Produkt bereits", "OK");
+                        return;
+                    }
+                }
                 //Loads the List<PContent> of the Product from the server
                 List<PContent> listPContents = await DataAccessHandler.DataAccess.GetPContent(product.product_ID);
                 //Loads the List<PContent> of the Product from the the User-Folder
@@ -85,7 +86,7 @@ namespace SMK.View
                     {
                         newlistPContents.Add(null);
                     }
-                    //updates Pcontent
+                    //updates PContent
                     newlistPContents[pcontent.content_ID] = pcontent;
                     if (pcontent.content_Kind!=0) {
                         client.DownloadFile(@"Thumbnail/" + pcontent.content_ID + ".png",

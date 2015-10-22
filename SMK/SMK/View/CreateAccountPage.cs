@@ -136,10 +136,8 @@ namespace SMK
                 string serverAdress = accessHandler.ServerAdress;
 
                 IFtpClient client = DependencyService.Get<IFtpClient>();
-                //Download empty folder PContent
-                //client.DownloadDirectoryAsync(@"emptyFolderStructure", DependencyService.Get<ISaveAndLoad>().Getpath(userPath), serverAdress, accessHandler.FtpName, accessHandler.FtpPassword);
-                //Download all Products this user posses with all its Pcontent
 
+                //Download all Products from the database
                 List<Product> listAllProducts = await DataAccessHandler.DataAccess.GetAllProducts();
                 
                 List<PContent> newEmptyContent = new List<PContent>();
@@ -151,11 +149,6 @@ namespace SMK
                     client.DownloadFile(@"Produkte/" + productAll.product_Thumbnail,
                     DependencyService.Get<ISaveAndLoad>().Getpath(@"Produkte/") + productAll.product_Thumbnail, serverAdress, accessHandler.FtpName,
                     accessHandler.FtpPassword);
-                    //Download Thumbnail in userName / thumbnail Folder
-                    //client.DownloadFile(@"Thumbnail/" + product.product_Thumbnail,
-                    //DependencyService.Get<ISaveAndLoad>().Getpath(files.GetUser().user_Email + @"/Thumbnail/") + product.product_Thumbnail, serverAdress, accessHandler.FtpName,
-                    //accessHandler.FtpPassword);
-
                 }
                 files.SaveUser(user);
                 files.SaveModelsLocal(userPath, listAllProducts, newEmptyContent);
@@ -170,15 +163,6 @@ namespace SMK
                         await DataAccessHandler.DataAccess.GetPContent(product.product_ID);
 
                     if (product.product_ID == 0) break;
-                    //Download Thumbnail in Produkte Folder
-                    //client.DownloadFile(@"Produkte/" + product.product_Thumbnail,
-                    //DependencyService.Get<ISaveAndLoad>().Getpath(@"Produkte/") + product.product_Thumbnail, serverAdress, accessHandler.FtpName,
-                    //accessHandler.FtpPassword);
-                    //Download Thumbnail in userName / thumbnail Folder
-                    //client.DownloadFile(@"Thumbnail/" + product.product_Thumbnail,
-                    //DependencyService.Get<ISaveAndLoad>().Getpath(files.GetUser().user_Email + @"/Thumbnail/") + product.product_Thumbnail, serverAdress, accessHandler.FtpName,
-
-                    //accessHandler.FtpPassword);
 
                     foreach (var pcontent in listUserPContents)
                     {
@@ -209,8 +193,6 @@ namespace SMK
                             DependencyService.Get<ISaveAndLoad>().Getpath(files.GetUser().user_Email + @"/Thumbnail/") + pcontent.content_ID + ".png", serverAdress, accessHandler.FtpName,
                             accessHandler.FtpPassword);
                         }
-                        //inserts the new PContent to PContent list
-                        //newlistPContents.Add(pcontent);
                     }
                 }
                 //Saves User, Products and PContent XML
