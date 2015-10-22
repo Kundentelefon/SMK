@@ -18,28 +18,20 @@ namespace SMK.View
         ICollection<Product> ProductCollection;
         localFileSystem files;
 
-
+        /// <summary>
+        /// Konstruktor der MainMenuPage, welcher eine Instanz der Seite erstellt.
+        /// </summary>
+        /// <param name="user"></param>
         public MainMenuPage(User user)
         {
-            ////localFileSystem sys = new localFileSystem();
-            ////sys.createInitalFolders();
-            //User user = new User();
-            //user.user_Email = "test";
-            //user.user_Password = "test";
-            //DependencyService.Get<ISaveAndLoad>().saveModelXml("User",user);//test
-            //Object test= DependencyService.Get<ISaveAndLoad>().loadUserXml("User");//test
-
-            //String productFolderLocation = "Produkte";
+            
             DataAccessHandler accessHandler = new DataAccessHandler();
             string serverAdress = accessHandler.ServerAdress;
             files = new localFileSystem();
             String userPath = files.AdjustPath(user.user_Email);
             files.CreateInitalFolders(userPath);
 
-            //+userId
-            //läd dummies 
-            // entfernen bevor go live
-            //files.initaldummies(userPath);
+       
 
             //Toolbar
             ToolbarItem toolButton = new ToolbarItem
@@ -121,21 +113,24 @@ namespace SMK.View
             //View Ende
         }
 
-        public void InitLogout()
-        {
-            Command logoutCommand = new Command(() =>
-            {
-                App.Current.Logout();
-                Navigation.PushAsync(new LoginModalPage());
-            });
-            ToolbarItem logoutButton = new ToolbarItem
-            {
-                Text = "Logout",
-                Order = ToolbarItemOrder.Primary,
-                Command = logoutCommand
-            };
-            this.ToolbarItems.Add(logoutButton);
+        /// <summary>
+        /// 
+        /// </summary>
+        //public void InitLogout()
+        //{
+        //    Command logoutCommand = new Command(() =>
+        //    {
+        //        App.Current.Logout();
+        //        Navigation.PushAsync(new LoginModalPage());
+        //    });
+        //    ToolbarItem logoutButton = new ToolbarItem
+        //    {
+        //        Text = "Logout",
+        //        Order = ToolbarItemOrder.Primary,
+        //        Command = logoutCommand
+        //    };
+        //    this.ToolbarItems.Add(logoutButton);
 
-        }
+        //}
     }
 }
