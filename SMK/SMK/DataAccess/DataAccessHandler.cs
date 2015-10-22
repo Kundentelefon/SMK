@@ -6,7 +6,7 @@ namespace SMK.DataAccess
     public class DataAccessHandler
     {
         /// <summary>
-        /// List the available Interfaces for Dataaccess
+        /// List of the available Interfaces for Dataaccess
         /// </summary>
         public enum InterfaceType
         {
@@ -15,13 +15,13 @@ namespace SMK.DataAccess
 
         public static IDataAccess DataAccess { get; private set; }
 
-        public string ServerAdress { get; private set; } = "192.168.2.100";
+        public string ServerAdress { get; private set; } = "192.168.2.101";
         public string FtpName { get; private set; } = "SMKFTPUser";
         public string FtpPassword { get; private set; } = "";
 
 
         /// <summary>
-        /// Sets the Dataacces. Easy to switch between different implementations of Dataaccess logic
+        /// Sets the DataAcces. Easy to switch between different implementations of the DataAccess logic
         /// </summary>
         /// <param name="interfaceType"></param>
         public static void InitDataAccess(InterfaceType interfaceType)

@@ -12,7 +12,7 @@ namespace SMK.View
     {
         public DetailCarousel()
         {
-           
+
         }
     }
 }

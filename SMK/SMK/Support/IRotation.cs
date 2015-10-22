@@ -8,6 +8,6 @@ namespace SMK.Support
 {
     public interface IRotation
     {
-       void disableRotation();
+       void DisableRotation();
     }
 }

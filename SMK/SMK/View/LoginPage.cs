@@ -18,15 +18,13 @@ namespace SMK
     public class LoginPage : ContentPage
     {
         Entry username, password;
-        // TODO: find better way to avoid giving null back to validUser
-        private bool exception;
+        private bool _exception;
 
         /// <summary>
         /// Checks: if Empty Email or password, if valid Email, if valid Login. Password Entry is set as isPassword and the shown Passworddigits only contains zeros. Password will be stored as SHA512StringHash
         /// </summary>
         public LoginPage()
         {
-
             BackgroundColor = new Color(255, 255, 255, 1);
 
             var button = new Button { Text = "Login", BackgroundColor = Color.FromHex("006AB3") };
@@ -47,7 +45,7 @@ namespace SMK
                     return;
                 }
                 // Converts Password in SHA512StringHash
-                string passwordHash = DependencyService.Get<IHash>().SHA512StringHash(password.Text);
+                string passwordHash = DependencyService.Get<IHash>().Sha512StringHash(password.Text);
                 // Sets the Passworddigits to zero after receiving a letter
                 password.Text = new string('0', password.Text.Length);
                 User validUser = await IsValidLogin(new User(username.Text, passwordHash));
@@ -55,21 +53,23 @@ namespace SMK
                 if (null == validUser)
                 {
                     password.Text = "";
-                    if (exception)
+                    if (_exception)
                         await DisplayAlert("Verbindungsfehler", "Server ist nicht erreichtbar. Internetzugang aktiv?", "OK");
                     else
                         await DisplayAlert("Ungültiger Login", "E-Mail oder Passwort falsch angegeben", "Neue Eingabe");
                 }
                 else
                 {
+                    localFileSystem file = new localFileSystem();
                     App.Current.Login(validUser);
-                    if (!DependencyService.Get<ISaveAndLoad>().fileExist(DependencyService.Get<ISaveAndLoad>().pathCombine(validUser.user_Email, "PContent")))
+                    if (!DependencyService.Get<ISaveAndLoad>().FileExist(DependencyService.Get<ISaveAndLoad>().PathCombine(file.AdjustPath( validUser.user_Email), "PContent")))
                     {
-                        Debug.WriteLine("getphath2 " + DependencyService.Get<ISaveAndLoad>().getpath(""));
+                        Debug.WriteLine("getphath2 " + DependencyService.Get<ISaveAndLoad>().Getpath(""));
                         await DisplayAlert("Neue Anmeldung", "Sie haben sich an einem neuen Gerät angemeldet. Daten werden runtergeladen", "OK");
                         CreateAccountPage cap = new CreateAccountPage();
-                        cap.DownloadInitialContent(validUser);
+                        await cap.DownloadInitialContent(validUser);
                     }
+
                     await Navigation.PushModalAsync(new NavigationPage(new MainMenuPage(validUser)));
                 }
             };
@@ -118,7 +118,7 @@ namespace SMK
         /// <returns></returns>
         public async Task<User> IsValidLogin(User user)
         {
-            //decommend to avoid login input
+            //decommend to avoid login input for testing purposes
             //return user;
             try
             {
@@ -127,7 +127,7 @@ namespace SMK
             catch (Exception e)
             {
                 Debug.WriteLine("Exception e: " + e);
-                exception = true;
+                _exception = true;
                 return null;
             }
         }

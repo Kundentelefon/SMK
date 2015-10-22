@@ -14,20 +14,20 @@ namespace SMK.View
         public LocalHtml2(PContent content, String userPath)
         {
             //Pfad setzen
-            String source = (DependencyService.Get<ISaveAndLoad>().pathCombine(
-                        (DependencyService.Get<ISaveAndLoad>().pathCombine(
-                            DependencyService.Get<ISaveAndLoad>().getpath(userPath), "p" + content.content_ID.ToString())), content.files[0]));
+            String source = (DependencyService.Get<ISaveAndLoad>().PathCombine(
+                        (DependencyService.Get<ISaveAndLoad>().PathCombine(
+                            DependencyService.Get<ISaveAndLoad>().Getpath(userPath), "p" + content.content_ID.ToString())), content.files[0]));
             //browser und viewsource initalisieren
             var browser = new WebView();
             var htmlSource = new HtmlWebViewSource();
             // fals Datei vorhanden einlesen
-            if (DependencyService.Get<ISaveAndLoad>().fileExistExact(source))
+            if (DependencyService.Get<ISaveAndLoad>().FileExistExact(source))
             {
                 htmlSource.Html = DependencyService.Get<ISaveAndLoad>().LoadText(source);
             }
             //BaseUrl setzen um auf andere Dateien referenzieren zu können(Css, javascript oder html)
-            htmlSource.BaseUrl = (DependencyService.Get<ISaveAndLoad>().pathCombine(
-                            DependencyService.Get<ISaveAndLoad>().getpath(userPath), "p" + content.content_ID.ToString()));
+            htmlSource.BaseUrl = (DependencyService.Get<ISaveAndLoad>().PathCombine(
+                            DependencyService.Get<ISaveAndLoad>().Getpath(userPath), "p" + content.content_ID.ToString()));
 
             browser.Source = htmlSource;
             Content = browser;

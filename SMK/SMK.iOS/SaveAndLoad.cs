@@ -19,17 +19,17 @@ namespace SMK.iOS
         /// </summary>
         /// <param name="location"></param>
         /// <param name="inputObject"></param>
-        public void saveUserXml(String location, Object inputObject)
+        public void SaveUserXml(String location, Object inputObject)
         {
             try
             {
-                if (fileExist(location))
+                if (FileExist(location))
                 {
-                    deleteFile(location);
+                    DeleteFile(location);
                 }
                 XmlSerializer ser = new XmlSerializer(typeof(User));
 
-                System.IO.FileStream file = System.IO.File.Create(getpath(location));
+                System.IO.FileStream file = System.IO.File.Create(Getpath(location));
                 ser.Serialize(file, inputObject);
                 file.Close();
             }
@@ -40,13 +40,13 @@ namespace SMK.iOS
         /// </summary>
         /// <param name="location"></param>
         /// <returns></returns>
-        public User loadUserXml(String location)
+        public User LoadUserXml(String location)
         {
             User returnObject = null;
             try
             {
                 XmlSerializer ser = new XmlSerializer(typeof(User));
-                FileStream fs = new FileStream(getpath(location), FileMode.Open);
+                FileStream fs = new FileStream(Getpath(location), FileMode.Open);
                 XmlReader reader = XmlReader.Create(fs);
                 returnObject = (User)ser.Deserialize(reader);
                 fs.Close();
@@ -61,18 +61,18 @@ namespace SMK.iOS
         /// </summary>
         /// <param name="location"></param>
         /// <param name="inputObject"></param>
-        public void savePContentsXml(String userPath, String location, Object inputObject)
+        public void SavePContentsXml(String userPath, String location, Object inputObject)
         {
             location = Path.Combine(userPath, location);
             try
             {
-                if (fileExist(location))
+                if (FileExist(location))
                 {
-                    deleteFile(location);
+                    DeleteFile(location);
                 }
                 XmlSerializer ser = new XmlSerializer(typeof(PContents));
 
-                System.IO.FileStream file = System.IO.File.Create(getpath(location));
+                System.IO.FileStream file = System.IO.File.Create(Getpath(location));
                 ser.Serialize(file, inputObject);
                 file.Close();
             }
@@ -83,14 +83,14 @@ namespace SMK.iOS
         /// </summary>
         /// <param name="location"></param>
         /// <returns></returns>
-        public PContents loadPcontentsXml(String location, String userPath)
+        public PContents LoadPcontentsXml(String location, String userPath)
         {
             location = Path.Combine(userPath, location);
             PContents retrunObject = new PContents();
             try
             {
                 XmlSerializer ser = new XmlSerializer(typeof(PContents));
-                FileStream fs = new FileStream(getpath(location), FileMode.Open);
+                FileStream fs = new FileStream(Getpath(location), FileMode.Open);
                 XmlReader reader = XmlReader.Create(fs);
                 retrunObject = (PContents)ser.Deserialize(reader);
                 fs.Close();
@@ -104,17 +104,17 @@ namespace SMK.iOS
         /// </summary>
         /// <param name="location"></param>
         /// <param name="inputObject"></param>
-        public void saveProductsXml(String location, Object inputObject)
+        public void SaveProductsXml(String location, Object inputObject)
         {
             try
             {
-                if (fileExist(location))
+                if (FileExist(location))
                 {
-                    deleteFile(location);
+                    DeleteFile(location);
                 }
                 XmlSerializer ser = new XmlSerializer(typeof(Products));
 
-                System.IO.FileStream file = System.IO.File.Create(getpath(location));
+                System.IO.FileStream file = System.IO.File.Create(Getpath(location));
                 ser.Serialize(file, inputObject);
                 file.Close();
             }
@@ -125,13 +125,13 @@ namespace SMK.iOS
         /// </summary>
         /// <param name="location"></param>
         /// <returns></returns>
-        public Products loadProductsXml(String location)
+        public Products LoadProductsXml(String location)
         {
             Products retrunObject = new Products();
             try
             {
                 XmlSerializer ser = new XmlSerializer(typeof(Products));
-                FileStream fs = new FileStream(getpath(location), FileMode.Open);
+                FileStream fs = new FileStream(Getpath(location), FileMode.Open);
                 XmlReader reader = XmlReader.Create(fs);
                 retrunObject = (Products)ser.Deserialize(reader);
                 fs.Close();
@@ -151,20 +151,20 @@ namespace SMK.iOS
         /// get the local path
         /// </summary>
         /// <returns></returns>
-        public String getpath(String inputPath)
+        public String Getpath(String inputPath)
         {
             String contentlPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), inputPath);
             return (contentlPath);
         }
         /// <summary>
-        /// erstellt einen ordner an den standardpfad
+        /// erstellt einen Folder an den standardpfad
         /// </summary>
         /// <param name="path"></param>
-        public void createOrdner(String path)
+        public void CreateFolder(String path)
         {
             try
             {
-                path = getpath(path);
+                path = Getpath(path);
                 if (!(Directory.Exists(path)))
                 {
                     Directory.CreateDirectory(path);
@@ -176,9 +176,9 @@ namespace SMK.iOS
 
 
 
-        public Boolean fileExist(String inputString)
+        public Boolean FileExist(String inputString)
         {
-            if (File.Exists(getpath(inputString)))
+            if (File.Exists(Getpath(inputString)))
             {
                 return (true);
             }
@@ -186,7 +186,7 @@ namespace SMK.iOS
 
         }
 
-        public Boolean fileExistExact(String inputString)
+        public Boolean FileExistExact(String inputString)
         {
             //var test=Directory.GetCurrentDirectory();
             if (File.Exists(inputString))
@@ -197,15 +197,15 @@ namespace SMK.iOS
 
         }
 
-        public void deleteFile(String location)
+        public void DeleteFile(String location)
         {
             try
             {
-                System.IO.File.Delete(getpath(location));
+                System.IO.File.Delete(Getpath(location));
             }
             catch (Exception e) { Console.WriteLine("" + e); }
         }
-        public String pathCombine(String firstPath, String secondPath)
+        public String PathCombine(String firstPath, String secondPath)
         {
             String path = Path.Combine(firstPath, secondPath);
             return (path);

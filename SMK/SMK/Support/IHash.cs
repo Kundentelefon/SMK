@@ -13,6 +13,6 @@ namespace SMK.Support
     /// </summary>
     public interface IHash
     {
-        String SHA512StringHash(String inputString); 
+        String Sha512StringHash(String inputString);
     }
 }

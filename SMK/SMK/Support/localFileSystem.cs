@@ -10,19 +10,19 @@ namespace SMK.Support
 {
     class localFileSystem
     {
-        //Ordner Namen 
+        //Folder Namen 
         public static readonly String productLocation = "Produkt";
         public static readonly String productFolderLocation = "Produkte";
         public static readonly String pContentLocation = "PContent";
         public static readonly String userLocation = "User";
 
         public localFileSystem()
-        {}
+        { }
         /// <summary>
-        /// initalisiert ein paar dummies
+        /// initialises dummies for testing purpoess
         /// </summary>
         /// <param name="userPath"></param>
-        public void initaldummies(String userPath)
+        public void Initaldummies(String userPath)
         {
             string testText = "have some Text i hope you like it fighting and burning from turning from who we really are, flying to close to the sun as we were invincible, around the world we grow weaker as we exterminate, we are the children of the sun bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb";
 
@@ -32,7 +32,7 @@ namespace SMK.Support
             pro1.product_Name = "Test";
             pro1.product_Thumbnail = ".png";
             pro1.product_Text = testText;
-            pro1.PContents = new List<int>(new int[] { 0, 1, 2 });            
+            pro1.PContents = new List<int>(new int[] { 0, 1, 2 });
 
             Product pro2 = new Product();
             pro2.product_ID = 1;
@@ -102,64 +102,70 @@ namespace SMK.Support
             returnList2.Add(content6);
             returnList2.Add(content7);
 
-            saveModelsLocal(userPath,returnList, returnList2);
- 
-            
+            SaveModelsLocal(userPath, returnList, returnList2);
+
+
         }
         /// <summary>
-        /// liest den Produkt ein von dem als xml gespeicherten Produkt 
+        /// loads the Product which was saved as XML-Product
         /// </summary>
         /// <returns></returns>
-        public List<Product> loadProductList()
+        public List<Product> LoadProductList()
         {
             List<Product> returnList = new List<Product>();
-            if (DependencyService.Get<ISaveAndLoad>().fileExist(productLocation))
+            if (DependencyService.Get<ISaveAndLoad>().FileExist(productLocation))
             {
-                returnList = DependencyService.Get<ISaveAndLoad>().loadProductsXml(productLocation).listProducts;
-            }            
+                returnList = DependencyService.Get<ISaveAndLoad>().LoadProductsXml(productLocation).listProducts;
+            }
             return (returnList);
         }
         /// <summary>
-        /// liest den PContent ein von dem als xml gespeicherten PContent 
+        /// laods the PContent from the PContent-File
         /// </summary>
-        /// <param name="userPath">der Spezifische User Ordner</param>
+        /// <param name="userPath">the spedific User-Folder</param>
         /// <returns></returns>
-        public List<PContent> loadContentList(String userPath) { 
+        public List<PContent> loadContentList(String userPath)
+        {
             List<PContent> returnList = new List<PContent>();
-            if (DependencyService.Get<ISaveAndLoad>().fileExist(productLocation))
+            if (DependencyService.Get<ISaveAndLoad>().FileExist(productLocation))
             {
-                returnList = DependencyService.Get<ISaveAndLoad>().loadPcontentsXml(pContentLocation, userPath).listPContent;
+                returnList = DependencyService.Get<ISaveAndLoad>().LoadPcontentsXml(pContentLocation, userPath).listPContent;
             }
             return (returnList);
         }
 
         /// <summary>
-        /// Übergebe ein Product und bekomme eine Liste mit allen Content für dieses Produkt
-        /// der zurückgegebene Content kann leer sein falls der User das Product nicht besitzt
+        /// Receives a Product and returns a List of all it Contents back
+        /// The returned List can be empty if the User dont own the Product
         /// </summary>
         /// <param name="product"></param>
+        /// <param name="userPath"></param>
         /// <returns></returns>
-        public List<PContent> loadContentList(Product product,String userPath)
+        public List<PContent> loadContentList(Product product, string userPath)
         {
             List<PContent> completeList = loadContentList(userPath);
             List<PContent> returnList = new List<PContent>();
-            foreach (int item in product.PContents)
+
+            foreach (var item in product.PContents)
             {
-                returnList.Add(completeList.Find(content => content.content_Kind == item));
+                if (completeList.Count>item)
+                {
+                    returnList.Add(completeList[item]);
+                }
             }
             return returnList;
         }
 
         /// <summary>
-        /// überprüft ob in Pcontent entwas enthalten ist und 
-        /// falls ja ob das Produkt auch Content besitzt und 
-        /// ob in Pcontent, Content von dem Produkt enthält.
+        /// Checks if PContent has content 
+        /// if it has content it also checks if the Product has content
+        /// and checks if Pcontent has content from the Product
         /// </summary>
         /// <param name="product"></param>
         /// <returns></returns>
-        public Boolean hasContent(Product product, List<PContent> Pcontent)
+        public Boolean HasContent(Product product, List<PContent> Pcontent)
         {
-            if (Pcontent.Count()>0&& product.PContents.Count() > 0 && Pcontent[product.PContents[0]] != null)
+            if (Pcontent.Any() && product.PContents.Any() && Pcontent[product.PContents[0]] != null)
             {
                 return true;
             }
@@ -167,83 +173,83 @@ namespace SMK.Support
         }
 
         /// <summary>
-        /// speichert alle Übergeben Produkte in der Datei "Products" vogegebenen Pfad ab 
-        /// speichert alle Pcontents in Contents im spezifischen User Verzeichnis übergeben in userPath ab
+        /// saves all given Products in a File "Products" at the given path and
+        /// saves all PContents in contents at the specific Folder
         /// </summary>
         /// <param name="userPath"></param>
         /// <param name="inputProducts"></param>
         /// <param name="inputContents"></param>
-        public void saveModelsLocal(String userPath,List<Product> inputProducts, List<PContent> inputContents)
+        public void SaveModelsLocal(String userPath, List<Product> inputProducts, List<PContent> inputContents)
         {
             PContents savePcontents = new PContents();
             savePcontents.listPContent = inputContents;
             Products saveProducts = new Products();
             saveProducts.listProducts = inputProducts;
 
-            DependencyService.Get<ISaveAndLoad>().savePContentsXml(userPath,pContentLocation, savePcontents);
-            DependencyService.Get<ISaveAndLoad>().saveProductsXml(productLocation, saveProducts);
-
+            DependencyService.Get<ISaveAndLoad>().SavePContentsXml(userPath, pContentLocation, savePcontents);
+            DependencyService.Get<ISaveAndLoad>().SaveProductsXml(productLocation, saveProducts);
         }
         /// <summary>
-        /// überprüft ob ein user existiert
+        /// Checks if a User exists
         /// </summary>
         /// <returns></returns>
         private Boolean userExist()
         {
-            if (DependencyService.Get<ISaveAndLoad>().fileExist(userLocation))
+            if (DependencyService.Get<ISaveAndLoad>().FileExist(userLocation))
             {
                 return (true);
             }
             return (false);
         }
         /// <summary>
-        /// lädt den User aus dem File User und gibt diesen zurück
+        /// loads the User from the File "User" and gives it back
         /// </summary>
         /// <returns></returns>
-         public User getUser()
+        public User GetUser()
         {
-            User returnUser=null;
+            User returnUser = null;
             if (userExist())
             {
-                returnUser=DependencyService.Get<ISaveAndLoad>().loadUserXml(userLocation);
+                returnUser = DependencyService.Get<ISaveAndLoad>().LoadUserXml(userLocation);
             }
             return (returnUser);
         }
 
         /// <summary>
-        /// speichert den User in der User File als xml ab
+        /// saves the User as User-File-XML
         /// </summary>
         /// <param name="inputUser"></param>
         /// <returns></returns>
-        public void saveUser(User inputUser)
+        public void SaveUser(User inputUser)
         {
-            DependencyService.Get<ISaveAndLoad>().saveUserXml(userLocation,inputUser);
+            DependencyService.Get<ISaveAndLoad>().SaveUserXml(userLocation, inputUser);
         }
         /// <summary>
-        /// erstellt den Produkt Ordner und den Userspezifischen Ordner,
-        /// fals die Ordner noch nicht vorhanden sind.
+        /// creates the Produkt-Folder and the specific User-Folder,
+        /// if they are not already created
         /// </summary>
         /// <param name="userFile"></param>
-        public void createInitalFolders(String userFile)
+        public void CreateInitalFolders(String userFile)
         {
-                DependencyService.Get<ISaveAndLoad>().createOrdner(productFolderLocation);
-                DependencyService.Get<ISaveAndLoad>().createOrdner(userFile);
+            DependencyService.Get<ISaveAndLoad>().CreateFolder(productFolderLocation);
+            DependencyService.Get<ISaveAndLoad>().CreateFolder(userFile);
+            DependencyService.Get<ISaveAndLoad>().CreateFolder(DependencyService.Get<ISaveAndLoad>().PathCombine( userFile, "Thumbnail"));
         }
         /// <summary>
-        /// entfärnt die User Xml Datei
+        /// deletes the "User"-File
         /// </summary>
-        public void deleteUser()
+        public void DeleteUser()
         {
-            DependencyService.Get<ISaveAndLoad>().deleteFile(userLocation);
+            DependencyService.Get<ISaveAndLoad>().DeleteFile(userLocation);
         }
         /// <summary>
-        /// entfärnt \\/:*?""<>| aus dem übergebenen String
+        /// removes \\/:*?""<>| from the given string
         /// </summary>
-        /// <param name="Input"></param>
+        /// <param name="input"></param>
         /// <returns></returns>
-        public string AdjustPath(string Input)
+        public string AdjustPath(string input)
         {
-            return System.Text.RegularExpressions.Regex.Replace(Input, @"[\\/:*?""<>|]", string.Empty);
+            return System.Text.RegularExpressions.Regex.Replace(input, @"[\\/:*?""<>|]", string.Empty);
         }
     }
 }
