@@ -88,12 +88,12 @@
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="BaseUrlWebViewRenderer.cs" />
-    <Compile Include="BaseUrl_iOS.cs" />
-    <Compile Include="SaveAndLoad.cs" />
+    <Compile Include="FileVerwaltung\BaseUrlWebViewRenderer.cs" />
+    <Compile Include="FileVerwaltung\BaseUrl_iOS.cs" />
+    <Compile Include="FileVerwaltung\SaveAndLoad.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
-    <Compile Include="Support\FtpClient.cs" />
+    <Compile Include="FileVerwaltung\FtpClient.cs" />
     <Compile Include="Support\Hash.cs" />
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
