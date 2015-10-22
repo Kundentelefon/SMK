@@ -145,9 +145,13 @@ namespace SMK.Support
         {
             List<PContent> completeList = loadContentList(userPath);
             List<PContent> returnList = new List<PContent>();
+
             foreach (var item in product.PContents)
             {
-                returnList.Add(completeList.Find(content => content.content_Kind == item));
+                if (completeList.Count>item)
+                {
+                    returnList.Add(completeList[item]);
+                }
             }
             return returnList;
         }

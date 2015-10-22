@@ -74,14 +74,21 @@ namespace SMK.View
                 //Loads the List<PContent> of the Product from the the User-Folder
                 List<PContent> newlistPContents = file.loadContentList(userPath);
 
-                foreach (var pcontent in listPContents)
+                foreach (PContent pcontent in listPContents)
                 {
+                    
                     //stops if the pcontent is empty
                     if (pcontent.content_ID == 0) break;
-                    List<string> contentPath =
-                        await DataAccessHandler.DataAccess.GetFileServerPath(pcontent.content_ID);
-                    //Adds to the server List<PContent> to the PContent from the User
-                    newlistPContents.Add(pcontent);
+                    //adds new Pcontent if necessary
+                    while (newlistPContents.Count <= pcontent.content_ID)
+                    {
+                        newlistPContents.Add(null);
+                    }
+                    //updates Pcontent
+                    newlistPContents[pcontent.content_ID] = pcontent;
+
+                        List<string> contentPath =
+                        await DataAccessHandler.DataAccess.GetFileServerPath(pcontent.content_ID);                   
 
                     //creates a new p folder for the content_Kind if not exists
                     DependencyService.Get<ISaveAndLoad>().CreateFolder(DependencyService.Get<ISaveAndLoad>().PathCombine(

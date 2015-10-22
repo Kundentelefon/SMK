@@ -24,7 +24,7 @@ namespace SMK.Support
             //var source = @"local.html";
             // < meta http - equiv = "refresh" content = "0; url=http://example.com/" />
             //htmlSource.Html = @"<html> < a href=""" + source + @""">";
-            //htmlSource.Html = @"<meta http-equiv=""refresh"" content=""0; url ="+source+@""" />";
+            //htmlSource.Html = @"<meta http-equiv=""refresh"" content=""0; url =" + source + @""" />";
             if (DependencyService.Get<ISaveAndLoad>().FileExistExact(source))
             {
                 htmlSource.Html = DependencyService.Get<ISaveAndLoad>().LoadText(source);
