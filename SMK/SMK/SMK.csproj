@@ -55,12 +55,12 @@
     <Compile Include="Model\Products.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Support\IFtpClient.cs" />
-    <Compile Include="Support\IBaseUrl.cs" />
+    <Compile Include="FileVerwaltung\IFtpClient.cs" />
+    <Compile Include="FileVerwaltung\IBaseUrl.cs" />
     <Compile Include="Support\IHash.cs" />
     <Compile Include="Support\IRotation.cs" />
-    <Compile Include="Support\ISaveAndLoad.cs" />
-    <Compile Include="Support\localFileSystem.cs" />
+    <Compile Include="FileVerwaltung\ISaveAndLoad.cs" />
+    <Compile Include="FileVerwaltung\localFileSystem.cs" />
     <Compile Include="View\LocalHtml.cs" />
     <Compile Include="View\AddProduktPage.cs" />
     <Compile Include="View\DetailCarousel.cs" />
