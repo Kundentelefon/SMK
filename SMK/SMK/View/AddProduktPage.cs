@@ -60,9 +60,9 @@ namespace SMK.View
                 IFtpClient client = DependencyService.Get<IFtpClient>();
                 Product product = await DataAccessHandler.DataAccess.GetProductByKey(productCode);
                 //Download Thumbnail in Produkte Folder
-                client.DownloadFile(@"Produkte/" + product.product_Thumbnail,
-                DependencyService.Get<ISaveAndLoad>().Getpath(@"Produkte/") + product.product_Thumbnail, serverAdress, accessHandler.FtpName,
-                accessHandler.FtpPassword);
+                //client.DownloadFile(@"Produkte/" + product.product_Thumbnail,
+                //DependencyService.Get<ISaveAndLoad>().Getpath(@"Produkte/") + product.product_Thumbnail, serverAdress, accessHandler.FtpName,
+                //accessHandler.FtpPassword);
                 //Download Thumbnail in userName / thumbnail Folder
                 //client.DownloadFile(@"Thumbnail/" + product.product_Thumbnail,
                 //DependencyService.Get<ISaveAndLoad>().Getpath(file.GetUser().user_Email + @"/Thumbnail/") + product.product_Thumbnail, serverAdress, accessHandler.FtpName,
@@ -82,7 +82,6 @@ namespace SMK.View
                     {
                         newlistPContents.Add(null);
                     }
-
                     //updates Pcontent
                     newlistPContents[pcontent.content_ID] = pcontent;
                     if (pcontent.content_Kind!=0) {
@@ -111,7 +110,7 @@ namespace SMK.View
                 }
                 //Adds the Product to the Product-File from the User
                 List<Product> newUserProducts = file.LoadProductList();
-                newUserProducts.Add(product);
+                //newUserProducts.Add(product);
                 file.SaveModelsLocal(userPath, newUserProducts, newlistPContents);
                 //Adds the Product to the User in the Database
                 DataAccessHandler.DataAccess.AddProductToUser(product.product_ID, file.GetUser());

@@ -56,7 +56,7 @@ namespace SMK
                     {
                         User user = new User(username.Text, password1.Text);
                         await DisplayAlert("Account erstellt!", "Neuer Account wurde erstellt", "OK");
-                        DownloadInitialContent(user);
+                        await DownloadInitialContent(user);
                         await Navigation.PushModalAsync(new NavigationPage(new MainMenuPage(user)));
                     }
                 }
@@ -140,6 +140,27 @@ namespace SMK
                 //client.DownloadDirectoryAsync(@"emptyFolderStructure", DependencyService.Get<ISaveAndLoad>().Getpath(userPath), serverAdress, accessHandler.FtpName, accessHandler.FtpPassword);
                 //Download all Products this user posses with all its Pcontent
 
+                List<Product> listAllProducts = await DataAccessHandler.DataAccess.GetAllProducts();
+                
+                List<PContent> newEmptyContent = new List<PContent>();
+                foreach (var productAll in listAllProducts)
+                {
+
+                    if (productAll.product_ID == 0) break;
+                    //Download Thumbnail in Produkte Folder
+                    client.DownloadFile(@"Produkte/" + productAll.product_Thumbnail,
+                    DependencyService.Get<ISaveAndLoad>().Getpath(@"Produkte/") + productAll.product_Thumbnail, serverAdress, accessHandler.FtpName,
+                    accessHandler.FtpPassword);
+                    //Download Thumbnail in userName / thumbnail Folder
+                    //client.DownloadFile(@"Thumbnail/" + product.product_Thumbnail,
+                    //DependencyService.Get<ISaveAndLoad>().Getpath(files.GetUser().user_Email + @"/Thumbnail/") + product.product_Thumbnail, serverAdress, accessHandler.FtpName,
+                    //accessHandler.FtpPassword);
+
+                }
+                files.SaveUser(user);
+                files.SaveModelsLocal(userPath, listAllProducts, newEmptyContent);
+
+                //Hier GetALLProducts ansttt nur user products
                 List<Product> listUserProducts = await DataAccessHandler.DataAccess.GetUserProducts(user);
                 List<PContent> newlistPContents = new List<PContent>();
                 foreach (var product in listUserProducts)
@@ -150,13 +171,13 @@ namespace SMK
 
                     if (product.product_ID == 0) break;
                     //Download Thumbnail in Produkte Folder
-                    client.DownloadFile(@"Produkte/" + product.product_Thumbnail,
-                    DependencyService.Get<ISaveAndLoad>().Getpath(@"Produkte/") + product.product_Thumbnail, serverAdress, accessHandler.FtpName,
-                    accessHandler.FtpPassword);
+                    //client.DownloadFile(@"Produkte/" + product.product_Thumbnail,
+                    //DependencyService.Get<ISaveAndLoad>().Getpath(@"Produkte/") + product.product_Thumbnail, serverAdress, accessHandler.FtpName,
+                    //accessHandler.FtpPassword);
                     //Download Thumbnail in userName / thumbnail Folder
                     //client.DownloadFile(@"Thumbnail/" + product.product_Thumbnail,
                     //DependencyService.Get<ISaveAndLoad>().Getpath(files.GetUser().user_Email + @"/Thumbnail/") + product.product_Thumbnail, serverAdress, accessHandler.FtpName,
-                    
+
                     //accessHandler.FtpPassword);
 
                     foreach (var pcontent in listUserPContents)
@@ -194,7 +215,7 @@ namespace SMK
                 }
                 //Saves User, Products and PContent XML
                 files.SaveUser(user);
-                files.SaveModelsLocal(userPath, listUserProducts, newlistPContents);
+                files.SaveModelsLocal(userPath, listAllProducts, newlistPContents);
             }
             catch (Exception e)
             {

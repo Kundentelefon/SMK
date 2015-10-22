@@ -39,10 +39,9 @@ namespace SMK.DataAccess
             }
             catch (Exception e)
             {
-                throw new Exception("Fehler aufgetreten: " + e);
+                return false;
             }
         }
-
 
         public async void SetProductKeyInvalid(string key)
         {
@@ -187,7 +186,7 @@ namespace SMK.DataAccess
                 var model = Newtonsoft.Json.JsonConvert.DeserializeObject<Product>(response.Content);
 
                 //a new server request instance to add the contentList
-                var request2 = new RestRequest("getProductContentKind.php", Method.GET);
+                var request2 = new RestRequest("getProductContentID.php", Method.GET);
                 request2.AddParameter("product_ID", model.product_ID);
 
                 request.Timeout = 1000;
@@ -206,7 +205,6 @@ namespace SMK.DataAccess
                 throw new Exception("Fehler aufgetreten: " + e);
             }
         }
-
 
         public async Task<List<PContent>> GetPContent(int productid)
         {
@@ -318,7 +316,7 @@ namespace SMK.DataAccess
                 foreach (var product in model)
                 {
                     //inserts for each Product of List<Product>
-                    var request2 = new RestRequest("getProductContentKind.php", Method.GET);
+                    var request2 = new RestRequest("getProductContentID.php", Method.GET);
                     request2.AddParameter("product_ID", product.product_ID);
 
                     request.Timeout = 1000;
@@ -340,5 +338,53 @@ namespace SMK.DataAccess
                 throw new Exception("Fehler aufgetreten: " + e);
             }
         }
+
+        public async Task<List<Product>> GetAllProducts()
+        {
+            try
+            {
+                var client = new RestClient("http://" + _serverAdress);
+                var request = new RestRequest("getAllProducts.php", Method.GET);
+
+                request.Timeout = 5000;
+                IRestResponse response = await client.ExecuteGetTaskAsync(request);
+                if (response.ErrorException != null)
+                {
+                    throw response.ErrorException;
+                }
+                if (response.Content.Equals("0 results"))
+                {
+                    return new List<Product>();
+                }
+                var model = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Product>>(response.Content);
+
+                //creates a new List<Product> and adds a List<int> of Content_Kind
+                var model2 = new List<Product>();
+                foreach (var product in model)
+                {
+                    //inserts for each Product of List<Product>
+                    var request2 = new RestRequest("getProductContentID.php", Method.GET);
+                    request2.AddParameter("product_ID", product.product_ID);
+
+                    request.Timeout = 1000;
+                    IRestResponse response2 = await client.ExecuteGetTaskAsync(request2);
+                    if (response.ErrorException != null)
+                    {
+                        throw response.ErrorException;
+                    }
+                    //Adds a List<int> of content_Kind to each Product
+                    List<int> productList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<int>>(response2.Content).Distinct().ToList(); //Distinct entfernt duplicate
+                    Product product2 = product;
+                    product2.PContents = productList;
+                    model2.Add(product2);
+                }
+                return model2;
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Fehler aufgetreten: " + e);
+            }
+        }
+
     }
 }

@@ -15,7 +15,7 @@ namespace SMK.DataAccess
 
         public static IDataAccess DataAccess { get; private set; }
 
-        public string ServerAdress { get; private set; } = "192.168.43.62";
+        public string ServerAdress { get; private set; } = "192.168.2.101";
         public string FtpName { get; private set; } = "SMKFTPUser";
         public string FtpPassword { get; private set; } = "";
 

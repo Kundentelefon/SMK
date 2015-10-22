@@ -73,5 +73,11 @@ namespace SMK.DataAccess
         /// <param name="cid"></param>
         /// <returns></returns>
         Task<List<string>> GetFileServerPath(int cid);
+
+        /// <summary>
+        /// Returns all available Products on the server
+        /// </summary>
+        /// <returns></returns>
+        Task<List<Product>> GetAllProducts();
     }
 }
