@@ -123,7 +123,7 @@ namespace SMK
             }
         }
 
-        public async void DownloadInitialContent(User user)
+        public async Task DownloadInitialContent(User user)
         {
             try
             {
@@ -137,7 +137,7 @@ namespace SMK
 
                 IFtpClient client = DependencyService.Get<IFtpClient>();
                 //Download empty folder PContent
-                client.DownloadDirectoryAsync(@"emptyFolderStructure", DependencyService.Get<ISaveAndLoad>().Getpath(user.user_Email), serverAdress, accessHandler.FtpName, accessHandler.FtpPassword);
+                //client.DownloadDirectoryAsync(@"emptyFolderStructure", DependencyService.Get<ISaveAndLoad>().Getpath(userPath), serverAdress, accessHandler.FtpName, accessHandler.FtpPassword);
                 //Download all Products this user posses with all its Pcontent
 
                 List<Product> listUserProducts = await DataAccessHandler.DataAccess.GetUserProducts(user);
@@ -150,20 +150,21 @@ namespace SMK
 
                     if (product.product_ID == 0) break;
                     //Download Thumbnail in Produkte Folder
-                    client.DownloadFile(@"Thumbnail/" + product.product_Thumbnail,
+                    client.DownloadFile(@"Produkte/" + product.product_Thumbnail,
                     DependencyService.Get<ISaveAndLoad>().Getpath(@"Produkte/") + product.product_Thumbnail, serverAdress, accessHandler.FtpName,
                     accessHandler.FtpPassword);
                     //Download Thumbnail in userName / thumbnail Folder
-                    client.DownloadFile(@"Thumbnail/" + product.product_Thumbnail,
-                    DependencyService.Get<ISaveAndLoad>().Getpath(files.GetUser().user_Email + @"/Thumbnail/") + product.product_Thumbnail, serverAdress, accessHandler.FtpName,
-                    accessHandler.FtpPassword);
+                    //client.DownloadFile(@"Thumbnail/" + product.product_Thumbnail,
+                    //DependencyService.Get<ISaveAndLoad>().Getpath(files.GetUser().user_Email + @"/Thumbnail/") + product.product_Thumbnail, serverAdress, accessHandler.FtpName,
+                    
+                    //accessHandler.FtpPassword);
 
                     foreach (var pcontent in listUserPContents)
                     {
                         if (pcontent.content_ID == 0) break;
                         //creates a new p folder if not exists for content_Kind
-                        DependencyService.Get<ISaveAndLoad>().PathCombine(
-                            DependencyService.Get<ISaveAndLoad>().Getpath(userPath), "p" + pcontent.content_ID);
+                        DependencyService.Get<ISaveAndLoad>().CreateFolder(DependencyService.Get<ISaveAndLoad>().PathCombine(
+                            DependencyService.Get<ISaveAndLoad>().Getpath(userPath), "p" + pcontent.content_ID));
 
                         List<string> contentPath = await DataAccessHandler.DataAccess.GetFileServerPath(pcontent.content_ID);
                         foreach (var path in contentPath)
@@ -173,8 +174,22 @@ namespace SMK
                             DependencyService.Get<ISaveAndLoad>().Getpath(files.GetUser().user_Email) + @"/p" + pcontent.content_ID + @"/" + Path.GetFileName(path), serverAdress, accessHandler.FtpName,
                             accessHandler.FtpPassword);
                         }
+
+                        while (newlistPContents.Count <= pcontent.content_ID)
+                        {
+                            newlistPContents.Add(null);
+                        }
+
+                        //updates Pcontent
+                        newlistPContents[pcontent.content_ID] = pcontent;
+                        if (pcontent.content_Kind != 0)
+                        {
+                            client.DownloadFile(@"Thumbnail/" + pcontent.content_ID + ".png",
+                            DependencyService.Get<ISaveAndLoad>().Getpath(files.GetUser().user_Email + @"/Thumbnail/") + pcontent.content_ID + ".png", serverAdress, accessHandler.FtpName,
+                            accessHandler.FtpPassword);
+                        }
                         //inserts the new PContent to PContent list
-                        newlistPContents.Add(pcontent);
+                        //newlistPContents.Add(pcontent);
                     }
                 }
                 //Saves User, Products and PContent XML

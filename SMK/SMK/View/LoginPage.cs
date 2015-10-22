@@ -60,14 +60,16 @@ namespace SMK
                 }
                 else
                 {
+                    localFileSystem file = new localFileSystem();
                     App.Current.Login(validUser);
-                    if (!DependencyService.Get<ISaveAndLoad>().FileExist(DependencyService.Get<ISaveAndLoad>().PathCombine(validUser.user_Email, "PContent")))
+                    if (!DependencyService.Get<ISaveAndLoad>().FileExist(DependencyService.Get<ISaveAndLoad>().PathCombine(file.AdjustPath( validUser.user_Email), "PContent")))
                     {
                         Debug.WriteLine("getphath2 " + DependencyService.Get<ISaveAndLoad>().Getpath(""));
                         await DisplayAlert("Neue Anmeldung", "Sie haben sich an einem neuen Gerät angemeldet. Daten werden runtergeladen", "OK");
                         CreateAccountPage cap = new CreateAccountPage();
-                        cap.DownloadInitialContent(validUser);
+                        await cap.DownloadInitialContent(validUser);
                     }
+
                     await Navigation.PushModalAsync(new NavigationPage(new MainMenuPage(validUser)));
                 }
             };

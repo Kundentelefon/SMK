@@ -74,8 +74,10 @@ namespace SMK.View
             stackLayout.Children.Add(
             new Image
             {
-                Source = ImageSource.FromFile(image_path)
+                Source = ImageSource.FromFile(image_path),
                 //Source = ImageSource.FromFile(image_path)
+                HeightRequest = 110
+                
             }
             );//Child added: Image
 
@@ -85,7 +87,9 @@ namespace SMK.View
             stackLayout.Children.Add(
                 new ScrollView
                 {
+                    MinimumHeightRequest = 100,
                     Content = new Frame
+              
                     {
                         OutlineColor = color,
                         BackgroundColor = color,
@@ -156,9 +160,12 @@ namespace SMK.View
                     Frame frame = new Frame
                     {
                         OutlineColor = color,
+                        //IsClippedToBounds = true
+                        Padding = 1,
                         Content = new Image
                         {
-                            Source = ImageSource.FromFile(source)
+                            Source = ImageSource.FromFile(source),
+
                         }
                     };
                     imageStack.Children.Add(frame);
@@ -195,7 +202,7 @@ namespace SMK.View
 
                 string source = (DependencyService.Get<ISaveAndLoad>().PathCombine(
                         (DependencyService.Get<ISaveAndLoad>().PathCombine(
-                            DependencyService.Get<ISaveAndLoad>().Getpath(userPath), "thumbnails")),
+                            DependencyService.Get<ISaveAndLoad>().Getpath(userPath), "Thumbnail")),
                         content.content_ID.ToString())
                         + ".png");
                 // if file doesn´t exist don`t create a frame
@@ -204,6 +211,7 @@ namespace SMK.View
                 Frame frame = new Frame
                 {
                     OutlineColor = color,
+                    Padding = 1,
                     Content = new Image
                     {
                         Source = ImageSource.FromFile(source)
@@ -247,12 +255,13 @@ namespace SMK.View
                 TapGestureRecognizer reco = new TapGestureRecognizer();
                 string source_thumb = ((DependencyService.Get<ISaveAndLoad>().PathCombine(
                     (DependencyService.Get<ISaveAndLoad>().PathCombine(
-                            DependencyService.Get<ISaveAndLoad>().Getpath(userPath), "thumbnails")), content.content_ID.ToString()) + ".png"));
+                            DependencyService.Get<ISaveAndLoad>().Getpath(userPath), "Thumbnail")), content.content_ID.ToString()) + ".png"));
                 string source_image;
 
                 Frame frame = new Frame
                 {
                     OutlineColor = color,
+                    Padding = 1,
                     Content = new Image
                     {
                         Source = ImageSource.FromFile(source_thumb)

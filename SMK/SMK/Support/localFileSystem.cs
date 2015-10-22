@@ -233,6 +233,7 @@ namespace SMK.Support
         {
             DependencyService.Get<ISaveAndLoad>().CreateFolder(productFolderLocation);
             DependencyService.Get<ISaveAndLoad>().CreateFolder(userFile);
+            DependencyService.Get<ISaveAndLoad>().CreateFolder(DependencyService.Get<ISaveAndLoad>().PathCombine( userFile, "Thumbnail"));
         }
         /// <summary>
         /// deletes the "User"-File

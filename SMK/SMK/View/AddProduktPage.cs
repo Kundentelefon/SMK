@@ -53,7 +53,6 @@ namespace SMK.View
                 localFileSystem file = new localFileSystem();
                 String userPath = file.AdjustPath(file.GetUser().user_Email);
 
-
                 //Gets the Serveradress 
                 DataAccessHandler accessHandler = new DataAccessHandler();
                 string serverAdress = accessHandler.ServerAdress;
@@ -61,13 +60,13 @@ namespace SMK.View
                 IFtpClient client = DependencyService.Get<IFtpClient>();
                 Product product = await DataAccessHandler.DataAccess.GetProductByKey(productCode);
                 //Download Thumbnail in Produkte Folder
-                client.DownloadFile(@"Thumbnail/" + product.product_Thumbnail,
+                client.DownloadFile(@"Produkte/" + product.product_Thumbnail,
                 DependencyService.Get<ISaveAndLoad>().Getpath(@"Produkte/") + product.product_Thumbnail, serverAdress, accessHandler.FtpName,
                 accessHandler.FtpPassword);
                 //Download Thumbnail in userName / thumbnail Folder
-                client.DownloadFile(@"Thumbnail/" + product.product_Thumbnail,
-                DependencyService.Get<ISaveAndLoad>().Getpath(file.GetUser().user_Email + @"/Thumbnail/") + product.product_Thumbnail, serverAdress, accessHandler.FtpName,
-                accessHandler.FtpPassword);
+                //client.DownloadFile(@"Thumbnail/" + product.product_Thumbnail,
+                //DependencyService.Get<ISaveAndLoad>().Getpath(file.GetUser().user_Email + @"/Thumbnail/") + product.product_Thumbnail, serverAdress, accessHandler.FtpName,
+                //accessHandler.FtpPassword);
 
                 //Loads the List<PContent> of the Product from the server
                 List<PContent> listPContents = await DataAccessHandler.DataAccess.GetPContent(product.product_ID);
@@ -75,8 +74,7 @@ namespace SMK.View
                 List<PContent> newlistPContents = file.loadContentList(userPath);
 
                 foreach (PContent pcontent in listPContents)
-                {
-                    
+                {                    
                     //stops if the pcontent is empty
                     if (pcontent.content_ID == 0) break;
                     //adds new Pcontent if necessary
@@ -84,10 +82,16 @@ namespace SMK.View
                     {
                         newlistPContents.Add(null);
                     }
+
                     //updates Pcontent
                     newlistPContents[pcontent.content_ID] = pcontent;
+                    if (pcontent.content_Kind!=0) {
+                        client.DownloadFile(@"Thumbnail/" + pcontent.content_ID + ".png",
+                        DependencyService.Get<ISaveAndLoad>().Getpath(file.GetUser().user_Email + @"/Thumbnail/") + pcontent.content_ID + ".png", serverAdress, accessHandler.FtpName,
+                        accessHandler.FtpPassword);
+                    }
 
-                        List<string> contentPath =
+                    List<string> contentPath =
                         await DataAccessHandler.DataAccess.GetFileServerPath(pcontent.content_ID);                   
 
                     //creates a new p folder for the content_Kind if not exists

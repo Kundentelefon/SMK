@@ -90,7 +90,8 @@ namespace SMK.View
                             {
                                 Source = ImageSource.FromFile(DependencyService.Get<ISaveAndLoad>().PathCombine(DependencyService.Get<ISaveAndLoad>().Getpath(localFileSystem.productFolderLocation), product.product_Thumbnail)),
                                 VerticalOptions = LayoutOptions.Center,
-                                HorizontalOptions = LayoutOptions.Center
+                                HorizontalOptions = LayoutOptions.Center,
+                                HeightRequest = 110
                             },
 
                                     new Label
