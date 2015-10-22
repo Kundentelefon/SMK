@@ -17,6 +17,9 @@ namespace SMK.View
         Color color;
         Button button;
         Entry entry;
+        /// <summary>
+        /// Konstruktor der AddProductPage, welcher eine Instanz der Seite erstellt
+        /// </summary>
         public AddProduktPage()
         {
             color = Color.FromHex("006AB3");

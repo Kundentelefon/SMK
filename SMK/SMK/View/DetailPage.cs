@@ -13,12 +13,7 @@ namespace SMK.View
 {
     public class DetailPage : ContentPage
     {
-        //müssen noch geändert werden sobald der server steht
-        //String imagePfadContent = DependencyService.Get<ISaveAndLoad>().getpath("PContent/p");
-        //String imagePfadProduct = DependencyService.Get<ISaveAndLoad>().getpath("Product/"); 
-        String imagePfadContent = "SMK.zeug.PContent.";
-        String imagePfadProduct = "SMK.zeug.Product.";
-        String thumbnail = "SMK.zeug.PContent.Thumbnail.";
+
         Product product;
         localFileSystem files;
         List<PContent> pContent;
@@ -39,7 +34,11 @@ namespace SMK.View
         List<PContent> contentVideo;
         List<PContent> contentConvertedPdf;
         Color color;
-
+        /// <summary>
+        /// Initialisiert ein Objekt der Klasse DetailPage
+        /// </summary>
+        /// <param name="ResourceProduct"></param>
+        /// <param name="userPath"></param>
         public DetailPage(Product ResourceProduct, String userPath)
         {
             product = ResourceProduct;
@@ -64,7 +63,7 @@ namespace SMK.View
             color = Color.FromHex("E2001A");
 
             initContentLists();
-            //String image_path = imagePfadProduct + product.product_ID.ToString() + ".png";
+      
             String image_path = DependencyService.Get<ISaveAndLoad>().PathCombine(DependencyService.Get<ISaveAndLoad>().Getpath(localFileSystem.productFolderLocation), product.product_Thumbnail);
             //(DependencyService.Get<ISaveAndLoad>().pathCombine(
             //(DependencyService.Get<ISaveAndLoad>().pathCombine(
@@ -116,6 +115,9 @@ namespace SMK.View
             //rotHandler.disableRotation();
         }//ende Construktor
 
+        /// <summary>
+        /// Läd die Inhalte des Produktes auf der Detailseite
+        /// </summary>
         public void initContentLists()
         {
             if ((pContent.Any()))
@@ -141,6 +143,11 @@ namespace SMK.View
                 }
             }
         }
+
+        /// <summary>
+        /// Erstellt eine Liste mit den Produktbildern des Produktes, welches die Detailseite behandelt
+        /// </summary>
+        /// <param name="userPath"></param>
         public void initImageStack(string userPath)
         {
             //Images des Produktes werden initalisiert
@@ -190,6 +197,10 @@ namespace SMK.View
 
         }
 
+        /// <summary>
+        /// Erstellt eine Liste mit Webviewelementen des Produktes, welches von der Detailseite behandelt wird
+        /// </summary>
+        /// <param name="userPath"></param>
         public void initHTMLStack(string userPath)
         {
             imageScrollWeb.Orientation = ScrollOrientation.Horizontal;
@@ -243,6 +254,10 @@ namespace SMK.View
             stackLayout.Children.Add(imageScrollWeb);
         }
 
+        /// <summary>
+        /// Erstellt eine Liste mit Lehrmaterial des Produktes, welches von der Detailseite behandelt wird
+        /// </summary>
+        /// <param name="userPath"></param>
         public void initPictureStack(string userPath)
         {
             imageScrollConverted.Orientation = ScrollOrientation.Horizontal;
